@@ -2,21 +2,20 @@
 footer{
     background-color: #131514;
     color: white;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 0;
+    
 
     img{
         width: 50%;
     }
     a{
         color: white;
+        text-decoration: none;
     }
     a:hover{
         color: #1cb8d1;
+        transition:color .5s;
     }
-    h3{
+    h5{
         color: #1cb8d1;
     }
     

@@ -1,15 +1,17 @@
 <div class="container text-center">
-  <h1>Bienvenido/a xxxxx</h1>
+  <h1> <b>Bienvenido/a xxxxx</b>
+    </h1>
 </div>
 <div class="container">
   <mat-stepper
     class="example-stepper"
-    [orientation]="(stepperOrientation | async)!" >
-    <mat-step [stepControl]="firstFormGroup" label="Verifica tu Producto">
+    [orientation]="(stepperOrientation | async)!" linear>
+    <mat-step [stepControl]="firstFormGroup" label="Verifica tu Producto" >
       <form [formGroup]="firstFormGroup">
         <mat-form-field appearance="fill">
-          <mat-label>Nombre</mat-label>
-          <input matInput placeholder="Nombre y Apellido" formControlName="firstCtrl" required>
+          <h3></h3>
+          <mat-label>Producto</mat-label>
+          <input matInput placeholder="Selecciona una opción" formControlName="firstCtrl" required>
         </mat-form-field>
         <div>
           <button mat-raised-button color="accent" matStepperNext>Siguiente</button>
@@ -19,8 +21,8 @@
     <mat-step [stepControl]="secondFormGroup" label="Confirma tus datos">
       <form [formGroup]="secondFormGroup">
         <mat-form-field appearance="fill">
-          <mat-label>Address</mat-label>
-          <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="secondCtrl" placeholder="Nombre y Apellido"
                  required>
         </mat-form-field>
         <div>
@@ -32,8 +34,8 @@
     <mat-step [stepControl]="thirdFormGroup" label="Selección de horario">
       <form [formGroup]="thirdFormGroup">
         <mat-form-field appearance="fill">
-          <mat-label>Phone number</mat-label>
-          <input matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
+          <mat-label>Selecciona un Horario</mat-label>
+          <input matInput formControlName="thirdCtrl" placeholder="" required>
         </mat-form-field>
         <div>
           <button mat-raised-button color="accent" matStepperPrevious>Atrás</button>
@@ -44,7 +46,7 @@
     <mat-step [stepControl]="fourFormGroup" label="Confirmar servicio">
       <form [formGroup]="fourFormGroup">
         <mat-form-field appearance="fill">
-          <mat-label>Phone number</mat-label>
+          <mat-label></mat-label>
           <input matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
         </mat-form-field>
         <div>
