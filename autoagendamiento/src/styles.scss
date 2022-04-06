@@ -1,16 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '~bootstrap/scss/bootstrap-grid';
 
-html, body { 
-    position: absolute;
-    height: 100%; width: 100%; left: 0;}
-body { margin: 0;
-    background-color: #f3f5f6 !important;
-}
-footer{
-    background-color: #131514;
-    color: white;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 0;
-}
+
+  
