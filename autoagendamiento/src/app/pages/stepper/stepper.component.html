@@ -4,8 +4,8 @@
 </div>
 <div class="container">
   <mat-stepper
-    class="example-stepper"
-    [orientation]="(stepperOrientation | async)!" linear>
+    class="example-stepper" color="accent"
+    [orientation]="(stepperOrientation | async)!" >
     <mat-step [stepControl]="firstFormGroup" label="Verifica tu Producto" >
       <form [formGroup]="firstFormGroup">
         <mat-form-field appearance="fill">
@@ -57,7 +57,9 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Listo</ng-template>
-      <p>You are now done.</p>
+      <div class="div">
+        <h1></h1>
+      </div>
       <div>
         <button mat-raised-button color="accent" matStepperPrevious>Enviar</button>
       </div>

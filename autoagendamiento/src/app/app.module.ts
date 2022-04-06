@@ -9,9 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SchedulingComponent } from './pages/scheduling/scheduling.component';
-import { ConfirmClientData } from './pages/confirm_clientData/confirm_clientData.component';
-import { ConfirmProduct } from './pages/confirm_product/confirm_product.component';
-import { ConfirmService } from './pages/confirm_service/confirm_service.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -27,9 +24,6 @@ import { CUSTOM_ELEMENTS_SCHEMA }  from '@angular/core';
     HeaderComponent,
     FooterComponent,
     SchedulingComponent,
-    ConfirmClientData,
-    ConfirmProduct,
-    ConfirmService,
     StepperComponent
     
   ],
