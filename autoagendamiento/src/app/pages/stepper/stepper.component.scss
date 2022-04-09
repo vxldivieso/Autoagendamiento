@@ -1,9 +1,19 @@
 .example-stepper {
   margin-top: 8px;
+  color: white;
+  text-align: center;
 }
 mat-label{
   color: #F6F5F4;
 }
 .mat-form-field {
   margin-top: 16px;
+}
+.example-full-width {
+  width: 50%;
+}
+.display-5{
+  font-size: calc(1.200rem + 1.1vw);
+  font-weight: 300;
+  line-height: 1.2;
 }
