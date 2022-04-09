@@ -11,14 +11,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SchedulingComponent } from './shared/components/scheduling/scheduling.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatStepperModule } from '@angular/material/stepper';
 import { StepperComponent } from './pages/stepper/stepper.component';
-import { MatButtonModule } from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
 import { CUSTOM_ELEMENTS_SCHEMA }  from '@angular/core';
 import { RadiobuttonComponent } from './shared/components/radiobutton/radiobutton.component';
+import { ClientDataComponent } from './shared/components/client-data/client-data.component';
+
 
 @NgModule({
   declarations: [
@@ -28,22 +25,16 @@ import { RadiobuttonComponent } from './shared/components/radiobutton/radiobutto
     SchedulingComponent,
     StepperComponent,
     RadiobuttonComponent,
-    
+    ClientDataComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatNativeDateModule,
-    MatStepperModule,
-    MatButtonModule,
-    MatInputModule,
-    MatSelectModule
   ],
   providers: [],
   schemas:[ CUSTOM_ELEMENTS_SCHEMA ],

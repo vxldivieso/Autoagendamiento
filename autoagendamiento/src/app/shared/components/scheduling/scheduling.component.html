@@ -1,1 +1,7 @@
-<p>scheduling works!</p>
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Seleccione un día</mat-label>
+    <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker">
+    <mat-hint>DD/MM/AAAA</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

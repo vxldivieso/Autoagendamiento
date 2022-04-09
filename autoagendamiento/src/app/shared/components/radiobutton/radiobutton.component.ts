@@ -12,4 +12,8 @@ export class RadiobuttonComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onTrueorFalse(value: boolean): void{
+    console.log(value);
+  }
+
 }
