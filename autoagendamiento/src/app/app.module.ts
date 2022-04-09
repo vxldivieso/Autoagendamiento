@@ -8,7 +8,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SchedulingComponent } from './pages/scheduling/scheduling.component';
+import { SchedulingComponent } from './shared/components/scheduling/scheduling.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -16,7 +16,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { StepperComponent } from './pages/stepper/stepper.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import { CUSTOM_ELEMENTS_SCHEMA }  from '@angular/core'; 
+import {MatSelectModule} from '@angular/material/select';
+import { CUSTOM_ELEMENTS_SCHEMA }  from '@angular/core';
+import { RadiobuttonComponent } from './shared/components/radiobutton/radiobutton.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { CUSTOM_ELEMENTS_SCHEMA }  from '@angular/core';
     HeaderComponent,
     FooterComponent,
     SchedulingComponent,
-    StepperComponent
+    StepperComponent,
+    RadiobuttonComponent,
     
   ],
   imports: [
@@ -40,6 +43,7 @@ import { CUSTOM_ELEMENTS_SCHEMA }  from '@angular/core';
     MatStepperModule,
     MatButtonModule,
     MatInputModule,
+    MatSelectModule
   ],
   providers: [],
   schemas:[ CUSTOM_ELEMENTS_SCHEMA ],

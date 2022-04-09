@@ -4,17 +4,10 @@
   </div>
 </div>
 
-
-
-<div class="col-md-7 col-lg-8">
-  <form class="needs-validation w-75" novalidate="">
-    
-  </form>
-</div>
-
-
+<!--Stepper-->
 
 <div class="container w-75">
+  <!--Verificar el producto-->
   <mat-stepper
     class="example-stepper" 
     [orientation]="(stepperOrientation | async)!" >
@@ -42,6 +35,7 @@
         </div>
       </form>
     </mat-step>
+    <!--Verifica los datos-->
     <mat-step [stepControl]="secondFormGroup" label="Confirma tus datos" >
       <form [formGroup]="secondFormGroup">
         <h1 class="text-center">Verifica que tus datos de contacto estén correctos</h1>
@@ -501,6 +495,7 @@
         
       </form>
     </mat-step>
+    <!--Seleccion de un horario-->
     <mat-step [stepControl]="thirdFormGroup" label="Selección de horario">
       <form [formGroup]="thirdFormGroup">
         <mat-form-field class="example-full-width"  appearance="fill">
@@ -509,17 +504,24 @@
         </mat-form-field>
         <div>
           <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
-          <button type="button" class="btn btn-info" matStepperNext>Siguiente</button>
+          <button type="button" class="btn btn-info" matStepperNext>Enviar</button>
         </div>
       </form>
     </mat-step>
+    <!--Done-->
     <mat-step>
       <ng-template matStepLabel>Listo</ng-template>
-      <div class="div">
-        <h1></h1>
+      <div class="px-4 pt-5 my-5 text-center border-bottom">
+        <h1 class="display-4 fw-bold">Te enviaremos un correo con la información de la visita.</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">Recuerda que puedes contactarte con nosotros en caso de querer modificar los datos del servicio.</p>
+        </div>
+      </div>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Contáctanos</button>
       </div>
       <div>
-        <button type="button" class="btn btn-info" matStepperPrevious>Enviar</button>
+        <button type="button" class="btn btn-info" submit>Cerrar</button>
       </div>
     </mat-step>
   </mat-stepper>
