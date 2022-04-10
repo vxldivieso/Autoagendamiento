@@ -1,16 +1,9 @@
-<div class="container text-center">
-  <div class="container">
-    <h1 class="display-5 fw-bold">Bienvenido/a</h1>
-  </div>
-</div>
-
-
 
 <!--Stepper-->
 
 <div class="container w-75">
   <mat-stepper
-    class="example-stepper" 
+    class="example-stepper" color="accent"
     [orientation]="(stepperOrientation | async)!"  >
     <!--Verificar el producto RADIOBUTTON-->
     <mat-step  [stepControl]="firstFormGroup" label="Verifica tu Producto" >

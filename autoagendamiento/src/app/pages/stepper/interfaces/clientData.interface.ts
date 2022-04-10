@@ -1,11 +1,12 @@
-export interface clientData{
-    id:number;
-    name:string;
-    rut:string;
-    email:string;
-    phone:number;
-    shippingAddress:string;
-    comuna:string;
-    city:string;
+export interface ClientData{
+    id: number;
+    name: string;
+    lastname: string;
+    rut: string;
+    email: string;
+    phone: number;
+    direccion: string;
+    comuna: string;
+    city: string;
 
 }

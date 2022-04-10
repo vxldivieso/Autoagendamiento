@@ -119,13 +119,14 @@
   "orders": [
     {
       "id": 1,
-      "name": "Maria Lopez",
+      "name": "Maria",
+      "lastname": "Lopez",
       "rut": "139957530",
-      "email":"marialopez@email.com",
-      "phone": "7750425",
-      "shippingAddress": "Av. de la Granvia de Hospitalet, 115",
-      "comuna": "Stgo. Centro",
-      "city": "Santiago"
+      "email":"",
+      "phone": "",
+      "direccion": "",
+      "comuna": "",
+      "city": ""
     }
   ],
   "detailsOrders": [

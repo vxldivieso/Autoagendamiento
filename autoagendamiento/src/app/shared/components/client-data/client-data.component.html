@@ -1,41 +1,42 @@
 
 <h1 class="text-center">Verifica que tus datos de contacto estén correctos</h1>
-<div class="row g-3">
+<div class="row g-3"  *ngFor="let client of clients" >
+    
     <!--Nombre-->
-    <mat-form-field class="col-md-6"  appearance="fill">
-    <mat-label for="firstName" class="form-label">Nombre</mat-label>
-    <input matInput type="text" id="firstName" disabled>
+    <mat-form-field class="col-md-6" appearance="fill" >
+        <mat-label for="firstName" class="form-label">Nombre</mat-label>
+        <input matInput type="text" name="" id="firstName" disabled>{{client.name}}
     </mat-form-field>
     <!--Apellido-->
     <mat-form-field class="col-md-6"  appearance="fill">
-    <mat-label for="lastName" class="form-label">Apellido</mat-label>
-    <input matInput type="text" id="lastName" disabled>
+        <mat-label for="lastName" class="form-label">Apellido</mat-label>
+        <input matInput type="text" id="lastName" disabled> {{client.lastname}}
     </mat-form-field>
     <!--Rut-->
     <mat-form-field class="col-md-6"  appearance="fill">
-    <mat-label for="rut" class="form-label">Rut</mat-label>
-    <input matInput type="text" id="rut" disabled>
+        <mat-label for="rut" class="form-label">Rut</mat-label>
+        <input matInput type="text" id="rut" disabled>{{client.rut}}
     </mat-form-field>
     <!--Email-->
     <mat-form-field class="col-md-6"  appearance="fill">
-    <mat-label for="email" class="form-label">Email </mat-label>
-    <input formControlName="secondCtrl" matInput type="email" id="email" placeholder="nombre@ejemplo.com" required>
-    <div class="invalid-feedback">
-        Por favor, ingresa un email válido.
-    </div>
+        <mat-label for="email" class="form-label">Email </mat-label>
+        <input formControlName="secondCtrl" matInput type="email" id="email" placeholder="nombre@ejemplo.com" required>{{client.email}}
+        <div class="invalid-feedback">
+            Por favor, ingresa un email válido.
+        </div>
     </mat-form-field>
     <!--Telefono-->
     <mat-form-field class="col-md-6"  appearance="fill">
-    <mat-label for="phone" class="form-label">Telefono </mat-label>
-    <input matInput type="phone" id="phone" placeholder="99999XXX" required>
-    <div class="invalid-feedback">
-        Por favor, ingresa un teléfono válido.
-    </div>
+        <mat-label for="phone" class="form-label">Telefono </mat-label>
+        <input matInput type="phone" id="phone" placeholder="99999XXX" required>{{client.phone}}
+        <div class="invalid-feedback">
+            Por favor, ingresa un teléfono válido.
+        </div>
     </mat-form-field>
     <!--Direccion-->
     <mat-form-field class="col-md-6" appearance="fill">
     <mat-label for="address" class="form-label">Dirección</mat-label>
-    <input matInput type="text" id="address" placeholder="Calle #XXXX" required="">
+    <input matInput type="text" id="address" placeholder="Calle #XXXX" required="">{{client.direccion}}
     <div class="invalid-feedback">
         Por favor, ingresa tu dirección.
     </div>
@@ -441,3 +442,4 @@
     </select>
     --> 
 </div>
+
