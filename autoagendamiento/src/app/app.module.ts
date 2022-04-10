@@ -15,6 +15,8 @@ import { StepperComponent } from './pages/stepper/stepper.component';
 import { CUSTOM_ELEMENTS_SCHEMA }  from '@angular/core';
 import { RadiobuttonComponent } from './shared/components/radiobutton/radiobutton.component';
 import { ClientDataComponent } from './shared/components/client-data/client-data.component';
+import { SelectComponent } from './shared/components/select/select.component';
+import { DetailComponent } from './shared/components/detailOrder/detailOrder.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { ClientDataComponent } from './shared/components/client-data/client-data
     StepperComponent,
     RadiobuttonComponent,
     ClientDataComponent,
+    SelectComponent,
+    DetailComponent,
   ],
   imports: [
     BrowserModule,

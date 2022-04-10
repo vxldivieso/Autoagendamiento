@@ -133,8 +133,10 @@
     {
       "id": 1,
       "orderId": 1,
-      "quantity": 10,
-      "productName": "Product name"
+      "quantity": 1,
+      "productName": "Closet",
+      "servicio": "Armado",
+      "proveedor": "Ripley"
     }
   ]
 }

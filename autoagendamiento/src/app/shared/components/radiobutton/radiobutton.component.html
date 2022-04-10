@@ -1,5 +1,5 @@
-<mat-radio-group class="form-check-inline" >
-  <h1 class="text-center">¿El producto está en sus manos?</h1>
+<mat-radio-group>
+  <h1 class="w-100">¿El producto está en sus manos?</h1>
     <div class="row g-3">
       <mat-radio-button value="Si" (change)="onTrueorFalse(false)">
         Sí
@@ -9,5 +9,24 @@
         No
       </mat-radio-button>
     </div>
-
 </mat-radio-group>
+
+<!--Hideform no-->
+
+<div class="container" *ngIf="" >
+  <p>Ingresar la fecha en la que debería haber llegado tu producto</p>
+  <scheduling></scheduling>
+    <p>Te contactaremos.</p>
+  <button type="submit" class="btn btn-warning">Enviar</button>
+</div>
+
+<!--Hideform si-->
+<br>
+<div class="container" *ngIf="">
+  <detail-order></detail-order>
+  <p>Puedes modificar si crees que hay un error, te contactaremos para verificar la información.</p>
+  <p>Si está todo correcto, presiona el botón 'Siguiente'</p>
+</div>
+
+
+
