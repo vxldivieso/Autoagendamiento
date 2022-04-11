@@ -14,6 +14,7 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./stepper.component.scss'],
 })
 export class StepperComponent {
+  
   isEditable = false;
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],

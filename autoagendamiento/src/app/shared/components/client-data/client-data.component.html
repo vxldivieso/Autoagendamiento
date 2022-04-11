@@ -1,6 +1,6 @@
 
 <h1 class="text-center">Verifica que tus datos de contacto estén correctos</h1>
-<div class="row"  *ngFor="let client of clients" >
+<div class="row" *ngFor="let client of clients" >
     <!--Nombre-->
     <mat-form-field class="col-md-6" appearance="fill" >
         <mat-label for="firstName" class="form-label">Nombre</mat-label>
@@ -19,7 +19,7 @@
     <!--Email-->
     <mat-form-field class="col-md-6"  appearance="fill">
         <mat-label for="email" class="form-label">Email </mat-label>
-        <input formControlName="secondCtrl" matInput type="email" id="email" placeholder="nombre@ejemplo.com" required>{{client.email}}
+        <input formControlName="secondCtrl" matInput type="email" id="email" placeholder="nombre@ejemplo.com">{{client.email}}
         <div class="invalid-feedback">
             Por favor, ingresa un email válido.
         </div>

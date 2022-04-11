@@ -3,7 +3,7 @@
 
 <div class="container w-75">
   <mat-stepper class="example-stepper" color="accent" [orientation]="(stepperOrientation | async)!"  >
-    <!--Verificar el producto RADIOBUTTON-->
+    <!--Verificar el producto-->
     <mat-step  [stepControl]="firstFormGroup" label="Verifica tu Producto" >
       <form [formGroup]="firstFormGroup">
         <div class="container w-75">
@@ -36,9 +36,12 @@
           <scheduling></scheduling>
         </div>
         <br>
-        <div>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
           <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
-          <button type="button" class="btn btn-info" matStepperNext>Enviar</button>
+          <button type="button" class="btn btn-info" matStepperNext>Agendar</button>
+          <button type="button" class="btn btn-secondary" >No encuentro disponibilidad que me acomode</button>
+          <button type="button" class="btn btn-secondary" >Necesito que me contacte un ejecutivo</button>
+          <button type="button" class="btn btn-secondary" >Deseo agendar en otro momento</button>
         </div>
       </form>
     </mat-step>
