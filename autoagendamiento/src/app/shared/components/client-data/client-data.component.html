@@ -1,6 +1,5 @@
 
-<h1 class="text-center">Verifica que tus datos de contacto estén correctos</h1>
-<div class="row" *ngFor="let client of clients" >
+<div class="row text-center" *ngFor="let client of clients" >
     <!--Nombre-->
     <mat-form-field class="col-md-6" appearance="fill" >
         <mat-label for="firstName" class="form-label">Nombre</mat-label>
@@ -19,7 +18,7 @@
     <!--Email-->
     <mat-form-field class="col-md-6"  appearance="fill">
         <mat-label for="email" class="form-label">Email </mat-label>
-        <input formControlName="secondCtrl" matInput type="email" id="email" placeholder="nombre@ejemplo.com">{{client.email}}
+        <input matInput type="email" id="email" placeholder="nombre@ejemplo.com" disabled>{{client.email}}
         <div class="invalid-feedback">
             Por favor, ingresa un email válido.
         </div>
@@ -27,7 +26,11 @@
     <!--Telefono-->
     <mat-form-field class="col-md-6"  appearance="fill">
         <mat-label for="phone" class="form-label">Telefono </mat-label>
-        <input matInput type="phone" id="phone" placeholder="99999XXX" required>{{client.phone}}
+        <input matInput type="phone" id="phone" placeholder="99999XXX" required disabled>{{client.phone}}
+    </mat-form-field>
+    <mat-form-field class="col-md-6"  appearance="fill">
+        <mat-label for="phone" class="form-label">Telefono 2 </mat-label>
+        <input matInput type="phone" id="phone" placeholder="Puedes agregar un telefono extra" >{{client.phone2}}
         <div class="invalid-feedback">
             Por favor, ingresa un teléfono válido.
         </div>
@@ -35,11 +38,13 @@
     <!--Direccion-->
     <mat-form-field class="col-md-6" appearance="fill">
         <mat-label for="address" class="form-label">Dirección</mat-label>
-        <input matInput type="text" id="address" placeholder="Calle #XXXX, Comuna" required="">{{client.direccion}}
-    <div class="invalid-feedback">
-        Por favor, ingresa tu dirección.
-    </div>
+        <input matInput type="text" id="address" placeholder="Calle #XXXX, Comuna" required="" disabled="">{{client.direccion}}
+    
     </mat-form-field>
-    <select-region></select-region>
+    <mat-form-field class="col-md-6" appearance="fill">
+        <mat-label for="address" class="form-label">Comuna - Ciudad</mat-label>
+        <input matInput type="text" id="address" placeholder="Comuna" required="" disabled="">{{client.comuna}} - {{client.city}}
+    
+    </mat-form-field>
 </div>
 

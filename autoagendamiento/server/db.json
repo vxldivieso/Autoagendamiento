@@ -122,11 +122,12 @@
       "name": "Maria",
       "lastname": "Lopez",
       "rut": "139957530",
-      "email":"",
-      "phone": "",
-      "direccion": "",
-      "comuna": "",
-      "city": ""
+      "email":"marialopez@gmail.com",
+      "phone": "+56951944848",
+      "phone2": "",
+      "direccion": "Calle los alamos 1548",
+      "comuna": "Puente Alto",
+      "city": "Santiago"
     }
   ],
   "detailsOrders": [

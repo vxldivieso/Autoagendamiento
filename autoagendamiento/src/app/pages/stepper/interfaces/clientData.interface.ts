@@ -5,6 +5,7 @@ export interface ClientData{
     rut: string;
     email: string;
     phone: number;
+    phone2:number;
     direccion: string;
     comuna: string;
     city: string;

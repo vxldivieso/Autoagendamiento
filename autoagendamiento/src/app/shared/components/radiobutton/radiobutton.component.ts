@@ -6,14 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./radiobutton.component.scss']
 })
 export class RadiobuttonComponent implements OnInit {
-
+  isTrue = false;
   constructor() { }
 
   ngOnInit(): void {
   }
 
   onTrueorFalse(value: boolean): void{
-    console.log(value);
+    this.isTrue = value;
   }
 
 }
