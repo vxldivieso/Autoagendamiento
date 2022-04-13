@@ -1,18 +1,24 @@
 <!--Radiobutton - answer if the client have the product or no-->
-<div class="py-2 text-center">
-  <p >¿El producto está en sus manos?</p>
-  <mat-radio-group color="primary">
-    <mat-radio-button value="Si" (change)="onTrueorFalse(false)" checked>
-      Sí
-    </mat-radio-button>
-    <mat-radio-button value="No"(change)="onTrueorFalse(true)">
-      No
-    </mat-radio-button>
-  </mat-radio-group>
-</div>
+<!--if the service is "Despacho" this check doesn´t have to show to the user -->
+<ng-container>
+  <div class="py-2 text-center" >
+    <p >¿El producto está en sus manos?</p>
+    <mat-radio-group color="primary">
+      <mat-radio-button value="Si" (change)="onTrueorFalse(false)" checked>
+        Sí
+      </mat-radio-button>
+      <mat-radio-button value="No"(change)="onTrueorFalse(true)">
+        No
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+</ng-container>
+
+
 
 
 <!--Hideform no-->
+<!--Aquí se debe mostrar de igual forma el form de abajo-->
 
 <ng-container *ngIf="isTrue ; else showProductData">
   <div class="container py-2 text-center" >
@@ -21,7 +27,7 @@
         <p >Ingresar la fecha en la que debería haber llegado tu producto</p>
       </div>
       <div class="col">
-        <scheduling></scheduling>
+        <datepicker></datepicker>
       </div>
     </div>
   </div>
@@ -32,14 +38,8 @@
 <!--Hideform si-->
 
 <ng-template #showProductData>
-  <div class="container"  >
+  <div class="container">
     <detail-order></detail-order>
-    <!--
-    <div class="alert alert-info d-flex align-items-center" role="alert">
-      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
-      <div>Puedes modificar el producto y/o el servicio si crees que hay un error, te contactaremos para verificar la información.</div>
-    </div>
-    -->
     <p >Si está todo correcto, presione el botón 'Continuar'</p>
   </div>
 </ng-template>

@@ -9,7 +9,7 @@ import { MatInputModule } from "@angular/material/input";
 import {MatRadioModule} from "@angular/material/radio"
 import { MatNativeDateModule } from "@angular/material/core";
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
@@ -23,7 +23,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
         MatInputModule,
         MatRadioModule,
         MatNativeDateModule,
-        MatDatepickerModule
+        MatDatepickerModule,
+        MatDialogModule
     ]
 })
 

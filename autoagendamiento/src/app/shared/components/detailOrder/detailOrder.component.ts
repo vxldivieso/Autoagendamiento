@@ -4,6 +4,9 @@ import { tap } from 'rxjs';
 import { DetailOrder } from './interfaces/detail.interface';
 import { DetailOrderService } from './service/detail.service';
 
+import { EditproductComponent } from 'src/app/shared/components/editproduct/editproduct.component';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 @Component({
   selector: 'detail-order',
   templateUrl: './detailOrder.component.html',
@@ -23,3 +26,6 @@ export class DetailComponent implements OnInit {
   }
 
 }
+
+
+

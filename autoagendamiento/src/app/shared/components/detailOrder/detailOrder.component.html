@@ -12,7 +12,8 @@
     <!--Nombre producto-->
     <mat-form-field class="col-md-6 text-center" appearance="fill" >
         <mat-label for="productName" class="form-label">Producto</mat-label>
-        <input matInput type="text" name="" id="productName">{{detail.productName}}
+        <input matInput type="text" name="" id="productName" disabled>{{detail.productName}}
+        <button type="button" class="btn btn-info">Editar</button>
     </mat-form-field>
     <!--Proveedor-->
     <mat-form-field class="col-md-6 text-center" appearance="fill" >
@@ -22,6 +23,10 @@
     <!--Servicio-->
     <mat-form-field class="col-md-12 text-center" appearance="fill" >
         <mat-label for="servicio" class="form-label">Tipo Servicio</mat-label>
-        <input matInput type="text" name="" id="servicio">{{detail.servicio}}
+        <input matInput type="text" name="" id="servicio" disabled>{{detail.servicio}}
+        <button type="button" class="btn btn-info">Editar</button>
     </mat-form-field>
 </div>
+
+
+

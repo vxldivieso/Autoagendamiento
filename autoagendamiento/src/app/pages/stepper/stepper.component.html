@@ -5,19 +5,22 @@
   <mat-stepper class="example-stepper" color="primary" [orientation]="(stepperOrientation | async)!"  >
     <!--Verificar el producto-->
     <mat-step  [stepControl]="firstFormGroup" label="Verifica tu Producto" >
+
       <form [formGroup]="firstFormGroup">
         <div class="py-2 text-center">
           <h2>Corrobore los datos del producto</h2>
         </div>
-        <radiobutton></radiobutton>
+        <checkoutproduct></checkoutproduct>
         <div class="container">
           <button type="button" class="btn btn-info" matStepperNext>Continuar</button>
         </div>
       </form>
+
     </mat-step>
 
     <!--Verifica los datos del Cliente-->
     <mat-step [stepControl]="secondFormGroup" label="Confirma tus datos" >
+
       <form [formGroup]="secondFormGroup">
         <div class="py-2 text-center">
           <h2>Corrobore sus datos</h2>
@@ -26,9 +29,11 @@
           <client-data></client-data>
         </div>
       </form>
+
       <h4>Si está todo en orden, presiona siguiente. Si crees que hay un error, presiona el botón 'Los datos son incorrectos'.</h4>
+      
+      
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-        
         <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
         <button type="button" class="btn btn-info" matStepperNext>Siguiente</button>
         <button type="button" class="btn btn-danger" >Los datos son incorrectos</button>
@@ -37,14 +42,16 @@
 
     <!--Seleccion de un horario-->
     <mat-step [stepControl]="thirdFormGroup" label="Selección de horario">
+
       <form [formGroup]="thirdFormGroup">
         <div class="py-2 text-center">
-          <h2>Seleccione el horario y bloque para la visita del técnico</h2>
+          <h2>Seleccione el horario y bloque</h2>
         </div>
         <div>
           <scheduling></scheduling>
         </div>
         <br>
+
         <div class="d-grid gap-2 d-sm-flex justify-content-md-center mb-2">
           <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
           <button type="button" class="btn btn-info" matStepperNext>Agendar</button>
@@ -55,23 +62,16 @@
           <button type="button" class="btn btn-secondary" >Deseo agendar en otro momento</button>
         </div>
       </form>
+
     </mat-step>
 
     <!--Done-->
-    <mat-step>
-      <ng-template matStepLabel>Listo</ng-template>
-      <div class="px-4 pt-5 my-5 text-center border-bottom">
-        <h1 class="display-4 fw-bold">Le enviaremos un correo con la información de la visita.</h1>
-        <div class="col-lg-6 mx-auto">
-          <p class="lead mb-4">Recuerda que puedes contactarte con nosotros en caso de querer modificar los datos del servicio.</p>
-        </div>
-      </div>
-      <div class="d-grid gap-4 d-sm-flex justify-content-sm-center mb-5">
-        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Contáctanos</button>
-      </div>
+    <mat-step  label="Listo">
+      <app-end-process></app-end-process>
       <div>
-        <button type="button" class="btn btn-info" submit>Cerrar</button>
+        <button type="button" class="btn btn-info btn-lg px-4" submit>Cerrar</button>
       </div>
     </mat-step>
+    <!--End-->
   </mat-stepper>
 </div>
