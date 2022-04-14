@@ -1,0 +1,10 @@
+<div mat-dialog-content>
+    <mat-form-field class="col-sm-12 col-md-12" appearance="fill">
+      <mat-label>Seleccione el tipo de Servicio contratado</mat-label>
+      <input matInput disabled> <select-service></select-service>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cerrar</button>
+    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Guardar cambios</button>
+</div>

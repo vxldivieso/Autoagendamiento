@@ -10,6 +10,7 @@ import {MatRadioModule} from "@angular/material/radio"
 import { MatNativeDateModule } from "@angular/material/core";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatRadioModule,
         MatNativeDateModule,
         MatDatepickerModule,
-        MatDialogModule
+        MatDialogModule,
+        MatButtonModule
     ]
 })
 

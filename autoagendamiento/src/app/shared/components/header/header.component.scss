@@ -1,20 +1,13 @@
-header{
+nav{
     font-family: 'Cerebri Sans', sans-serif;
+    margin-bottom: 0;
 }
-span{
-    font-size: small;
-}
-.fs-4 {
-    font-size: calc(1.100rem + .3vw)!important;
-}
-
 *, ::after, ::before {
     box-sizing: border-box;
 }
 img{
     margin-right: 10px;
 }
-
 .d-flex {
     display: flex!important;
 }
@@ -22,7 +15,6 @@ img{
     display: block;
     padding: 0.5rem 1rem;
     font-size: large;
-    
     text-decoration: none;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
 }
@@ -30,7 +22,7 @@ img{
     color: #797979;
 }
 .link-dark {
-    color: #212529;
+    color: white;
 }
 .px-2 {
     padding-right: 0.5rem!important;

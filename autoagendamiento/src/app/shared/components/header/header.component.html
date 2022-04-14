@@ -1,14 +1,11 @@
-
-
-<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" *ngFor="let client of clients">
-  <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-    <img src="https://maydayservicios.cl/wp-content/uploads/2019/05/Logo_Mayday0.png" alt="" 
-        width="50" class="d-inline-block align-text-center"> 
-        <span class="fs-4">Hola, {{client.name}} {{client.lastname}}!</span>
-  </a>
-
-  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-    <li><a href="" class="nav-link px-2 link-dark text-uppercase">Agendamiento</a></li>
-  </ul>
-
-</header>
+<nav class="navbar navbar-dark bg-dark d-flex flex-wrap py-3 mb-4" *ngFor="let client of clients">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img src="https://maydayservicios.cl/wp-content/uploads/2019/05/Logo_Mayday0.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+      Hola, {{client.name}} {{client.lastname}}!
+    </a>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 ">
+      <li><a href="" class="nav-link px-2 link-dark text-uppercase">Agendamiento</a></li>
+    </ul>
+  </div>
+</nav>
