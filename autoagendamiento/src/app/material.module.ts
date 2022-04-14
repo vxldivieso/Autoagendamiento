@@ -26,7 +26,8 @@ import {MatButtonModule} from '@angular/material/button';
         MatNativeDateModule,
         MatDatepickerModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        
     ]
 })
 

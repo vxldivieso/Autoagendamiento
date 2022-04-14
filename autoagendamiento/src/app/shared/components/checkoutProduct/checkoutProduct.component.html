@@ -14,29 +14,30 @@
   </div>
 </ng-container>
 
-
-
-
 <!--Hideform no-->
 <!--Aquí se debe mostrar de igual forma el form de abajo-->
 
-<ng-container *ngIf="isTrue ; else showProductData">
-  <div class="container py-2 text-center" >
-    <div class="row">
-      <div class="col">
+<ng-container *ngIf="isTrue then showCalendar else showProductData" >
+</ng-container>
+<ng-template #showCalendar>
+  <div class="container w-75 py-4 justify-content-center align-items-center " >
+    <div class="row justify-content-center py-3 mb-md-0 border-top border-bottom">
+      <div class="col-md-4 py-2 ">
         <p >Ingresar la fecha en la que debería haber llegado tu producto</p>
       </div>
-      <div class="col">
+      <div class="col-md-4 ">
         <datepicker></datepicker>
+      </div>
+      <div class="col-md-4 py-2">
+        <button mat-raised-button color="primary">Guardar fecha</button>
       </div>
     </div>
   </div>
-</ng-container>
-
-
+</ng-template>
 
 <!--Hideform si-->
-
+<ng-container *ngIf="isFalse then showProductData">
+</ng-container>
 <ng-template #showProductData>
   <div class="container">
     <detail-order></detail-order>

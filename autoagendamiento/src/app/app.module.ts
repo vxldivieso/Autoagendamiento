@@ -48,6 +48,7 @@ import { EndProcessComponent } from './shared/components/end-process/end-process
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgModule
   ],
   providers: [],
   schemas:[ CUSTOM_ELEMENTS_SCHEMA ],

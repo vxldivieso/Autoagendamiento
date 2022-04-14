@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutProductComponent implements OnInit {
   isTrue = false;
+  isFalse = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -14,6 +15,7 @@ export class CheckoutProductComponent implements OnInit {
 
   onTrueorFalse(value: boolean): void{
     this.isTrue = value;
+    this.isFalse = value;
   }
 
 }

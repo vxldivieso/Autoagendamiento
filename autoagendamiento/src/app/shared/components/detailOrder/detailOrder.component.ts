@@ -144,7 +144,7 @@ interface Servicios {
 }
 @Component({
   selector: 'select-service',
-  template: `<mat-label>Servicio</mat-label>
+  template: `
   <mat-select>
     <mat-option *ngFor="let service of services" [value]="service.viewValue" >
       {{service.viewValue}}
