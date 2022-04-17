@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'datepicker',
-  template: `<mat-form-field color="primary" appearance="fill">
+  template: `<mat-form-field color="accent" appearance="fill">
   <mat-label>Seleccione una fecha</mat-label>
   <input matInput [matDatepicker]="picker1">
   <mat-hint>MM/DD/AAAA</mat-hint>

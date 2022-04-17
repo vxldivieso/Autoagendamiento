@@ -1,7 +1,7 @@
 
 <!--Stepper-->
 
-<div class="container w-75">
+<div class="container ">
   <mat-stepper class="example-stepper" color="primary" [orientation]="(stepperOrientation | async)!"  >
     <!--Verificar el producto-->
     <mat-step  [stepControl]="firstFormGroup" label="Verifica tu Producto" >
@@ -12,7 +12,7 @@
         </div>
         <checkoutproduct></checkoutproduct>
         <div class="container">
-          <button type="button" class="btn btn-info" matStepperNext>Continuar</button>
+          <button mat-raised-button color="primary" matStepperNext>Continuar</button>
         </div>
       </form>
 
@@ -35,8 +35,8 @@
       
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
         <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
-        <button type="button" class="btn btn-info" matStepperNext>Siguiente</button>
-        <button type="button" class="btn btn-danger" [routerLink]="['contact']" >Los datos son incorrectos</button>
+        <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+        <button mat-raised-button color="warn" [routerLink]="['contact']" >Los datos son incorrectos</button>
       </div>
     </mat-step>
 
@@ -54,12 +54,12 @@
 
         <div class="d-grid gap-2 d-sm-flex justify-content-md-center mb-2">
           <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
-          <button type="button" class="btn btn-info" matStepperNext>Agendar</button>
+          <button mat-raised-button color="primary" matStepperNext>Agendar</button>
         </div>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-          <button type="button" class="btn btn-secondary" >No encuentro disponibilidad que me acomode</button>
-          <button type="button" class="btn btn-secondary" >Necesito que me contacte un ejecutivo</button>
-          <button type="button" class="btn btn-secondary" >Deseo agendar en otro momento</button>
+          <button mat-raised-button color="accent" >No encuentro disponibilidad que me acomode</button>
+          <button mat-raised-button color="accent" >Necesito que me contacte un ejecutivo</button>
+          <button mat-raised-button color="accent" >Deseo agendar en otro momento</button>
         </div>
       </form>
 
@@ -69,7 +69,7 @@
     <mat-step  label="Listo">
       <app-end-process></app-end-process>
       <div>
-        <button type="button" class="btn btn-info btn-lg px-4" submit>Cerrar</button>
+        <button mat-raised-button color="primary" submit>Cerrar</button>
       </div>
     </mat-step>
     <!--End-->

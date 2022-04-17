@@ -1,13 +1,13 @@
-<div class="row" *ngFor="let detail of details">
+<div class="row" *ngFor="let detail of details" >
     <!--Orden ID-->
     <mat-form-field class="col-md-6 text-center" appearance="fill" >
         <mat-label for="orderId" class="form-label">ID Orden</mat-label>
         <input matInput type="text" name="" id="orderId" disabled>{{detail.orderId}}
     </mat-form-field>
     <!--Cantidad-->
-    <mat-form-field class="col-md-6 text-center" appearance="fill" >
-        <mat-label for="quantity" class="form-label">Cantidad</mat-label>
-        <input matInput type="text" name="" id="quantity" disabled >{{detail.quantity}}
+    <mat-form-field class="col-md-6 text-center"  appearance="fill" >
+        <mat-label  for="quantity" class="form-label">Cantidad</mat-label>
+        <input  matInput type="text" name="" id="quantity" disabled >{{detail.quantity}}
     </mat-form-field>
     <!--Nombre producto-->
     <mat-form-field class="col-md-6 text-center" appearance="fill" >
