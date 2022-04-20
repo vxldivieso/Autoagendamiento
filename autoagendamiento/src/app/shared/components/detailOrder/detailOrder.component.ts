@@ -64,7 +64,7 @@ export class EditProductComponent implements OnInit{
 //Form edit product dialog
 @Component({
   selector: 'editproduct-dialog',
-  template: `<button mat-raised-button color="warn" (click)="openDialog()">Editar</button>`,
+  template: `<button mat-button (click)="openDialog()"><mat-icon>create</mat-icon></button>`,
 })
 export class EditProductDialog{
   constructor(private dialog: MatDialog ){}
@@ -114,7 +114,7 @@ export class EditServiceComponent implements OnInit{
 
 @Component({
   selector: 'editservice-dialog',
-  template: `<button mat-raised-button color="warn" (click)="openDialog()">Editar</button>`,
+  template: `<button mat-button (click)="openDialog()"><mat-icon>create</mat-icon></button>`,
 })
 export class EditServiceDialog{
   constructor(private dialog: MatDialog ){}

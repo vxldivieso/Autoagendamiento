@@ -11,6 +11,7 @@ import { MatNativeDateModule } from "@angular/material/core";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {MatButtonModule} from '@angular/material/button';
         MatDatepickerModule,
         MatDialogModule,
         MatButtonModule,
+        MatSnackBarModule
         
     ]
 })

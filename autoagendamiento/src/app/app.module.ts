@@ -14,10 +14,11 @@ import { StepperComponent } from './pages/stepper/stepper.component';
 import { SchedulingComponent } from './shared/components/scheduling/scheduling.component';
 import { CheckoutProductComponent } from './shared/components/checkoutProduct/checkoutProduct.component';
 import { ClientDataComponent } from './shared/components/client-data/client-data.component';
-import { DatepickerComponent } from './shared/components/datepicker/datepicker.component';
+import { DateFormProduct, DatepickerComponent } from './shared/components/datepicker/datepicker.component';
 import { EndProcessComponent } from './shared/components/end-process/end-process.component';
 import { DetailComponent, EditProductComponent, EditProductDialog, EditServiceComponent, EditServiceDialog} from './shared/components/detailOrder/detailOrder.component';
 import { AgGridModule } from 'ag-grid-angular';
+
 //I keep the new line
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AgGridModule } from 'ag-grid-angular';
     EditProductComponent,
     EditProductDialog,
     EditServiceComponent,
-    EditServiceDialog
+    EditServiceDialog,
+    DateFormProduct
   ],
   imports: [
     CommonModule,

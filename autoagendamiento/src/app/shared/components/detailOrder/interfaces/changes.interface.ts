@@ -10,3 +10,8 @@ export interface changeService{
     name: string;
     img: string;
 }
+
+export interface dateProduct{
+    id: number;
+    date: string;
+}

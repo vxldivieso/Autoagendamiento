@@ -3,7 +3,7 @@
 <ng-container>
   <div class="py-2 text-center" >
     <p >¿El producto está en sus manos?</p>
-    <mat-radio-group color="accent">
+    <mat-radio-group color="warn">
       <mat-radio-button value="Si" (change)="onTrueorFalse(false)" checked>
         Sí
       </mat-radio-button>
@@ -21,17 +21,7 @@
 </ng-container>
 <ng-template #showCalendar>
   <div class="container w-75 py-4 justify-content-center align-items-center " >
-    <div class="row justify-content-center py-3 mb-md-0 border-top border-bottom">
-      <div class="col-md-4 py-2 ">
-        <p >Ingresar la fecha en la que debería haber llegado tu producto</p>
-      </div>
-      <div class="col-md-4 ">
-        <datepicker></datepicker>
-      </div>
-      <div class="col-md-4 py-2">
-        <button mat-raised-button color="warn">Guardar fecha</button>
-      </div>
-    </div>
+        <dateProduct></dateProduct>
   </div>
 </ng-template>
 

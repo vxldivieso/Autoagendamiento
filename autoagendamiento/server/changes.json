@@ -18,5 +18,15 @@
       "selectService": "Instalación",
       "id": 1
     }
+  ],
+  "dateProduct": [
+    {
+      "dateProduct": "2022-04-12T04:00:00.000Z",
+      "id": 1
+    },
+    {
+      "dateProduct": "2022-04-11T04:00:00.000Z",
+      "id": 2
+    }
   ]
 }

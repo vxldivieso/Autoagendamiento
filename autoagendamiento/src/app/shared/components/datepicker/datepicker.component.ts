@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DateService } from '../detailOrder/service/detail.service';
 
 @Component({
   selector: 'datepicker',
-  template: `<mat-form-field color="accent" appearance="fill">
-  <mat-label>Seleccione una fecha</mat-label>
-  <input matInput [matDatepicker]="picker1">
-  <mat-hint>MM/DD/AAAA</mat-hint>
-  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-  <mat-datepicker #picker1></mat-datepicker>
-</mat-form-field>`,
+  template: ``,
   styleUrls: ['./datepicker.component.scss']
 })
 export class DatepickerComponent{
@@ -19,4 +15,34 @@ export class DatepickerComponent{
     return day !== 0 && day !== 6;
   };
 
+}
+
+@Component({
+  selector:'dateProduct',
+  templateUrl: './datepicker.component.html',
+})
+export class DateFormProduct{
+  dateProductForm !: FormGroup;
+  constructor(private formBuilder: FormBuilder, 
+    private api: DateService){}
+  
+  ngOnInit(): void {
+    this.dateProductForm = this.formBuilder.group({
+      dateProduct: ['',Validators.required],
+    })
+  }
+
+  onSubmit(): void{
+    if(this.dateProductForm.valid){
+      this.api.postDateProduct(this.dateProductForm.value)
+      .subscribe({
+        next:(res)=>{
+          alert("Modificación enviada exitosamente")
+        },
+        error: () =>{
+          alert("Error al enviar modificación")
+        }
+      })
+    }
+  }
 }
