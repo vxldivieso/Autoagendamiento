@@ -1,18 +1,27 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Scheduling } from "../interfaces/scheduling.interface";
+
+interface Scheduling{
+    bloque1: string;
+    bloque2: string;
+    bloque3: string;
+    bloque4: string;
+
+}
 
 @Injectable({
     providedIn:'root'
 })
-
 export class SchedulingService{
+    private apiURL='http://localhost:5000';
+    
     constructor(private http: HttpClient){
 
     }
-
-    public getScheduling(): Observable<any>{
-        return this.http.get("http://localhost:5000/")
+    getScheduling():Observable<Scheduling[]>{
+        return this.http.get<Scheduling[]>(`${this.apiURL}/dates`);
     }
+
+
 }

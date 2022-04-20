@@ -6,3 +6,8 @@ export interface DetailOrder{
     servicio: string;
     proveedor: string;
 }
+
+export interface Services{
+    id: number;
+    name: string;
+}

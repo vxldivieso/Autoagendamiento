@@ -1,31 +1,32 @@
-<div class="row" *ngFor="let detail of details" >
+<div class="row" *ngFor="let detailOrder of detailsOrder" >
     <!--Orden ID-->
     <mat-form-field class="col-md-6 text-center" appearance="fill" >
         <mat-label for="orderId" class="form-label">ID Orden</mat-label>
-        <input matInput type="text" name="" id="orderId" disabled>{{detail.orderId}}
+        <input matInput type="text" name="" id="orderId" disabled>{{detailOrder.orderId}}
     </mat-form-field>
     <!--Cantidad-->
     <mat-form-field class="col-md-6 text-center"  appearance="fill" >
         <mat-label  for="quantity" class="form-label">Cantidad</mat-label>
-        <input  matInput type="text" name="" id="quantity" disabled >{{detail.quantity}}
+        <input matInput type="text" name="" id="quantity" disabled > {{detailOrder.quantity}}
     </mat-form-field>
     <!--Nombre producto-->
     <mat-form-field class="col-md-6 text-center" appearance="fill" >
         <mat-label for="productName" class="form-label">Producto</mat-label>
-        <input matInput type="text" name="" id="productName" disabled>{{detail.productName}}
-         <!--Boton Edit Product-->
-        <app-editproduct></app-editproduct>
+        <input matInput type="text" name="" id="productName" disabled>{{detailOrder.productName}}
+        <editproduct-dialog></editproduct-dialog>
+        
     </mat-form-field>
     <!--Proveedor-->
     <mat-form-field class="col-md-6 text-center" appearance="fill" >
         <mat-label for="proveedor" class="form-label">Proveedor</mat-label>
-        <input matInput type="text" name="" id="proveedor" disabled >{{detail.proveedor}}
+        <input matInput type="text" name="" id="proveedor" disabled >{{detailOrder.proveedor}}
     </mat-form-field>
     <!--Servicio-->
     <mat-form-field class="col-md-12 text-center" appearance="fill" >
         <mat-label for="servicio" class="form-label">Tipo Servicio</mat-label>
-        <input matInput type="text" name="" id="servicio" disabled>{{detail.servicio}}
-        <!--Boton Edit Service-->
-        <app-editservice></app-editservice>
+        <input matInput type="text" name="" id="servicio" disabled>{{detailOrder.servicio}}
+        <editservice-dialog></editservice-dialog>
     </mat-form-field>
 </div>
+
+  

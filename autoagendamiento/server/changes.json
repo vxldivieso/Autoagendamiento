@@ -1,0 +1,22 @@
+{
+  "editProduct": [
+    {
+      "nameProduct": "Futón Americano",
+      "skuProduct": "f23424FSSS",
+      "img": "C:\\fakepath\\Logo.jpg",
+      "id": 1
+    },
+    {
+      "nameProduct": "Futón ",
+      "skuProduct": "hhgjdh3223",
+      "img": "C:\\fakepath\\Logo.jpg",
+      "id": 2
+    }
+  ],
+  "editService": [
+    {
+      "selectService": "Instalación",
+      "id": 1
+    }
+  ]
+}

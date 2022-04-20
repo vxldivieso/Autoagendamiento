@@ -43,7 +43,7 @@
     },
     {
       "id": 2,
-      "name": "Instalacion"
+      "name": "Instalación"
     },
     {
       "id": 3,
@@ -122,7 +122,7 @@
       "name": "Maria",
       "lastname": "Lopez",
       "rut": "139957530",
-      "email":"marialopez@gmail.com",
+      "email": "marialopez@gmail.com",
       "phone": "+56951944848",
       "phone2": "",
       "direccion": "Calle los alamos 1548",
