@@ -11,10 +11,8 @@ export class SchedulingService{
     constructor(private http: HttpClient){
 
     }
-    getScheduling(){
+    getScheduling(): Observable<any>{
         return this.http.get<any>(`${this.apiURL}/dates`);
     }
-
-
 
 }

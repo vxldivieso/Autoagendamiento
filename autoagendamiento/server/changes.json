@@ -11,13 +11,28 @@
       "skuProduct": "hhgjdh3223",
       "img": "C:\\fakepath\\Logo.jpg",
       "id": 2
+    },
+    {
+      "nameProduct": "Mesa",
+      "skuProduct": "sfsdferwe",
+      "img": "C:\\fakepath\\Captura.PNG",
+      "id": 3
+    },
+    {
+      "nameProduct": "Closet Americano ",
+      "skuProduct": "54asd54w1",
+      "img": "C:\\fakepath\\Captura.PNG",
+      "id": 4
+    },
+    {
+      "nameProduct": "",
+      "skuProduct": "",
+      "img": "",
+      "id": 5
     }
   ],
   "editService": [
-    {
-      "selectService": "Instalación",
-      "id": 1
-    }
+    {}
   ],
   "dateProduct": [
     {

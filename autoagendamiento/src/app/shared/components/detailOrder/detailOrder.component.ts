@@ -1,9 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { switchMap, tap } from 'rxjs';
 import { DetailOrder, Services } from './interfaces/detail.interface';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { DetailOrderService, ModifyProductService, ModifyService } from './service/detail.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 //DetailOrder
 @Component({
   selector: 'detail-order',
@@ -12,14 +15,26 @@ import { DetailOrderService, ModifyProductService, ModifyService } from './servi
 })
 export class DetailComponent implements OnInit {
   detailsOrder!: DetailOrder[];
+  displayedColumns : string[] = ['orderId', 'quantity', 'productName','servicio','proveedor'];
+  dataSource!: MatTableDataSource<any>;
 
+  @ViewChild(MatPaginator) paginator!:MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  
   constructor(private detailOrderSvc: DetailOrderService) { }
   ngOnInit(): void {
+    this.getCalendario();
+  }
+  getCalendario(){
     this.detailOrderSvc.getDetailOrder()
-    .pipe(
-      tap((detailOrder: DetailOrder[]) => this.detailsOrder = detailOrder)
-    )
-    .subscribe()
+    .subscribe({
+      next:(res)=>{
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        console.log(res);
+      }
+    })
   }
 }
 
@@ -57,8 +72,6 @@ export class EditProductComponent implements OnInit{
     }
   }
 
-  
-
 }
 
 //Form edit product dialog
@@ -90,8 +103,7 @@ export class EditServiceComponent implements OnInit{
   
   ngOnInit(): void {
     this.changeServiceForm = this.formBuilder.group({
-      selectService: ['', Validators.required],
-      img: ['',Validators.required]
+      selectService: ['', Validators.required]
     })
   }
 

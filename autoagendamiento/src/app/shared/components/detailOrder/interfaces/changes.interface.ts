@@ -8,7 +8,6 @@ export interface changeProduct{
 export interface changeService{
     id: number;
     name: string;
-    img: string;
 }
 
 export interface dateProduct{

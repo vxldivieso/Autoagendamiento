@@ -34,9 +34,9 @@ import { AgGridModule } from 'ag-grid-angular';
     DetailComponent,
     EditProductComponent,
     EditProductDialog,
+    DateFormProduct,
     EditServiceComponent,
-    EditServiceDialog,
-    DateFormProduct
+    EditServiceDialog
   ],
   imports: [
     CommonModule,

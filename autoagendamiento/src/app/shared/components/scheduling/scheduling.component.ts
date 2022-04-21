@@ -15,6 +15,7 @@ import { MatSort } from '@angular/material/sort';
 export class SchedulingComponent implements OnInit{
   displayedColumns : string[] = ['date','bloques']
   dataSource!: MatTableDataSource<any>;
+  objectkeys = (item:any) => {return Object.keys(item).filter(key=> {return key != "date"})};
 
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,9 +33,14 @@ export class SchedulingComponent implements OnInit{
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        console.log(res);
       }
     })
   }
+
+
+
+
 
 
 
