@@ -5,22 +5,21 @@
   <mat-stepper class="example-stepper" color="primary" [orientation]="(stepperOrientation | async)!"  >
     <!--Verificar el producto-->
     <mat-step  [stepControl]="firstFormGroup" label="Verifica tu Producto" >
-
       <form [formGroup]="firstFormGroup">
         <div class="py-2 text-center">
           <h2>Corrobore los datos del producto</h2>
         </div>
-        <checkoutproduct></checkoutproduct>
+        <div class="container py-2" >
+          <checkoutproduct></checkoutproduct>
+        </div>
         <div class="container">
           <button mat-raised-button color="primary" matStepperNext>Continuar</button>
         </div>
       </form>
-
     </mat-step>
 
     <!--Verifica los datos del Cliente-->
     <mat-step [stepControl]="secondFormGroup" label="Confirma tus datos" >
-
       <form [formGroup]="secondFormGroup">
         <div class="py-2 text-center">
           <h2>Corrobore sus datos</h2>
@@ -29,10 +28,7 @@
           <client-data></client-data>
         </div>
       </form>
-
       <h4>Si está todo en orden, presiona siguiente. Si crees que hay un error, presiona el botón 'Los datos son incorrectos'.</h4>
-      
-      
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
         <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
         <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
@@ -42,7 +38,6 @@
 
     <!--Seleccion de un horario-->
     <mat-step [stepControl]="thirdFormGroup" label="Selección de horario">
-
       <form [formGroup]="thirdFormGroup">
         <div class="py-2 text-center">
           <h2>Seleccione el horario y bloque</h2>
@@ -62,7 +57,6 @@
           <button mat-raised-button color="accent" >Deseo agendar en otro momento</button>
         </div>
       </form>
-
     </mat-step>
 
     <!--Done-->

@@ -12,8 +12,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
-
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatSort } from "@angular/material/sort";
+ 
 @NgModule({
     exports:[
         MatToolbarModule,
@@ -28,8 +29,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
         MatDatepickerModule,
         MatDialogModule,
         MatButtonModule,
-        MatSnackBarModule
-        
+        MatSnackBarModule,
+        MatTableModule
     ]
 })
 

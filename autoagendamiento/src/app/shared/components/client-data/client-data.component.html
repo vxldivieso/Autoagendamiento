@@ -1,50 +1,56 @@
 
-<div class="row text-center" *ngFor="let client of clients" >
-    <!--Nombre-->
-    <mat-form-field class="col-md-6 text-center" appearance="fill" >
-        <mat-label for="firstName" class="form-label">Nombre</mat-label>
-        <input matInput type="text" name="" id="firstName" disabled>{{client.name}}
-    </mat-form-field>
-    <!--Apellido-->
-    <mat-form-field class="col-md-6 text-center"  appearance="fill">
-        <mat-label for="lastName" class="form-label">Apellido</mat-label>
-        <input matInput type="text" id="lastName" disabled> {{client.lastname}}
-    </mat-form-field>
-    <!--Rut-->
-    <mat-form-field class="col-md-6 text-center"  appearance="fill">
-        <mat-label for="rut" class="form-label">Rut</mat-label>
-        <input matInput type="text" id="rut" disabled>{{client.rut}}
-    </mat-form-field>
-    <!--Email-->
-    <mat-form-field class="col-md-6 text-center"  appearance="fill">
-        <mat-label for="email" class="form-label">Email </mat-label>
-        <input matInput type="email" id="email" placeholder="nombre@ejemplo.com" disabled>{{client.email}}
-        <div class="invalid-feedback">
-            Por favor, ingresa un email válido.
-        </div>
-    </mat-form-field>
-    <!--Telefono-->
-    <mat-form-field class="col-md-6 text-center"  appearance="fill">
-        <mat-label for="phone" class="form-label">Telefono </mat-label>
-        <input matInput type="phone" id="phone" placeholder="99999XXX" required disabled>{{client.phone}}
-    </mat-form-field>
-    <mat-form-field class="col-md-6 text-center"  appearance="fill" color="accent">
-        <mat-label for="phone" class="form-label">Telefono 2 </mat-label>
-        <input matInput type="phone" id="phone" placeholder="Puedes agregar un telefono extra" >{{client.phone2}}
-        <div class="invalid-feedback">
-            Por favor, ingresa un teléfono válido.
-        </div>
-    </mat-form-field>
-    <!--Direccion-->
-    <mat-form-field class="col-md-6 text-center" appearance="fill">
-        <mat-label for="address" class="form-label">Dirección</mat-label>
-        <input matInput type="text" id="address" placeholder="Calle #XXXX, Comuna" required="" disabled="">{{client.direccion}}
+<div class="row text-center" *ngFor="let data of clientData" >
+    <form [formGroup]="clientForm">
+        <!--Nombre-->
+        <mat-form-field class="col-md-6 text-center" appearance="fill" >
+            <mat-label for="firstName" class="form-label">Nombre</mat-label>
+            <input matInput type="text" name="" id="firstName" disabled>{{data.name}}
+        </mat-form-field>
+        <!--Apellido-->
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="lastName" class="form-label">Apellido</mat-label>
+            <input matInput type="text" id="lastName" disabled> {{data.lastname}}
+        </mat-form-field>
+        <!--Rut-->
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="rut" class="form-label">Rut</mat-label>
+            <input matInput type="text" id="rut" disabled>{{data.rut}}
+        </mat-form-field>
+        <!--Email-->
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="email" class="form-label">Email </mat-label>
+            <input matInput type="email" id="email" placeholder="nombre@ejemplo.com" disabled> {{data.email}}
+        </mat-form-field>
+        <!--Telefono-->
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="phone" class="form-label">Telefono </mat-label>
+            <input matInput type="phone" id="phone" placeholder="99999XXX" required disabled> {{data.phone}}
+        </mat-form-field>
+        <mat-form-field class="col-md-6 text-center"  appearance="fill" color="accent">
+            <div class="row">
+                <div class="col-md-10">
+                    <mat-label for="phone" class="form-label">Telefono 2 </mat-label>
+                    <input formControlName="phone2" matInput type="phone" id="phone" placeholder="Puedes agregar un telefono extra" >{{data.phone2}}
+                    <div class="invalid-feedback">
+                        Por favor, ingresa un teléfono válido.
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button mat-button (click)="updateClientDetails()" ><mat-icon>save</mat-icon></button>
+                </div>
+            </div>
+        </mat-form-field>
+        <!--Direccion-->
+        <mat-form-field class="col-md-6 text-center" appearance="fill">
+            <mat-label for="address" class="form-label">Dirección</mat-label>
+            <input matInput type="text" id="address" placeholder="Calle #XXXX, Comuna" required="" disabled=""> {{data.direccion}}
+        
+        </mat-form-field>
+        <mat-form-field class="col-md-6 text-center" appearance="fill">
+            <mat-label for="address" class="form-label">Comuna - Ciudad</mat-label>
+            <input matInput type="text" id="address" placeholder="Comuna" required="" disabled=""> {{data.comuna}} - {{data.city}}
+        </mat-form-field>
+    </form>
     
-    </mat-form-field>
-    <mat-form-field class="col-md-6 text-center" appearance="fill">
-        <mat-label for="address" class="form-label">Comuna - Ciudad</mat-label>
-        <input matInput type="text" id="address" placeholder="Comuna" required="" disabled="">{{client.comuna}} - {{client.city}}
-    
-    </mat-form-field>
 </div>
 

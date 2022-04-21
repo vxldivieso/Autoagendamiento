@@ -1,13 +1,18 @@
-<nav class="navbar navbar-dark bg-dark d-flex flex-wrap py-3 mb-4" *ngFor="let client of clients">
+<nav class="navbar navbar-dark d-flex flex-wrap py-3 mb-4" style="background-color: #080808;" >
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img src="https://maydayservicios.cl/wp-content/uploads/2019/05/Logo_Mayday0.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
-      <mat-icon>person</mat-icon>
-      Hola, {{client.name}} {{client.lastname}}!
+    <a class="navbar-brand" href="">
+      <div class="nav col-12 col-md-auto ">
+        <img src="https://maydayservicios.cl/wp-content/uploads/2019/05/Logo_Mayday0.png" alt="" width="50" height="24" class="d-flex">
+        <li><a href="" class="nav-link px-2 link-dark text-uppercase">Agendamiento</a></li>
+      </div>
     </a>
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 ">
-      
-      <li><a href="" class="nav-link px-2 link-dark text-uppercase">Agendamiento</a></li>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center">
+      <mat-icon>person</mat-icon>
+      <h3>
+        Hola, !
+      </h3>
+        
     </ul>
   </div>
 </nav>
+
