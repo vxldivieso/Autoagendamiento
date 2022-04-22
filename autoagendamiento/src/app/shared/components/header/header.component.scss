@@ -1,34 +1,16 @@
-nav{
-    font-family: 'Cerebri Sans', sans-serif;
-    margin-bottom: 0;
-}
 
-*, ::after, ::before {
-    box-sizing: border-box;
-}
-#icon{
-    vertical-align: middle;
-}
-img{
-    margin-right: 10px;
-}
-.d-flex {
-    display: flex!important;
-}
-.nav-link {
-    display: block;
-    padding: 0.5rem 1rem;
-    font-size: large;
-    text-decoration: none;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
-}
-.nav-link:hover{
-    color: #00e5ff ;
-}
-.link-dark {
-    color: white;
-}
-.px-2 {
-    padding-right: 0.5rem!important;
-    padding-left: 0.5rem!important;
+
+nav{
+    margin-bottom:0;
+} 
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px 0px rgba(0,0,0,.5);
 }

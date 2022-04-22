@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { StepperComponent } from './pages/stepper/stepper.component';
+import { DialogDataExampleDialog, StepperComponent } from './pages/stepper/stepper.component';
 import { SchedulingComponent } from './shared/components/scheduling/scheduling.component';
 import { CheckoutProductComponent } from './shared/components/checkoutProduct/checkoutProduct.component';
 import { ClientDataComponent } from './shared/components/client-data/client-data.component';
@@ -36,7 +36,8 @@ import { AgGridModule } from 'ag-grid-angular';
     EditProductDialog,
     DateFormProduct,
     EditServiceComponent,
-    EditServiceDialog
+    EditServiceDialog,
+    DialogDataExampleDialog
   ],
   imports: [
     CommonModule,

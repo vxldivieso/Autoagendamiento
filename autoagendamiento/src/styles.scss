@@ -21,7 +21,7 @@ $autoagendamiento-warn: mat.define-palette(mat.$pink-palette, 500);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$autoagendamiento-theme: mat.define-dark-theme((
+$autoagendamiento-theme: mat.define-light-theme((
   color: (
     primary: $autoagendamiento-primary,
     accent: $autoagendamiento-accent,
@@ -43,9 +43,8 @@ $autoagendamiento-theme: mat.define-dark-theme((
 
 body{
     margin: 0;
-    background-color: #171717;
+    background-color: #EBEDEF;
     display: grid;
-    color: white;
     width: 100%;
     min-height: 50vh;
     grid-template-rows: auto 1fr auto;

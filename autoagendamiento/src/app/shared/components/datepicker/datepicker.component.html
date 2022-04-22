@@ -1,5 +1,5 @@
-<div class="row justify-content-center py-3 mb-md-0 border-top border-bottom">
 
+<div class="row justify-content-center py-3 mb-md-0 border-top border-bottom" *ngIf="!isSend" >
     <div class="col-md-4 py-2 ">
         <p >Ingrese la fecha en la que debería haber llegado su producto</p>
     </div>
@@ -18,6 +18,8 @@
         <button [disabled]="!dateProductForm.valid" type="submit" (click)="onSubmit()" mat-raised-button color="accent">Guardar fecha</button>
     </div>
 </div>
+
+
 
 <!--Mostrar alertas-->
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

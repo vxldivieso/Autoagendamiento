@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateService } from '../detailOrder/service/detail.service';
 
@@ -17,12 +17,17 @@ export class DatepickerComponent{
 
 }
 
+
 @Component({
   selector:'dateProduct',
   templateUrl: './datepicker.component.html',
 })
+
+
 export class DateFormProduct{
+  @Output()
   dateProductForm !: FormGroup;
+  isSend:boolean = false;
   constructor(private formBuilder: FormBuilder, 
     private api: DateService){}
   
@@ -38,6 +43,8 @@ export class DateFormProduct{
       .subscribe({
         next:(res)=>{
           alert("Modificación enviada exitosamente, por favor confirme los datos del producto.")
+          this.isSend = !this.isSend;
+
         },
         error: () =>{
           alert("Error al enviar modificación")

@@ -49,7 +49,7 @@
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-2">
           <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
-          <button mat-raised-button color="primary" matStepperNext>Agendar</button>
+          <button mat-raised-button color="primary" (click)="openDialog()">Agendar</button>
         </div>
         <div class="d-grid gap-2 d-xs-flex d-lg-flex justify-content-md-center mb-2 ">
           <button mat-raised-button color="accent" >No encuentro disponibilidad que me acomode</button>
