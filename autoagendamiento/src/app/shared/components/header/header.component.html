@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark d-flex flex-wrap py-3 mb-4" style="background-color: #080808;" >
-  <div class="container-fluid">
+  <div class="container-fluid" *ngFor="let client of clientData">
     <a class="navbar-brand" href="">
       <div class="nav col-12 col-md-auto ">
         <img src="https://maydayservicios.cl/wp-content/uploads/2019/05/Logo_Mayday0.png" alt="" width="50" height="24" class="d-flex">
@@ -9,7 +9,7 @@
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center">
       <mat-icon>person</mat-icon>
       <h3>
-        Hola, María Lopez !
+        Hola, {{client.name}} {{client.lastname}} !
       </h3>
         
     </ul>

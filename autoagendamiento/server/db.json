@@ -138,6 +138,14 @@
       "productName": "Closet",
       "servicio": "Armado",
       "proveedor": "Ripley"
+    },
+    {
+      "id": 1,
+      "orderId": 1,
+      "quantity": 1,
+      "productName": "Comedor",
+      "servicio": "Despacho",
+      "proveedor": "Ripley"
     }
   ]
 }

@@ -1,6 +1,7 @@
 <div class="container w-75 justify-content-center align-items-center">
-    <div class="row text-center" *ngFor="let data of clientData" >
+    
         <form [formGroup]="clientForm">
+            <div class="row text-center" *ngFor="let data of clientData" >
             <!--Nombre-->
             <mat-form-field class="col-md-6 text-center" appearance="fill" >
                 <mat-label for="firstName" class="form-label">Nombre</mat-label>
@@ -50,9 +51,10 @@
                 <mat-label for="address" class="form-label">Comuna - Ciudad</mat-label>
                 <input matInput type="text" id="address" placeholder="Comuna" required="" disabled=""> {{data.comuna}} - {{data.city}}
             </mat-form-field>
+        </div>
         </form>
         
-    </div>
+    
     
     
 </div>

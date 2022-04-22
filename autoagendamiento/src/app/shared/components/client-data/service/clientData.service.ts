@@ -18,8 +18,8 @@ export class ClientDataService{
     getClient(){
         return this.http.get<any>(`${this.apiURL}`);
     }
-    patchPhone(data:any, id:number){
-        return this.http.patch<any>(`${this.apiURL}/`+id,data)
+    putPhone(data:any, id:number){
+        return this.http.put<any>(`${this.apiURL}/`+id,data)
         
     }
 

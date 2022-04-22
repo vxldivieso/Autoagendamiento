@@ -79,7 +79,7 @@ export class ClientDataComponent implements OnInit {
     this.clientModelObj.comuna = this.clientForm.value.comuna;
     this.clientModelObj.city = this.clientForm.value.city;
 
-    this.api.patchPhone(this.clientModelObj, this.clientModelObj.id).subscribe({
+    this.api.putPhone(this.clientModelObj, this.clientModelObj.id).subscribe({
       next:(res)=>{
         alert("Modificación enviada exitosamente")
       },

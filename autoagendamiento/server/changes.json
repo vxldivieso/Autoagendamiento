@@ -29,10 +29,51 @@
       "skuProduct": "",
       "img": "",
       "id": 5
+    },
+    {
+      "nameProduct": "Closet Americano ",
+      "skuProduct": "ewfwd",
+      "img": "C:\\fakepath\\Captura.PNG",
+      "id": 6
+    },
+    {
+      "nameProduct": "Closet Americano ",
+      "skuProduct": "f23424FSSS",
+      "img": "C:\\fakepath\\Captura.PNG",
+      "id": 7
+    },
+    {
+      "nameProduct": "Mesa",
+      "skuProduct": "f23424FSSS",
+      "img": "C:\\fakepath\\Captura.PNG",
+      "id": 8
     }
   ],
   "editService": [
-    {}
+    {
+      "id": "1",
+      "name": "Armado"
+    },
+    {
+      "selectService": "Instalación",
+      "id": "NI2olEr"
+    },
+    {
+      "selectService": "Instalación",
+      "id": "AHF_ilT"
+    },
+    {
+      "selectService": "Instalación",
+      "id": "1kplLWF"
+    },
+    {
+      "selectService": "Instalación",
+      "id": "2b9YgHA"
+    },
+    {
+      "selectService": "Despacho",
+      "id": "cZuwXjw"
+    }
   ],
   "dateProduct": [
     {
@@ -46,6 +87,22 @@
     {
       "dateProduct": "2022-04-14T04:00:00.000Z",
       "id": 3
+    },
+    {
+      "dateProduct": "2022-04-11T04:00:00.000Z",
+      "id": 4
+    },
+    {
+      "dateProduct": "2022-04-11T04:00:00.000Z",
+      "id": 5
+    },
+    {
+      "dateProduct": "2022-04-12T04:00:00.000Z",
+      "id": 6
+    },
+    {
+      "dateProduct": "2022-04-12T04:00:00.000Z",
+      "id": 7
     }
   ]
 }

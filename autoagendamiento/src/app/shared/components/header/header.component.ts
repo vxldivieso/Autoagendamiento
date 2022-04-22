@@ -9,11 +9,19 @@ import { ClientDataService } from '../client-data/service/clientData.service';
 })
 export class HeaderComponent {
   
-
-  constructor(private clientDataSvc: ClientDataService ) { }
+  clientData:any;
+  constructor(private api: ClientDataService ) { }
 
   ngOnInit(): void {
-    
+    this.getClient();
+  }
+  getClient(){
+    this.api.getClient()
+    .subscribe(res=>{
+      this.clientData = res
+      console.log(res);
+    }
+    )
   }
  
 }

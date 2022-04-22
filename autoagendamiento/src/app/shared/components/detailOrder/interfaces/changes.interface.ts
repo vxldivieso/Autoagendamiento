@@ -6,7 +6,7 @@ export interface changeProduct{
 }
 
 export interface changeService{
-    id: number;
+    id:number;
     name: string;
 }
 

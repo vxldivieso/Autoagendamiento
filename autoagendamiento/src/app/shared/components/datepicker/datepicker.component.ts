@@ -37,7 +37,7 @@ export class DateFormProduct{
       this.api.postDateProduct(this.dateProductForm.value)
       .subscribe({
         next:(res)=>{
-          alert("Modificación enviada exitosamente")
+          alert("Modificación enviada exitosamente, por favor confirme los datos del producto.")
         },
         error: () =>{
           alert("Error al enviar modificación")
