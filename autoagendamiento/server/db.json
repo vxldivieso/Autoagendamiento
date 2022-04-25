@@ -119,14 +119,14 @@
   "clients": [
     {
       "id": 0,
-      "name": "Maria",
+      "name": "Maria ",
       "lastname": "Lopez",
-      "rut": "139957530",
+      "rut": "13254895-8",
       "email": "marialopez@gmail.com",
-      "phone": "+56951944848",
-      "phone2": "",
-      "direccion": "Calle los alamos 1548",
-      "comuna": "Puente Alto",
+      "phone": "945865458",
+      "phone2": "945658454",
+      "direccion": "calle las violetas 4578",
+      "comuna": "La florida",
       "city": "Santiago"
     }
   ],

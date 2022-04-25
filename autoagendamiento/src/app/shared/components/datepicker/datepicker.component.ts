@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateService } from '../detailOrder/service/detail.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'datepicker',
   template: ``,
@@ -42,14 +42,35 @@ export class DateFormProduct{
       this.api.postDateProduct(this.dateProductForm.value)
       .subscribe({
         next:(res)=>{
-          alert("Modificación enviada exitosamente, por favor confirme los datos del producto.")
+          this.messageSuccessfull();
           this.isSend = !this.isSend;
 
         },
         error: () =>{
-          alert("Error al enviar modificación")
+          this.messageError();
         }
       })
     }
+
   }
+
+  //Message successfull
+  messageSuccessfull(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Fecha ingresada correctamente',
+      showConfirmButton: true,
+      timer: 3000
+    })
+  }
+  //Message Error
+  messageError(){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'No pudimos completar el proceso',
+      showConfirmButton: true,
+    })
+  }
+
 }

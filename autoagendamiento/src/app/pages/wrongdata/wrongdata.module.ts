@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { WrongdataRoutingModule } from './wrongdata-routing.module';
 import { WrongdataComponent } from './wrongdata.component';
+import { MaterialModule } from 'src/app/material.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { WrongdataComponent } from './wrongdata.component';
   ],
   imports: [
     CommonModule,
-    WrongdataRoutingModule
+    WrongdataRoutingModule,
+    MaterialModule
   ]
 })
 export class WrongdataModule { }

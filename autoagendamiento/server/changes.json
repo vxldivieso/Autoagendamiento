@@ -7,46 +7,16 @@
       "id": 1
     },
     {
-      "nameProduct": "Futón ",
-      "skuProduct": "hhgjdh3223",
-      "img": "C:\\fakepath\\Logo.jpg",
+      "nameProduct": "",
+      "skuProduct": "F45487212",
+      "img": "",
       "id": 2
-    },
-    {
-      "nameProduct": "Mesa",
-      "skuProduct": "sfsdferwe",
-      "img": "C:\\fakepath\\Captura.PNG",
-      "id": 3
-    },
-    {
-      "nameProduct": "Closet Americano ",
-      "skuProduct": "54asd54w1",
-      "img": "C:\\fakepath\\Captura.PNG",
-      "id": 4
     },
     {
       "nameProduct": "",
       "skuProduct": "",
       "img": "",
-      "id": 5
-    },
-    {
-      "nameProduct": "Closet Americano ",
-      "skuProduct": "ewfwd",
-      "img": "C:\\fakepath\\Captura.PNG",
-      "id": 6
-    },
-    {
-      "nameProduct": "Closet Americano ",
-      "skuProduct": "f23424FSSS",
-      "img": "C:\\fakepath\\Captura.PNG",
-      "id": 7
-    },
-    {
-      "nameProduct": "Mesa",
-      "skuProduct": "f23424FSSS",
-      "img": "C:\\fakepath\\Captura.PNG",
-      "id": 8
+      "id": 3
     }
   ],
   "editService": [
@@ -56,23 +26,27 @@
     },
     {
       "selectService": "Instalación",
-      "id": "NI2olEr"
+      "id": "LdXN9fr"
     },
     {
       "selectService": "Instalación",
-      "id": "AHF_ilT"
+      "id": "M2QM5qf"
+    },
+    {
+      "selectService": "Retiro ecológico",
+      "id": "WQtuWS4"
     },
     {
       "selectService": "Instalación",
-      "id": "1kplLWF"
+      "id": "1YSmGU_"
     },
     {
       "selectService": "Instalación",
-      "id": "2b9YgHA"
+      "id": "TZcAGMM"
     },
     {
-      "selectService": "Despacho",
-      "id": "cZuwXjw"
+      "selectService": "Instalación",
+      "id": "RDIIL46"
     }
   ],
   "dateProduct": [
@@ -81,68 +55,12 @@
       "id": 1
     },
     {
-      "dateProduct": "2022-04-11T04:00:00.000Z",
+      "dateProduct": "2022-04-12T04:00:00.000Z",
       "id": 2
     },
     {
-      "dateProduct": "2022-04-14T04:00:00.000Z",
+      "dateProduct": "2022-04-13T04:00:00.000Z",
       "id": 3
-    },
-    {
-      "dateProduct": "2022-04-11T04:00:00.000Z",
-      "id": 4
-    },
-    {
-      "dateProduct": "2022-04-11T04:00:00.000Z",
-      "id": 5
-    },
-    {
-      "dateProduct": "2022-04-12T04:00:00.000Z",
-      "id": 6
-    },
-    {
-      "dateProduct": "2022-04-12T04:00:00.000Z",
-      "id": 7
-    },
-    {
-      "dateProduct": "2022-04-19T04:00:00.000Z",
-      "id": 8
-    },
-    {
-      "dateProduct": "2022-04-14T04:00:00.000Z",
-      "id": 9
-    },
-    {
-      "dateProduct": "2022-04-12T04:00:00.000Z",
-      "id": 10
-    },
-    {
-      "dateProduct": "2022-04-13T04:00:00.000Z",
-      "id": 11
-    },
-    {
-      "dateProduct": "2022-04-13T04:00:00.000Z",
-      "id": 12
-    },
-    {
-      "dateProduct": "2022-04-07T04:00:00.000Z",
-      "id": 13
-    },
-    {
-      "dateProduct": "2022-04-06T04:00:00.000Z",
-      "id": 14
-    },
-    {
-      "dateProduct": "2022-04-12T04:00:00.000Z",
-      "id": 15
-    },
-    {
-      "dateProduct": "2022-04-19T04:00:00.000Z",
-      "id": 16
-    },
-    {
-      "dateProduct": "2022-04-18T04:00:00.000Z",
-      "id": 17
     }
   ]
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { tap } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientDataModel } from './client-data.model';
 import { ClientDataService } from './service/clientData.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'client-data',
@@ -12,63 +12,51 @@ import { ClientDataService } from './service/clientData.service';
 export class ClientDataComponent implements OnInit {
   clientForm !: FormGroup;
   clientModelObj: ClientDataModel = new ClientDataModel();
-
+  showUpdate !: boolean;
   clientData:any;
+  message:boolean =false;
   constructor( private formBuilder: FormBuilder,
     private api: ClientDataService ) { }
 
   ngOnInit(): void {
     this.clientForm = this.formBuilder.group({
-      id: [''],
       name: [''],
       lastname: [''],
       rut: [''],
       email: [''],
-      phone: [''],
-      phone2: [''],
+      phone: ['',[Validators.minLength(9), Validators.maxLength(9)]],
+      phone2: ['', [Validators.minLength(9), Validators.maxLength(9)]],
       direccion: [''],
       comuna: [''],
       city: [''],
     })
-    this.getClient();
-    
-  }
-  
-  addClient(){
-    if(this.clientForm.valid){
-      this.api.postClient(this.clientForm.value)
-      .subscribe({
-        next:(res)=>{
-          alert("Cliente añadido correctamente")
-        },
-        error:()=>{
-          alert("Error al añadir cliente")
-        }
-      })
-    }
+    this.getClient()
   }
 
   getClient(){
     this.api.getClient()
     .subscribe(res=>{
-      this.clientData = res
-      console.log(res);
+      this.clientData = res;
     }
     )
   }
-
-  onEdit(data:any){
-    this.clientModelObj.id = data.id;
-    this.clientForm.controls['name'].setValue(data.name);
-    this.clientForm.controls['lastname'].setValue(data.lastname);
-    this.clientForm.controls['rut'].setValue(data.rut);
-    this.clientForm.controls['email'].setValue(data.email);
-    this.clientForm.controls['phone'].setValue(data.phone);
-    this.clientForm.controls['phone2'].setValue(data.phone2);
-
+  onEdit(row:any){
+    this.showUpdate = true;
+    this.clientModelObj.id = row.id;
+    this.clientForm.controls['name'].setValue(row.name);
+    this.clientForm.controls['lastname'].setValue(row.lastname);
+    this.clientForm.controls['rut'].setValue(row.rut);
+    this.clientForm.controls['email'].setValue(row.email);
+    this.clientForm.controls['phone'].setValue(row.phone);
+    this.clientForm.controls['phone2'].setValue(row.phone2);
+    this.clientForm.controls['direccion'].setValue(row.direccion);
+    this.clientForm.controls['comuna'].setValue(row.comuna);
+    this.clientForm.controls['city'].setValue(row.city); 
   }
 
+
   updateClientDetails(){
+    
     this.clientModelObj.name = this.clientForm.value.name;
     this.clientModelObj.lastname = this.clientForm.value.lastname;
     this.clientModelObj.rut = this.clientForm.value.rut;
@@ -79,16 +67,34 @@ export class ClientDataComponent implements OnInit {
     this.clientModelObj.comuna = this.clientForm.value.comuna;
     this.clientModelObj.city = this.clientForm.value.city;
 
-    this.api.putPhone(this.clientModelObj, this.clientModelObj.id).subscribe({
+    this.api.putClient(this.clientModelObj, this.clientModelObj.id).subscribe({
       next:(res)=>{
-        alert("Modificación enviada exitosamente")
+        this.messageSuccessfull();
       },
       error: () =>{
-        alert("Error al enviar modificación")
+        this.messageError();
       }
     }
     )
 
+  }
+
+  //Message Successfull
+  messageSuccessfull(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Modificación enviada correctamente',
+      showConfirmButton: false,
+      timer: 3000
+    })
+  }
+  //Message Error
+  messageError(){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'No pudimos enviar la modificación'
+    })
   }
 
 

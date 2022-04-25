@@ -7,7 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
 @Component({
-  selector: 'scheduling',
+   selector: 'scheduling',
   templateUrl: './scheduling.component.html' ,
   styleUrls: ['./scheduling.component.scss'],
   
@@ -33,7 +33,6 @@ export class SchedulingComponent implements OnInit{
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log(res);
       }
     })
   }

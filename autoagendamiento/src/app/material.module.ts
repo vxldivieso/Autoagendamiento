@@ -15,6 +15,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { MatSort } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { CdkTableModule } from "@angular/cdk/table";
  
 @NgModule({
     exports:[
@@ -32,7 +33,8 @@ import { MatPaginatorModule } from "@angular/material/paginator";
         MatButtonModule,
         MatSnackBarModule,
         MatTableModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        CdkTableModule
     ]
 })
 

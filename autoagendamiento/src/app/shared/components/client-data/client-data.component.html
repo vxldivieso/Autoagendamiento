@@ -1,60 +1,55 @@
+
 <div class="container w-75 justify-content-center align-items-center">
-    
-        <form [formGroup]="clientForm">
-            <div class="row text-center" *ngFor="let data of clientData" >
-            <!--Nombre-->
-            <mat-form-field class="col-md-6 text-center" appearance="fill" >
-                <mat-label for="firstName" class="form-label">Nombre</mat-label>
-                <input matInput type="text" name="" id="firstName" disabled>{{data.name}}
-            </mat-form-field>
-            <!--Apellido-->
-            <mat-form-field class="col-md-6 text-center"  appearance="fill">
-                <mat-label for="lastName" class="form-label">Apellido</mat-label>
-                <input matInput type="text" id="lastName" disabled> {{data.lastname}}
-            </mat-form-field>
-            <!--Rut-->
-            <mat-form-field class="col-md-6 text-center"  appearance="fill">
-                <mat-label for="rut" class="form-label">Rut</mat-label>
-                <input matInput type="text" id="rut" disabled>{{data.rut}}
-            </mat-form-field>
-            <!--Email-->
-            <mat-form-field class="col-md-6 text-center"  appearance="fill">
-                <mat-label for="email" class="form-label">Email </mat-label>
-                <input matInput type="email" id="email" placeholder="nombre@ejemplo.com" disabled> {{data.email}}
-            </mat-form-field>
-            <!--Telefono-->
-            <mat-form-field class="col-md-6 text-center"  appearance="fill">
-                <mat-label for="phone" class="form-label">Telefono </mat-label>
-                <input matInput type="phone" id="phone" placeholder="99999XXX" required disabled> {{data.phone}}
-            </mat-form-field>
-            <mat-form-field class="col-md-6 text-center"  appearance="fill" color="accent">
-                <div class="row">
-                    <div class="col-md-10">
-                        <mat-label for="phone" class="form-label">Telefono 2 </mat-label>
-                        <input formControlName="phone2" matInput type="phone" id="phone" placeholder="Puedes agregar un telefono extra" >{{data.phone2}}
-                        <div class="invalid-feedback">
-                            Por favor, ingresa un teléfono válido.
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button mat-button (click)="updateClientDetails()" ><mat-icon>save</mat-icon></button>
-                    </div>
-                </div>
-            </mat-form-field>
-            <!--Direccion-->
-            <mat-form-field class="col-md-6 text-center" appearance="fill">
-                <mat-label for="address" class="form-label">Dirección</mat-label>
-                <input matInput type="text" id="address" placeholder="Calle #XXXX, Comuna" required="" disabled=""> {{data.direccion}}
-            
-            </mat-form-field>
-            <mat-form-field class="col-md-6 text-center" appearance="fill">
-                <mat-label for="address" class="form-label">Comuna - Ciudad</mat-label>
-                <input matInput type="text" id="address" placeholder="Comuna" required="" disabled=""> {{data.comuna}} - {{data.city}}
-            </mat-form-field>
-        </div>
-        </form>
+    <form [formGroup]="clientForm" *ngFor="let row of clientData">
         
+    <div class="row text-center">
+        <!--Nombre-->
+        <mat-form-field class="col-md-6 text-center" appearance="fill" >
+            <mat-label for="name" class="form-label">Nombre</mat-label>
+            <input matInput type="text" name="" id="name" disabled> {{row.name}}
+        </mat-form-field>
+        <!--Apellido-->
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="lastName" class="form-label">Apellido</mat-label>
+            <input matInput type="text" id="lastName" disabled> {{row.lastname}} 
+        </mat-form-field>
+        <!--Rut-->
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="rut" class="form-label">Rut</mat-label>
+            <input matInput type="text" id="rut" disabled> {{row.rut}}
+        </mat-form-field>
+        <!--Email-->
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="email" class="form-label">Email </mat-label>
+            <input matInput type="email" id="email" placeholder="nombre@ejemplo.com" disabled> {{row.email}}
+        </mat-form-field>
+        <!--Telefono-->
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="phone" class="form-label">Telefono </mat-label>
+            <input matInput type="phone" id="phone" placeholder="(9)XXX-XX-XXX" disabled> {{row.phone}}
+        </mat-form-field>
+        <mat-form-field class="col-md-6 text-center"  appearance="fill">
+            <mat-label for="phone" class="form-label">Telefono 2 </mat-label>
+            <input formControlName="phone2" matInput type="tel" id="phone" placeholder="(9)XXX-XX-XXX" pattern="([0-9]{9})">
+            <mat-error *ngIf="clientForm.get('phone2')?.invalid">Ingrese un número con 9 dígitos</mat-error>
+        </mat-form-field>
+        <!--Direccion-->
+        <mat-form-field class="col-md-6 text-center" appearance="fill">
+            <mat-label for="direccion" class="form-label">Dirección</mat-label>
+            <input matInput type="text" id="direccion" placeholder="Calle #XXXX" disabled > {{row.direccion}} 
+        
+        </mat-form-field>
+        <mat-form-field class="col-md-6 text-center" appearance="fill">
+            <mat-label for="comuna" class="form-label">Comuna</mat-label>
+            <input matInput type="text" id="comuna" placeholder="Comuna" disabled > {{row.comuna}}
+        </mat-form-field>
+        <mat-form-field class="col-md-12 text-center" appearance="fill">
+            <mat-label for="city" class="form-label">Ciudad</mat-label>
+            <input matInput type="text" id="city" placeholder="Ciudad" disabled > {{row.city}}
+        </mat-form-field>
+    </div>
+    <button mat-raised-button color="accent" (click)="onEdit(row)">Ver datos</button>
+    <button mat-raised-button color="primary" [disabled]="!clientForm.valid" (click)="updateClientDetails()">Actualizar datos</button>
     
-    
-    
+</form>
 </div>

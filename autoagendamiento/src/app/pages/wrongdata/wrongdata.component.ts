@@ -3,17 +3,16 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-wrongdata',
   template: `
-  <div class="container w-75" style="color:black" >
-  <div class="p-5 mb-4 bg-light rounded-3 justify-content-center align-items-centers">
-  <div class="container-fluid py-5">
+  <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">Te contactaremos</h1>
-    <p class="col-md-8 fs-5">
-      Un ejecutivo se pondrá en contacto para verificar la información modificada. Enviaremos un correo con los datos de esta
-      solicitud y los pasos a seguir.
-    </p>
-    <button class="btn btn-primary btn-md" type="button">Cerrar</button>
-  </div>
-</div>
+    <div class="col-lg-6 mx-auto">
+      <h3 class="mb-4">Dentro de las próximas horas hábiles, un ejecutivo se pondrá en contacto para verificar la información
+        modificada y continuar con el agendamiento del servicio.
+      </h3>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button mat-raised-button color="primary" class="btn-lg px-4 gap-3">Cerrar</button>
+      </div>
+    </div>
   </div>
   `,
   styleUrls: ['./wrongdata.component.scss']

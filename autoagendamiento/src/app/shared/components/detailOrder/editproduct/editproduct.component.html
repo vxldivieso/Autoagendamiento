@@ -2,18 +2,18 @@
 <div mat-dialog-content >
   <form [formGroup]="changeProductForm" >
     <mat-form-field appearance="fill">
-      <mat-label>Ingrese el nombre del producto que aparece en la boleta</mat-label>
-      <input formControlName="nameProduct" required name="nameProduct" matInput>
+      <mat-label>Ingrese el nombre del producto</mat-label>
+      <input formControlName="nameProduct" name="nameProduct" matInput>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Ingrese el sku del producto que aparece en la boleta</mat-label>
-      <input formControlName="skuProduct" required name="skuProduct" matInput>
+      <mat-label>Ingrese el código del producto</mat-label>
+      <input formControlName="skuProduct" name="skuProduct" matInput>
     </mat-form-field>
     
     <mat-form-field appearance="fill">
       <mat-label>Adjunte Comprobante: Boleta o Caja (Embalaje)</mat-label>
-      <input matInput disabled> <input formControlName="img" required name="img"  type="file">
+      <input matInput disabled> <input formControlName="img" name="img"  type="file">
     </mat-form-field>
   </form>
 </div>

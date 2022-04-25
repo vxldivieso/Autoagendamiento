@@ -2,12 +2,13 @@
 <!--Stepper-->
 
 <div class="container ">
-  <mat-stepper class="example-stepper" color="primary" [orientation]="(stepperOrientation | async)!"  >
+  <mat-stepper class="example-stepper" color="primary" [orientation]="(stepperOrientation | async)!" >
     <!--Verificar el producto-->
     <mat-step  [stepControl]="firstFormGroup" label="Verifica tu Producto" >
       <form [formGroup]="firstFormGroup">
-        <div class="py-2 text-center">
-          <h2>Corrobore los datos del producto</h2>
+        <div class="py-4 text-center">
+          <h1>Datos del producto</h1>
+          <p class="text-center ">Corrobore los siguientes datos asociados a su producto. Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
         </div>
         <div class="container py-2" >
           <checkoutproduct></checkoutproduct>
@@ -22,13 +23,14 @@
     <mat-step [stepControl]="secondFormGroup" label="Confirma tus datos" >
       <form [formGroup]="secondFormGroup">
         <div class="py-2 text-center">
-          <h2>Corrobore sus datos</h2>
+          <h1>Datos de contacto</h1>
+          <p class="text-center ">Corrobore sus datos de contacto. Puede agregar un teléfono extra.</p>
         </div>
         <div>
           <client-data></client-data>
         </div>
       </form>
-      <h4>Si está todo en orden, presiona siguiente. Si crees que hay un error, presiona el botón 'Los datos son incorrectos'.</h4>
+      <h4 class="py-2">Si está todo en orden, presione siguiente. Si cree que hay un error, presione el botón 'Los datos son incorrectos'.</h4>
       <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
         <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
         <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
@@ -40,7 +42,8 @@
     <mat-step [stepControl]="thirdFormGroup" label="Selección de horario">
       <form [formGroup]="thirdFormGroup">
         <div class="py-2 text-center">
-          <h2>Seleccione el horario y bloque</h2>
+          <h1>Selección de horario</h1>
+          <p class="text-center ">Para agendar el servicio, seleccione el bloque horario de su preferencia según las fechas disponibles.</p>
         </div>
         <div class="container">
           <scheduling></scheduling>

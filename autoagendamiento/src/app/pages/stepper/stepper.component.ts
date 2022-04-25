@@ -8,7 +8,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 
-
+//Stepper component
 /**
  * @title Stepper responsive
  */
@@ -22,9 +22,6 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./stepper.component.scss'],
 })
 export class StepperComponent {
-
-  
-  
   isEditable = false;
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -54,6 +51,21 @@ export class StepperComponent {
 
 }
 
+
+//View 2: ClientData
+
+
+
+
+
+
+
+
+
+
+
+
+//View 3: Scheduling modal
 @Component({
   selector: 'dialog-data-example-dialog',
   template:`

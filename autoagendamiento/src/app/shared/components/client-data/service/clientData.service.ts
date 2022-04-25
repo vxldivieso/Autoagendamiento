@@ -18,8 +18,12 @@ export class ClientDataService{
     getClient(){
         return this.http.get<any>(`${this.apiURL}`);
     }
-    putPhone(data:any, id:number){
-        return this.http.put<any>(`${this.apiURL}/`+id,data)
+    putClient(data:any, id:number){
+        return this.http.put<any>(`${this.apiURL}/`+id,data).pipe(
+            (map((res:any)=>{
+                return res;
+            }))
+        )
         
     }
 

@@ -13,11 +13,12 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { DialogDataExampleDialog, StepperComponent } from './pages/stepper/stepper.component';
 import { SchedulingComponent } from './shared/components/scheduling/scheduling.component';
 import { CheckoutProductComponent } from './shared/components/checkoutProduct/checkoutProduct.component';
-import { ClientDataComponent } from './shared/components/client-data/client-data.component';
 import { DateFormProduct, DatepickerComponent } from './shared/components/datepicker/datepicker.component';
 import { EndProcessComponent } from './shared/components/end-process/end-process.component';
 import { DetailComponent, EditProductComponent, EditProductDialog, EditServiceComponent, EditServiceDialog} from './shared/components/detailOrder/detailOrder.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { ClientDataComponent } from './shared/components/client-data/client-data.component';
+import { CdkTableModule } from '@angular/cdk/table';
 
 //I keep the new line
 @NgModule({
@@ -26,9 +27,9 @@ import { AgGridModule } from 'ag-grid-angular';
     HeaderComponent,
     FooterComponent,
     StepperComponent,
+    ClientDataComponent,
     SchedulingComponent,
     CheckoutProductComponent,
-    ClientDataComponent,
     DatepickerComponent,
     EndProcessComponent,
     DetailComponent,
@@ -48,7 +49,8 @@ import { AgGridModule } from 'ag-grid-angular';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AgGridModule
+    AgGridModule,
+    CdkTableModule
   ],
   providers: [],
   bootstrap: [AppComponent],
