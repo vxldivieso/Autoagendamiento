@@ -25,6 +25,7 @@
     "@angular/router": "~13.3.3",
     "@ng-bootstrap/ng-bootstrap": "^12.0.2",
     "@popperjs/core": "^2.11.5",
+    "@sweetalert2/themes": "^5.0.10",
     "ag-grid-angular": "^27.1.1",
     "ag-grid-community": "^27.1.0",
     "bootstrap": "^5.1.3",

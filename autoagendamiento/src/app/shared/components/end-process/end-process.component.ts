@@ -13,4 +13,6 @@ export class EndProcessComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  
+
 }

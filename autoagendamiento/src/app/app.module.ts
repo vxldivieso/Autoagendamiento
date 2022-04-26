@@ -13,7 +13,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { DialogDataExampleDialog, StepperComponent } from './pages/stepper/stepper.component';
 import { SchedulingComponent } from './shared/components/scheduling/scheduling.component';
 import { CheckoutProductComponent } from './shared/components/checkoutProduct/checkoutProduct.component';
-import { DateFormProduct, DatepickerComponent } from './shared/components/datepicker/datepicker.component';
+import { DateFormProduct} from './shared/components/datepicker/datepicker.component';
 import { EndProcessComponent } from './shared/components/end-process/end-process.component';
 import { DetailComponent, EditProductComponent, EditProductDialog, EditServiceComponent, EditServiceDialog} from './shared/components/detailOrder/detailOrder.component';
 import { AgGridModule } from 'ag-grid-angular';
@@ -30,7 +30,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     ClientDataComponent,
     SchedulingComponent,
     CheckoutProductComponent,
-    DatepickerComponent,
+    DateFormProduct,
     EndProcessComponent,
     DetailComponent,
     EditProductComponent,

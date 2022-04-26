@@ -2,20 +2,6 @@ import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateService } from '../detailOrder/service/detail.service';
 import Swal from 'sweetalert2';
-@Component({
-  selector: 'datepicker',
-  template: ``,
-  styleUrls: ['./datepicker.component.scss']
-})
-export class DatepickerComponent{
-
-  myFilter = (d: Date | null): boolean => {
-    const day = (d || new Date()).getDay();
-    // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6;
-  };
-
-}
 
 
 @Component({
@@ -25,9 +11,19 @@ export class DatepickerComponent{
 
 
 export class DateFormProduct{
-  @Output()
+
+  
+  myFilter = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6;
+  }; 
+
+
   dateProductForm !: FormGroup;
   isSend:boolean = false;
+
+  
   constructor(private formBuilder: FormBuilder, 
     private api: DateService){}
   

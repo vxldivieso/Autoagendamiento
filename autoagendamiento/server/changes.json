@@ -23,30 +23,6 @@
     {
       "id": "1",
       "name": "Armado"
-    },
-    {
-      "selectService": "Instalación",
-      "id": "LdXN9fr"
-    },
-    {
-      "selectService": "Instalación",
-      "id": "M2QM5qf"
-    },
-    {
-      "selectService": "Retiro ecológico",
-      "id": "WQtuWS4"
-    },
-    {
-      "selectService": "Instalación",
-      "id": "1YSmGU_"
-    },
-    {
-      "selectService": "Instalación",
-      "id": "TZcAGMM"
-    },
-    {
-      "selectService": "Instalación",
-      "id": "RDIIL46"
     }
   ],
   "dateProduct": [
@@ -61,6 +37,10 @@
     {
       "dateProduct": "2022-04-13T04:00:00.000Z",
       "id": 3
+    },
+    {
+      "dateProduct": "2022-04-13T04:00:00.000Z",
+      "id": 4
     }
   ]
 }

@@ -30,7 +30,8 @@ export class ClientDataComponent implements OnInit {
       comuna: [''],
       city: [''],
     })
-    this.getClient()
+    this.getClient();
+    
   }
 
   getClient(){
@@ -83,9 +84,8 @@ export class ClientDataComponent implements OnInit {
   messageSuccessfull(){
     Swal.fire({
       icon: 'success',
-      title: 'Modificación enviada correctamente',
-      showConfirmButton: false,
-      timer: 3000
+      title: 'Modificación enviada correctamente, por favor presione botón "Siguiente"',
+      showConfirmButton: true,
     })
   }
   //Message Error
