@@ -47,7 +47,7 @@
     },
     {
       "id": 3,
-      "name": "Despacho"
+      "name": "Retiro Ecológico"
     }
   ],
   "products": [
@@ -124,7 +124,7 @@
       "rut": "13254895-8",
       "email": "marialopez@gmail.com",
       "phone": "945865458",
-      "phone2": "954875465",
+      "phone2": "747554544",
       "direccion": "calle las violetas 4578",
       "comuna": "La florida",
       "city": "Santiago"
@@ -135,7 +135,7 @@
       "id": 1,
       "orderId": 1,
       "quantity": 1,
-      "productName": "Closet",
+      "productName": "Sofá Seccional izquierdo HOME PIRLO CAFE 5C",
       "servicio": "Armado",
       "proveedor": "Ripley"
     },
@@ -143,8 +143,8 @@
       "id": 1,
       "orderId": 1,
       "quantity": 1,
-      "productName": "Comedor",
-      "servicio": "Despacho",
+      "productName": "Juego de comedor INNOVAMOBEL SIENA 6S",
+      "servicio": "Armado",
       "proveedor": "Ripley"
     }
   ]

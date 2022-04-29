@@ -14,3 +14,8 @@ export interface dateProduct{
     id: number;
     date: string;
 }
+
+export interface reagendar{
+    id:number;
+    date: string;
+}

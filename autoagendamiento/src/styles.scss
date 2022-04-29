@@ -34,19 +34,23 @@ $autoagendamiento-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($autoagendamiento-theme);
 
-
+//styles index.html
 
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap/scss/bootstrap-reboot';
 @import '~bootstrap/scss/bootstrap-grid';
+//as-grid css
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+
 
 body{
     margin: 0;
     background-color: #EBEDEF;
     display: grid;
     width: 100%;
-    min-height: 50vh;
+    min-height: 100%;
     grid-template-rows: auto 1fr auto;
 }   
 body::-webkit-scrollbar{
@@ -59,11 +63,7 @@ body::-webkit-scrollbar-thumb{
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-//as-grid css
-@import "ag-grid-community/dist/styles/ag-grid.css";
-@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+

@@ -10,8 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
-import { DialogDataExampleDialog, StepperComponent } from './pages/stepper/stepper.component';
-import { SchedulingComponent } from './shared/components/scheduling/scheduling.component';
+import { StepperComponent } from './pages/stepper/stepper.component';
+import { DialogDataExampleDialog, ReagendarComponent, ReagendarDialog, SchedulingComponent } from './shared/components/scheduling/scheduling.component';
 import { CheckoutProductComponent } from './shared/components/checkoutProduct/checkoutProduct.component';
 import { DateFormProduct} from './shared/components/datepicker/datepicker.component';
 import { EndProcessComponent } from './shared/components/end-process/end-process.component';
@@ -19,6 +19,7 @@ import { DetailComponent, EditProductComponent, EditProductDialog, EditServiceCo
 import { AgGridModule } from 'ag-grid-angular';
 import { ClientDataComponent } from './shared/components/client-data/client-data.component';
 import { CdkTableModule } from '@angular/cdk/table';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 //I keep the new line
 @NgModule({
@@ -29,6 +30,7 @@ import { CdkTableModule } from '@angular/cdk/table';
     StepperComponent,
     ClientDataComponent,
     SchedulingComponent,
+    ReagendarComponent,
     CheckoutProductComponent,
     DateFormProduct,
     EndProcessComponent,
@@ -38,7 +40,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     DateFormProduct,
     EditServiceComponent,
     EditServiceDialog,
-    DialogDataExampleDialog
+    DialogDataExampleDialog,
+    ReagendarDialog
   ],
   imports: [
     CommonModule,
@@ -52,7 +55,10 @@ import { CdkTableModule } from '@angular/cdk/table';
     AgGridModule,
     CdkTableModule
   ],
-  providers: [],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS,
+    useValue: { displayDefaultIndicatorType: false}
+  }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

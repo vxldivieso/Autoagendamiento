@@ -20,6 +20,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss'],
+  
 })
 export class StepperComponent {
   isEditable = false;
@@ -43,48 +44,7 @@ export class StepperComponent {
       .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
   }
 
-  openDialog() {
-    this.dialog.open(DialogDataExampleDialog,
-      {width:'500px'}
-      );
-  }
-
 }
-
-
-//View 2: ClientData
-
-
-
-
-
-
-
-
-
-
-
-
-//View 3: Scheduling modal
-@Component({
-  selector: 'dialog-data-example-dialog',
-  template:`
-  <h1 mat-dialog-title class="text-center">Condiciones del Servicio</h1>
-  <div mat-dialog-content >
-  <p>Cajas deben encontrarse selladas</p>
-  <p>Las cajas deben estar en el lugar exacto donde va a quedar producto armado para uso</p>
-  <p>Debe contar con el espacio suficiente para que técnico pueda manipular las piezas</p>
-  </div>
-  <div mat-dialog-actions [align]="'center'" >
-  <button mat-raised-button mat-dialog-close>Cerrar</button>
-  <button mat-raised-button color="primary">Agendar</button>
-</div>`,
-  styleUrls: ['./stepper.component.scss'],
-})
-export class DialogDataExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-}
-
 
 
 /**  Copyright 2022 Google LLC. All Rights Reserved.

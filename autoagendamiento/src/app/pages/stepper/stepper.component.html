@@ -4,27 +4,29 @@
 <div class="container ">
   <mat-stepper class="example-stepper" color="primary" [orientation]="(stepperOrientation | async)!" >
     <!--Verificar el producto-->
-    <mat-step  [stepControl]="firstFormGroup" label="Verifica tu Producto" >
+    <mat-step  [stepControl]="firstFormGroup" label="Verifica tu Producto" [editable]="true">
       <form [formGroup]="firstFormGroup">
-        <div class="py-4 text-center">
-          <h1>Datos del producto</h1>
-          <p class="text-center ">Corrobore los siguientes datos asociados a su producto. Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
+        <div class="py-4 px-4">
+          <h1 class="title">Datos del producto</h1>
+          <p class="subtitle col-md-10">Corrobore los siguientes datos asociados a su producto.<br> Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
         </div>
+        
         <div class="container py-2" >
           <checkoutproduct></checkoutproduct>
         </div>
-        <div class="container">
+        <p>Si está todo en orden, presione 'Continuar'</p>
+        <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
           <button mat-raised-button color="primary" matStepperNext>Continuar</button>
         </div>
       </form>
     </mat-step>
 
     <!--Verifica los datos del Cliente-->
-    <mat-step [stepControl]="secondFormGroup" label="Confirma tus datos" >
+    <mat-step [stepControl]="secondFormGroup" label="Confirma tus datos" [editable]="true">
       <form [formGroup]="secondFormGroup">
-        <div class="py-2 text-center">
-          <h1>Datos de contacto</h1>
-          <p class="text-center ">Corrobore sus datos de contacto. Puede agregar un teléfono extra.</p>
+        <div class="py-4 px-4">
+          <h1 class="title">Datos de contacto</h1>
+          <p class="subtitle">Corrobore sus datos de contacto. Puede agregar un teléfono extra.</p>
         </div>
         <div>
           <client-data></client-data>
@@ -41,30 +43,29 @@
     <!--Seleccion de un horario-->
     <mat-step [stepControl]="thirdFormGroup" label="Selección de horario">
       <form [formGroup]="thirdFormGroup">
-        <div class="py-2 text-center">
-          <h1>Selección de horario</h1>
-          <p class="text-center ">Para agendar el servicio, seleccione el bloque horario de su preferencia según las fechas disponibles.</p>
+        <div class="py-4 px-4">
+          <h1 class="title">Selección de horario</h1>
+          <p class="subtitle">Para agendar el servicio, seleccione el bloque horario de su preferencia según las fechas disponibles.</p>
         </div>
-        <div class="container">
+        <div class="container py-2">
           <scheduling></scheduling>
         </div>
-        <br>
-
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-2">
-          <button type="button" class="btn btn-dark" matStepperPrevious>Atrás</button>
-          <button mat-raised-button color="primary" (click)="openDialog()">Agendar</button>
-        </div>
-        <div class="d-grid gap-2 d-xs-flex d-lg-flex justify-content-md-center mb-2 ">
-          <button mat-raised-button color="accent" >No encuentro disponibilidad que me acomode</button>
-          <button mat-raised-button color="accent" >Necesito que me contacte un ejecutivo</button>
-          <button mat-raised-button color="accent" >Deseo agendar en otro momento</button>
-        </div>
+        
       </form>
     </mat-step>
 
     <!--Done-->
-    <mat-step  label="Listo">
-      <app-end-process></app-end-process>
+    <mat-step [stepControl]="fourFormGroup" label="Listo">
+      <form [formGroup]="fourFormGroup">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="py-4 px-4">
+              <h1 class="title">Todo listo</h1>
+              <p class="subtitle">La visita del técnico se agendó correctamente. Te enviaremos un correo con la información detallada.</p>
+            </div>
+          </div>
+        </div>
+      </form>
       <div>
         <button mat-raised-button color="primary" submit>Cerrar</button>
       </div>

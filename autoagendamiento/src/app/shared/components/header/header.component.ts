@@ -19,7 +19,6 @@ export class HeaderComponent {
     this.api.getClient()
     .subscribe(res=>{
       this.clientData = res
-      console.log(res);
     }
     )
   }

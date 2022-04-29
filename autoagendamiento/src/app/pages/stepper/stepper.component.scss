@@ -1,9 +1,25 @@
+* {
+	box-sizing: border-box;
+	font-family: 'Inter', sans-serif;
+}
 .example-stepper {
   text-align: center;
-  font-family: 'Cerebri Sans', sans-serif;
   border-radius: 5px;
   
 }
-.h1, h1 {
-  font-size: calc(1.375rem + 1.5vw);
+.title {
+  font-size: calc(1.375rem + 0.5vw);
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  color:black;
 }
+.subtitle{
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  color:#424949;
+}
+
+button{
+  border-radius: 30px;
+}
+

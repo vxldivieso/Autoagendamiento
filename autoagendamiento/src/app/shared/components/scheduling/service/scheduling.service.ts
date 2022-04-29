@@ -2,6 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
+export interface Agendamiento{
+    date: string;
+    block:string;
+}
 @Injectable({
     providedIn:'root'
 })
@@ -12,7 +16,10 @@ export class SchedulingService{
 
     }
     getScheduling(): Observable<any>{
-        return this.http.get<any>(`${this.apiURL}/dates`);
+        return this.http.get<any>(`${this.apiURL}/scheduling`);
+    }
+    postAgendamiento(date:any, block:any): Observable<Agendamiento> {
+        return this.http.post<Agendamiento>(`${this.apiURL}/agendamiento`, {date,block})
     }
 
 }

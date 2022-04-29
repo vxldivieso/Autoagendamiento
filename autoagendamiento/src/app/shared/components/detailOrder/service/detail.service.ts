@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { changeProduct, changeService, dateProduct } from "../interfaces/changes.interface";
+import { changeProduct, changeService, dateProduct, reagendar } from "../interfaces/changes.interface";
 import { DetailOrder} from "../interfaces/detail.interface";
 import {Services } from '../interfaces/detail.interface';
 
@@ -72,5 +72,19 @@ export class DateService{
     getDateProduct():Observable<dateProduct[]>{
         return this.http.get<dateProduct[]>(`${this.apiURL}/dateProduct`);
     }
+}
 
+@Injectable({
+    providedIn:'root'
+})
+export class ReagendarService{
+    private apiURL='http://localhost:3030';
+    constructor (private http : HttpClient){}
+    postReagendar(data: reagendar): Observable<reagendar>{
+        return this.http.post<reagendar>(`${this.apiURL}/reagendar`, data );
+    }
+
+    getReagendar():Observable<reagendar[]>{
+        return this.http.get<reagendar[]>(`${this.apiURL}/reagendar`);
+    }
 }

@@ -1,50 +1,22 @@
-
-<div class="container justify-content-center align-items-center py-5" >
-    <div class="row table-responsive">
-        <table class="table" mat-table [dataSource]="dataSource" matSort 
-    class="mat-elevation-z8" >
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="orderId" >
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-            N° Orden
-        </th>
-        <td mat-cell *matCellDef="let row" >  {{row.orderId}}
-    </td>
-    </ng-container>
-    <ng-container matColumnDef="quantity" >
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-            Cantidad
-        </th>
-        <td mat-cell *matCellDef="let row" >  {{row.quantity}}
-    </td>
-    </ng-container>
-    <ng-container matColumnDef="productName" >
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-            Producto
-        </th>
-        <td mat-cell *matCellDef="let row" >  {{row.productName}} <editproduct-dialog></editproduct-dialog>
-    </td>
-    </ng-container>
-    <ng-container matColumnDef="servicio" >
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-            Tipo Servicio
-        </th>
-        <td mat-cell *matCellDef="let row" >  {{row.servicio}} <editservice-dialog></editservice-dialog>
-    </td>
-    </ng-container>
-    <ng-container matColumnDef="proveedor" >
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-            Proveedor
-        </th>
-        <td mat-cell *matCellDef="let row" >  {{row.proveedor}}
-    </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+<div class="container py-4 " id="course">
+    <div class="courses-container text-center" *ngFor="let data of detail">
+        <div class="course">
+            <div class="course-preview">
+                <h6>Producto</h6>
+                <h2>{{data.productName}}</h2>
+                <h6>Cantidad</h6>
+                <h6>{{data.quantity}}</h6>
+                <editproduct-dialog></editproduct-dialog>
+            </div>
+            <div class="course-info card-body">
+                <h6 class="card-title">{{data.proveedor}}</h6>
+                <h2 class="card-text">Tipo Servicio: {{data.servicio}}</h2>
+                <h6>Número de orden: {{data.orderId}}</h6>
+                <editservice-dialog></editservice-dialog>
+            </div>
+            
+        </div>
     </div>
-    
 </div>
 
-  
+

@@ -1,22 +1,22 @@
-
-<div class="row justify-content-center py-3 mb-md-0 border-top border-bottom" *ngIf="!isSend" >
-    <div class="col-md-4 py-2 ">
-        <p >Ingrese la fecha en la que debería haber llegado su producto</p>
-    </div>
-    <div class="col-md-4">
-        <form [formGroup]="dateProductForm">
-            <mat-form-field color="warn" appearance="fill">
-                <mat-label>Seleccione una fecha</mat-label>
-                <input formControlName="dateProduct" [matDatepickerFilter]="myFilter" matInput [matDatepicker]="picker1">
-                <mat-hint>MM/DD/AAAA</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <button [disabled]="!dateProductForm.valid" type="submit" (click)="onSubmit()" mat-raised-button color="accent">Guardar fecha</button>
-    </div>
+<div class="container" id="card">
+    <div class="card" *ngIf="!isSend" >
+        <div class="card-body">
+          <h5 class="card-title">Ingrese la fecha estimada de despacho de su(s) producto(s).</h5>
+          <div class="card-text">
+                <form [formGroup]="dateProductForm">
+                    <mat-form-field color="primary" appearance="outline">
+                        <mat-label>Seleccione una fecha</mat-label>
+                        <input formControlName="dateProduct" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1">
+                        <mat-hint>MM/DD/AAAA</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </form>
+            </div>
+            <button [disabled]="!dateProductForm.valid" type="submit" (click)="onSubmit()" mat-raised-button color="primary">Guardar fecha</button>
+        </div>
+      </div>
 </div>
+
 
 

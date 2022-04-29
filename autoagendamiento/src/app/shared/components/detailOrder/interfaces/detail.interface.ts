@@ -1,6 +1,6 @@
 export interface DetailOrder{
     id: number;
-    orderId: number;
+    orderId: string;
     quantity: number;
     productName: string;
     servicio: string;

@@ -7,19 +7,12 @@ import Swal from 'sweetalert2';
 @Component({
   selector:'dateProduct',
   templateUrl: './datepicker.component.html',
+  styleUrls: ['./datepicker.component.scss']
 })
 
-
 export class DateFormProduct{
-
-  
-  myFilter = (d: Date | null): boolean => {
-    const day = (d || new Date()).getDay();
-    // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6;
-  }; 
-
-
+  minDate = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())
+  maxDate = new Date(2030, 11, 1); 
   dateProductForm !: FormGroup;
   isSend:boolean = false;
 
@@ -56,7 +49,8 @@ export class DateFormProduct{
       icon: 'success',
       title: 'Fecha ingresada correctamente',
       showConfirmButton: true,
-      timer: 3000
+      timer: 3000,
+      backdrop: true
     })
   }
   //Message Error
@@ -66,6 +60,7 @@ export class DateFormProduct{
       title: 'Oops...',
       text: 'No pudimos completar el proceso',
       showConfirmButton: true,
+      backdrop: true
     })
   }
 

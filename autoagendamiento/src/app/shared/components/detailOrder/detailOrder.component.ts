@@ -18,24 +18,19 @@ import Swal from 'sweetalert2';
   styleUrls: ['./detailOrder.component.scss']
 })
 export class DetailComponent implements OnInit {
-  detailsOrder!: DetailOrder[];
-  displayedColumns : string[] = ['orderId', 'quantity', 'productName','servicio','proveedor'];
-  dataSource!: MatTableDataSource<any>;
-
-  @ViewChild(MatPaginator) paginator!:MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  detail : DetailOrder[] = [];
+  columns = ["N°Orden", "Cantidad", "Producto", "Tipo Servicio", "Proveedor"]
+  index = ["orderID", "quantity","productName","servicio","proveedor"]
   
-  constructor(private detailOrderSvc: DetailOrderService) { }
+  constructor(private api: DetailOrderService) { }
   ngOnInit(): void {
-    this.getCalendario();
+    this.getOrderDetail();
   }
-  getCalendario(){
-    this.detailOrderSvc.getDetailOrder()
+  getOrderDetail(){
+    this.api.getDetailOrder()
     .subscribe({
       next:(res)=>{
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.detail = res;
       }
     })
   }
@@ -44,8 +39,8 @@ export class DetailComponent implements OnInit {
 //EditProduct
 @Component({
   selector: 'edit-product',
-  templateUrl: './editproduct/editproduct.component.html',
-  styleUrls: ['./editproduct/editproduct.component.scss']
+  templateUrl: './editproduct/editProduct.component.html',
+  styleUrls: ['./editproduct/editProduct.component.scss']
 })
 
 
@@ -75,13 +70,14 @@ export class EditProductComponent implements OnInit{
       })
     }
   }
-  //Message successfull
+//Message successfull
 messageSuccessfull(){
   Swal.fire({
     icon: 'success',
     title: 'Modificación enviada correctamente',
     showConfirmButton: true,
-    timer: 3000
+    timer: 5000,
+    backdrop: true
   })
 }
 //Message Error
@@ -91,6 +87,7 @@ messageError(){
     title: 'Oops...',
     text: 'No pudimos enviar la modificación',
     showConfirmButton: true,
+    backdrop: true
   })
 }
   
@@ -100,7 +97,8 @@ messageError(){
 //Form edit product dialog
 @Component({
   selector: 'editproduct-dialog',
-  template: `<button mat-button (click)="openDialog()"><mat-icon>create</mat-icon></button>`,
+  template: `<a (click)="openDialog()">Editar producto</a>`,
+  styleUrls: ['./detailOrder.component.scss']
 })
 export class EditProductDialog{
   constructor(private dialog: MatDialog ){}
@@ -151,7 +149,8 @@ messageSuccessfull(){
     icon: 'success',
     title: 'Modificación enviada correctamente',
     showConfirmButton: true,
-    timer: 3000
+    timer: 5000,
+    backdrop: true
   })
 }
 //Message Error
@@ -161,6 +160,7 @@ messageError(){
     title: 'Oops...',
     text: 'No pudimos enviar la modificación',
     showConfirmButton: true,
+    backdrop: true
   })
 }
 }
@@ -169,7 +169,8 @@ messageError(){
 
 @Component({
   selector: 'editservice-dialog',
-  template: `<button mat-button (click)="openDialog()"><mat-icon>create</mat-icon></button>`,
+  template: `<a (click)="openDialog()" class="btn">Editar servicio</a>`,
+  styleUrls: ['./detailOrder.component.scss']
 })
 export class EditServiceDialog{
   constructor(private dialog: MatDialog ){}

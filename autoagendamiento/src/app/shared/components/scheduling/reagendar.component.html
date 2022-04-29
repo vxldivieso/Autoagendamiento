@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Para reagendar servicio</h1>
+ <div mat-dialog-content >
+ <p>Seleccione la fecha en la que desea reagendar</p>
+ <form [formGroup]="reagendarForm">
+ <mat-form-field appearance="outline">
+  <mat-label>Selecciona una fecha</mat-label>
+  <input [min]="minDate" [max]="maxDate" formControlName="date" matInput [matDatepicker]="picker">
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+ </form>
+ </div>
+ <div mat-dialog-actions [align]="'center'" >
+ <button mat-raised-button mat-dialog-close>Cerrar</button>
+ <button mat-raised-button color="primary" (click)="onSubmit()">Enviar</button>
+</div>

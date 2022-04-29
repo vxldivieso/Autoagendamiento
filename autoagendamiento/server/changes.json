@@ -5,24 +5,16 @@
       "skuProduct": "f23424FSSS",
       "img": "C:\\fakepath\\Logo.jpg",
       "id": 1
-    },
-    {
-      "nameProduct": "",
-      "skuProduct": "F45487212",
-      "img": "",
-      "id": 2
-    },
-    {
-      "nameProduct": "",
-      "skuProduct": "",
-      "img": "",
-      "id": 3
     }
   ],
   "editService": [
     {
       "id": "1",
       "name": "Armado"
+    },
+    {
+      "selectService": "Instalación",
+      "id": "Q5nW_W1"
     }
   ],
   "dateProduct": [
@@ -31,16 +23,18 @@
       "id": 1
     },
     {
-      "dateProduct": "2022-04-12T04:00:00.000Z",
+      "dateProduct": "2022-04-30T04:00:00.000Z",
       "id": 2
+    }
+  ],
+  "reagendar": [
+    {
+      "date": "2022-04-29T04:00:00.000Z",
+      "id": 1
     },
     {
-      "dateProduct": "2022-04-13T04:00:00.000Z",
-      "id": 3
-    },
-    {
-      "dateProduct": "2022-04-13T04:00:00.000Z",
-      "id": 4
+      "date": "2022-04-30T04:00:00.000Z",
+      "id": 2
     }
   ]
 }

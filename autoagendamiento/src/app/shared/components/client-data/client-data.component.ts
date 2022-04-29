@@ -86,6 +86,7 @@ export class ClientDataComponent implements OnInit {
       icon: 'success',
       title: 'Modificación enviada correctamente, por favor presione botón "Siguiente"',
       showConfirmButton: true,
+      backdrop: true
     })
   }
   //Message Error
@@ -93,7 +94,8 @@ export class ClientDataComponent implements OnInit {
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'No pudimos enviar la modificación'
+      text: 'No pudimos enviar la modificación',
+      backdrop: true
     })
   }
 
