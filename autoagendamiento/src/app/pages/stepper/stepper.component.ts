@@ -5,6 +5,10 @@ import {StepperOrientation} from '@angular/material/stepper';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CheckoutProductComponent } from 'src/app/shared/components/checkoutProduct/checkoutProduct.component';
+import { ClientDataComponent } from 'src/app/shared/components/client-data/client-data.component';
+import { SchedulingComponent } from 'src/app/shared/components/scheduling/scheduling.component';
+import { EndProcessComponent } from 'src/app/shared/components/end-process/end-process.component';
 
 
 
@@ -25,16 +29,16 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class StepperComponent {
   isEditable = false;
   firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
+    firstCtrl: [CheckoutProductComponent, Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    secondCtrl: [ClientDataComponent, Validators.required],
   });
   thirdFormGroup = this._formBuilder.group({
-    thirdCtrl: ['', Validators.required],
+    thirdCtrl: [SchedulingComponent, Validators.required],
   });
   fourFormGroup = this._formBuilder.group({
-    thirdCtrl: ['', Validators.required],
+    fourCtrl: [EndProcessComponent, Validators.required],
   });
   stepperOrientation: Observable<StepperOrientation>;
 

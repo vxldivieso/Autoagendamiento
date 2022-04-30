@@ -39,15 +39,19 @@
   "categories": [
     {
       "id": 1,
-      "name": "Armado"
+      "name": "Armado Mueble"
     },
     {
       "id": 2,
-      "name": "Instalación"
+      "name": "Armado Parrilla"
     },
     {
       "id": 3,
-      "name": "Retiro Ecológico"
+      "name": "Inspección Técnica de muebles"
+    },
+    {
+      "id": 4,
+      "name": "Retiro ecológico"
     }
   ],
   "products": [
@@ -124,7 +128,7 @@
       "rut": "13254895-8",
       "email": "marialopez@gmail.com",
       "phone": "945865458",
-      "phone2": "747554544",
+      "phone2": "",
       "direccion": "calle las violetas 4578",
       "comuna": "La florida",
       "city": "Santiago"
@@ -136,15 +140,7 @@
       "orderId": 1,
       "quantity": 1,
       "productName": "Sofá Seccional izquierdo HOME PIRLO CAFE 5C",
-      "servicio": "Armado",
-      "proveedor": "Ripley"
-    },
-    {
-      "id": 1,
-      "orderId": 1,
-      "quantity": 1,
-      "productName": "Juego de comedor INNOVAMOBEL SIENA 6S",
-      "servicio": "Armado",
+      "servicio": "Armado Mueble",
       "proveedor": "Ripley"
     }
   ]

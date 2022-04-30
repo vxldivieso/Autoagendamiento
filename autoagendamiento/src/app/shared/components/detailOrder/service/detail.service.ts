@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { changeProduct, changeService, dateProduct, reagendar } from "../interfaces/changes.interface";
 import { DetailOrder} from "../interfaces/detail.interface";
-import {Services } from '../interfaces/detail.interface';
 
 @Injectable({
     providedIn:'root'
@@ -27,18 +26,14 @@ export class ModifyProductService{
     private apiURL='http://localhost:3030';
 
     constructor (private http : HttpClient){}
-
     postChangeProduct(data: changeProduct): Observable<changeProduct>{
         return this.http.post<changeProduct>(`${this.apiURL}/editProduct`, data );
     }
-
     getChangeProduct():Observable<changeProduct[]>{
         return this.http.get<changeProduct[]>(`${this.apiURL}/editProduct`);
     }
-
-    
-    
 }
+
 @Injectable({
     providedIn:'root'
 })

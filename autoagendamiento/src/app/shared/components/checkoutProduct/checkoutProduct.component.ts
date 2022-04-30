@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { CheckoutService } from './service/checkout.service';
 
 @Component({
   selector: 'checkoutproduct',
@@ -6,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./checkoutProduct.component.scss']
 })
 export class CheckoutProductComponent implements OnInit {
-  isTrue = false;
+  //variables hidden forms
   isFalse = false;
-  constructor() { }
+  isTrue = false;
+  
+  constructor(private api : CheckoutService) { }
 
   ngOnInit(): void {
   }
@@ -16,6 +19,21 @@ export class CheckoutProductComponent implements OnInit {
   onTrueorFalse(value: boolean): void{
     this.isTrue = value;
     this.isFalse = value;
+    this.onSubmit();
   }
 
+  onSubmit(){
+    this.api.postCheckout(this.isFalse).subscribe(
+      {
+        next:(res)=>{
+          console.log('Tiene el producto en sus manos? si es true, no lo tiene, si es false, si lo tiene', res);
+        },
+        error: (res) =>{
+          console.log('error');
+          
+        }
+      }
+    )
+  }
 }
+

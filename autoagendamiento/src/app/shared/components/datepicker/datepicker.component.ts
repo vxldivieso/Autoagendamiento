@@ -3,11 +3,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateService } from '../detailOrder/service/detail.service';
 import Swal from 'sweetalert2';
 
+import  {trigger, style, transition, animate,state } from '@angular/animations';
+
 
 @Component({
   selector:'dateProduct',
   templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.scss']
+  styleUrls: ['./datepicker.component.scss'],
+  animations:[
+    trigger('enterState',[
+      state('void',style({
+        opacity: 0
+      })),
+      transition(':enter',[
+        animate(300,style({
+          opacity: 1
+        }))
+      ])
+    ])
+  ]
 })
 
 export class DateFormProduct{

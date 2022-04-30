@@ -37,7 +37,7 @@
                     <mat-error *ngIf="clientForm.get('phone2')?.invalid">Ingrese un número con 9 dígitos</mat-error>
                 </mat-form-field>
                 <!--Direccion-->
-                <mat-form-field class="col-md-6 " appearance="fill">
+                <mat-form-field class="col-md-6" appearance="fill">
                     <mat-label for="direccion" class="form-label">Dirección</mat-label>
                     <input matInput type="text" id="direccion" placeholder="Calle #XXXX" disabled > {{row.direccion}} 
                 
@@ -51,7 +51,11 @@
                     <input matInput type="text" id="city" placeholder="Ciudad" disabled > {{row.city}}
                 </mat-form-field>
             </div>
-            <button mat-raised-button color="primary" [disabled]="!clientForm.valid" (click)="updateClientDetails()">Actualizar datos</button>  
+            <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
+                <button mat-raised-button color="accent" [routerLink]="['contact']" >Los datos son incorrectos</button>
+                <button mat-raised-button color="primary" (click)="updateClientDetails()">Actualizar datos</button>
+            </div>
+             
         </form>
     </div>
     

@@ -30,5 +30,8 @@
       "5": "15:00 - 17:00"
     }
   },
-  "agendamiento": {}
+  "agendamiento": {
+    "date": "2022-04-20",
+    "block": 1
+  }
 }

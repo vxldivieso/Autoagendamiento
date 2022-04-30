@@ -75,6 +75,7 @@ messageSuccessfull(){
   Swal.fire({
     icon: 'success',
     title: 'Modificación enviada correctamente',
+    text: 'Nos contactaremos para verificar la información',
     showConfirmButton: true,
     timer: 5000,
     backdrop: true
@@ -117,7 +118,7 @@ export class EditProductDialog{
   styleUrls: ['./editService/editService.component.scss']
 })
 export class EditServiceComponent implements OnInit{
-  services = ["Armado", "Instalación", "Retiro ecológico"];
+  services = ["Armado Mueble", "Armado Parrilla", "Inspección Técnica de muebles", "Retiro ecológico"];
   changeServiceForm !: FormGroup;
   constructor(private formBuilder: FormBuilder, 
     private api: ModifyService){}
@@ -148,6 +149,7 @@ messageSuccessfull(){
   Swal.fire({
     icon: 'success',
     title: 'Modificación enviada correctamente',
+    text: 'Nos contactaremos para verificar la información',
     showConfirmButton: true,
     timer: 5000,
     backdrop: true

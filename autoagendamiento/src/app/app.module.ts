@@ -11,7 +11,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { StepperComponent } from './pages/stepper/stepper.component';
-import { DialogDataExampleDialog, ReagendarComponent, ReagendarDialog, SchedulingComponent } from './shared/components/scheduling/scheduling.component';
+import { ReagendarComponent, ReagendarDialog, SchedulingComponent } from './shared/components/scheduling/scheduling.component';
 import { CheckoutProductComponent } from './shared/components/checkoutProduct/checkoutProduct.component';
 import { DateFormProduct} from './shared/components/datepicker/datepicker.component';
 import { EndProcessComponent } from './shared/components/end-process/end-process.component';
@@ -40,7 +40,6 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     DateFormProduct,
     EditServiceComponent,
     EditServiceDialog,
-    DialogDataExampleDialog,
     ReagendarDialog
   ],
   imports: [

@@ -5,6 +5,12 @@
       "skuProduct": "f23424FSSS",
       "img": "C:\\fakepath\\Logo.jpg",
       "id": 1
+    },
+    {
+      "nameProduct": "",
+      "skuProduct": "",
+      "img": "",
+      "id": 2
     }
   ],
   "editService": [
@@ -25,6 +31,10 @@
     {
       "dateProduct": "2022-04-30T04:00:00.000Z",
       "id": 2
+    },
+    {
+      "dateProduct": "2022-05-11T04:00:00.000Z",
+      "id": 3
     }
   ],
   "reagendar": [

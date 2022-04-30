@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { SchedulingService } from './service/scheduling.service';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ReagendarService } from '../detailOrder/service/detail.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from 'src/app/pages/stepper/stepper.component';
+import { SchedulingService } from './service/scheduling.service';
+import { ReagendarService } from '../detailOrder/service/detail.service';
+import { ChildActivationStart } from '@angular/router';
+
 
 @Component({
   selector: 'scheduling',
@@ -19,13 +18,13 @@ import { DialogData } from 'src/app/pages/stepper/stepper.component';
 })
 
 export class SchedulingComponent implements OnInit{
+  //table
   displayedColumns : string[] = ['date','bloques']
   dataSource!: MatTableDataSource<any>;
 
   date!: string;
   bloque!: number;
-
-  isSelect = false;
+  blockSelect !: boolean;
 
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -72,40 +71,57 @@ export class SchedulingComponent implements OnInit{
   select(date:string, bloque:number){
     this.date = date;
     this.bloque = bloque;
-    console.log(`bloque ${bloque} del dia ${date} `)
-    return true;
+    if (this.date,this.bloque){
+      this.blockSelect = true;
+      return console.log(`bloque ${bloque} del día ${date}`);
+    }
+    else
+      this.blockSelect = false;
   }
   
-  isSelectOrNo(value: boolean): void{
-    this.isSelect = value;
-  }
-
   //Agendar
   agendar(){
+    if(this.blockSelect == true ){
       this.api.postAgendamiento(this.date,this.bloque).subscribe(
         {
           next:(res)=>{
-            this.messageSuccessfull();
-  
+            console.log(res);
           },
-          error: () =>{
+          error: (res) =>{
             this.messageError();
           }
+
         }
       )
-      
-    
+    }
   }
-
   //Message successfull
   messageSuccessfull(){
-    Swal.fire({
-      icon: 'success',
-      title: 'Visita agendada correctamente',
-      showConfirmButton: true,
-      timer: 3000,
-      backdrop: true
-    })
+    if(this.blockSelect == true){
+      Swal.fire({
+        icon: 'info',
+        title: 'Condiciones del servicio',
+        html: 
+        '<ol class="text-left">'+
+        '<li>Cajas deben encontrarse selladas</li>'+
+        '<li>Las cajas deben estar en el lugar exacto donde va a quedar producto armado para uso</li>'+
+        '<li>Debe contar con el espacio suficiente para que técnico pueda manipular las piezas</li>'+
+        '</ol>',
+        showDenyButton: true,
+        confirmButtonColor:'black',
+        confirmButtonText: 'Agendar',
+        denyButtonText: `Cancelar`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire(  `Visita agendada correctamente para el día `, `${this.date}`, 'success')
+          this.agendar()
+        }
+      })
+    }
+    else
+    this.messageErrorSelect();
+    
   }
   //Message Error
   messageError(){
@@ -117,35 +133,20 @@ export class SchedulingComponent implements OnInit{
       backdrop: true
     })
   }
-
-  //Dialog modal condiciones
-  openDialog() {
-    console.log(`Bloque seleccionado: ${this.bloque} en el día ${this.date} `);
-    this.dialog.open(DialogDataExampleDialog,
-      {width:'500px'}
-      );
+  //Error select
+  messageErrorSelect(){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Por favor selecciona un bloque horario',
+      showConfirmButton: true,
+      confirmButtonColor:'black',
+      backdrop: true
+    })
   }
+
 }
 
-
-//Dialog - Modal condiciones del servicio
-@Component({
-  selector: 'dialog-data-example-dialog',
-  template:`<h1 mat-dialog-title class="text-center">Condiciones del Servicio</h1>
-  <div mat-dialog-content >
-  <p>Cajas deben encontrarse selladas</p>
-  <p>Las cajas deben estar en el lugar exacto donde va a quedar producto armado para uso</p>
-  <p>Debe contar con el espacio suficiente para que técnico pueda manipular las piezas</p>
-  </div>
-  <div mat-dialog-actions [align]="'center'" >
-  <button mat-raised-button mat-dialog-close>Cerrar</button>
-  <button mat-raised-button color="primary">OK</button>
-</div>`,
-  styleUrls: ['./scheduling.component.scss'],
-})
-export class DialogDataExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-}
 
 //Modal Reagendar
 @Component({
@@ -208,7 +209,7 @@ messageError(){
 @Component({
   selector: 'button-reagendar',
   template: `
-  <button mat-raised-button color="warn" (click)="openDialog()">Deseo agendar en otro momento</button>
+  <button mat-raised-button color="accent" (click)="openDialog()">Deseo agendar en otro momento</button>
   
   `,
   styleUrls: ['./scheduling.component.scss'],
@@ -222,4 +223,8 @@ export class ReagendarDialog{
   }
 }
 
+
+function isConfirmed(isConfirmed: any) {
+  throw new Error('Function not implemented.');
+}
 

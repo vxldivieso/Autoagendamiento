@@ -68,15 +68,18 @@ export class ClientDataComponent implements OnInit {
     this.clientModelObj.comuna = this.clientForm.value.comuna;
     this.clientModelObj.city = this.clientForm.value.city;
 
-    this.api.putClient(this.clientModelObj, this.clientModelObj.id).subscribe({
-      next:(res)=>{
-        this.messageSuccessfull();
-      },
-      error: () =>{
-        this.messageError();
+    if (this.clientForm.valid){
+      this.api.putClient(this.clientModelObj, this.clientModelObj.id).subscribe({
+        next:(res)=>{
+          this.messageSuccessfull();
+        },
+        error: () =>{
+          this.messageError();
+        }
       }
+      )
     }
-    )
+    
 
   }
 

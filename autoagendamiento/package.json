@@ -9,7 +9,8 @@
     "test": "ng test",
     "serverAPI": "json-server --watch server/db.json --port 3000",
     "schedulingAPI": "json-server --watch server/scheduling1.json --port 5000",
-    "changeAPI": "json-server --watch server/changes.json --port 3030"
+    "changeAPI": "json-server --watch server/changes.json --port 3030",
+    "checkoutAPI": "json-server --watch server/checkout.json --port 4040"
   },
   "private": true,
   "dependencies": {
