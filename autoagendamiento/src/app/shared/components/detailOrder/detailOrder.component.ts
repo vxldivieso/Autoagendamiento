@@ -19,8 +19,6 @@ import Swal from 'sweetalert2';
 })
 export class DetailComponent implements OnInit {
   detail : DetailOrder[] = [];
-  columns = ["N°Orden", "Cantidad", "Producto", "Tipo Servicio", "Proveedor"]
-  index = ["orderID", "quantity","productName","servicio","proveedor"]
   
   constructor(private api: DetailOrderService) { }
   ngOnInit(): void {

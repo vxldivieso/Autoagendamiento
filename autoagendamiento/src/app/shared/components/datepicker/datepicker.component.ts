@@ -1,5 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { DateService } from '../detailOrder/service/detail.service';
 import Swal from 'sweetalert2';
 
@@ -37,7 +37,7 @@ export class DateFormProduct{
   ngOnInit(): void {
     this.dateProductForm = this.formBuilder.group({
       dateProduct: ['',Validators.required],
-    })
+    });
   }
 
   onSubmit(): void{
