@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientDataModel } from './client-data.model';
 import { ClientDataService } from './service/clientData.service';
 import Swal from 'sweetalert2';
@@ -7,20 +7,16 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'client-data',
   templateUrl: './client-data.component.html',
-  styleUrls: ['./client-data.component.scss'],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
+  styleUrls: ['./client-data.component.scss']
 })
 export class ClientDataComponent implements OnInit {
-  form !: FormGroup;
   clientForm !: FormGroup;
-
   clientModelObj: ClientDataModel = new ClientDataModel();
   showUpdate !: boolean;
   clientData:any;
   message:boolean =false;
-  
   constructor( private formBuilder: FormBuilder,
-    private api: ClientDataService, private ctrlContainer: FormGroupDirective ) { }
+    private api: ClientDataService ) { }
 
   ngOnInit(): void {
     this.clientForm = this.formBuilder.group({
@@ -33,10 +29,9 @@ export class ClientDataComponent implements OnInit {
       direccion: [''],
       comuna: [''],
       city: [''],
-    });
-    this.form = this.ctrlContainer.form;
-    //this.form.addControl("clientData", this.clientForm);
+    })
     this.getClient();
+    
   }
 
   getClient(){

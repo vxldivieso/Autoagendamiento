@@ -1,15 +1,13 @@
-import { AfterViewInit, Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SchedulingService } from './service/scheduling.service';
 import { ReagendarService } from '../detailOrder/service/detail.service';
-import { MatStepper, MatStepperNext } from '@angular/material/stepper';
-import { StepperModule } from 'src/app/pages/stepper/stepper.module';
-
+import { ChildActivationStart } from '@angular/router';
 
 
 @Component({
@@ -19,20 +17,19 @@ import { StepperModule } from 'src/app/pages/stepper/stepper.module';
   
 })
 
-export class SchedulingComponent implements OnInit {
+export class SchedulingComponent implements OnInit{
   //table
   displayedColumns : string[] = ['date','bloques']
   dataSource!: MatTableDataSource<any>;
 
-  date !: string;
-  bloque !: number;
+  date!: string;
+  bloque!: number;
   blockSelect !: boolean;
 
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   
-  
-  constructor(private api: SchedulingService) {}
+  constructor(private dialog: MatDialog, private api: SchedulingService) {}
 
   ngOnInit(): void {
     this.getCalendario()
@@ -117,8 +114,8 @@ export class SchedulingComponent implements OnInit {
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire(  `Visita agendada correctamente para el día `, `${this.date}`, 'success');
-          this.agendar();
+          Swal.fire(  `Visita agendada correctamente para el día `, `${this.date}`, 'success')
+          this.agendar()
         }
       })
     }
@@ -126,7 +123,6 @@ export class SchedulingComponent implements OnInit {
     this.messageErrorSelect();
     
   }
-  
   //Message Error
   messageError(){
     Swal.fire({
@@ -148,7 +144,6 @@ export class SchedulingComponent implements OnInit {
       backdrop: true
     })
   }
-
 
 }
 
