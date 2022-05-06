@@ -79,7 +79,8 @@
               "browserTarget": "autoagendamiento:build:production"
             },
             "development": {
-              "browserTarget": "autoagendamiento:build:development"
+              "browserTarget": "autoagendamiento:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

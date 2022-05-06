@@ -1,15 +1,9 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { switchMap, tap } from 'rxjs';
-import { DetailOrder, Services } from './interfaces/detail.interface';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { DetailOrderService, ModifyProductService, ModifyService } from './service/detail.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DetailOrderService, ModifyProductService, ModifyService } from '../../../service/detail.service';
 import Swal from 'sweetalert2';
-
-
+import { ActivatedRoute } from '@angular/router';
 
 //DetailOrder
 @Component({
@@ -18,22 +12,25 @@ import Swal from 'sweetalert2';
   styleUrls: ['./detailOrder.component.scss']
 })
 export class DetailComponent implements OnInit {
-  detail : DetailOrder[] = [];
-  columns = ["N°Orden", "Cantidad", "Producto", "Tipo Servicio", "Proveedor"]
-  index = ["orderID", "quantity","productName","servicio","proveedor"]
+  details:any
+
   
-  constructor(private api: DetailOrderService) { }
+  order!: number;
+  token!: string;
+  constructor(private api: DetailOrderService, private route : ActivatedRoute) {
+    this.order = this.route.snapshot.params['order'];
+    this.token = this.route.snapshot.params['token'];
+   }
   ngOnInit(): void {
-    this.getOrderDetail();
+    this.getOrderId()
+
   }
-  getOrderDetail(){
-    this.api.getDetailOrder()
-    .subscribe({
-      next:(res)=>{
-        this.detail = res;
-      }
+  getOrderId(){
+    this.api.getOrderId(this.order, this.token).subscribe((resp:any)=>{
+      this.details = resp;
     })
   }
+  
 }
 
 //EditProduct
@@ -72,23 +69,41 @@ export class EditProductComponent implements OnInit{
   }
 //Message successfull
 messageSuccessfull(){
-  Swal.fire({
-    icon: 'success',
-    title: 'Modificación enviada correctamente',
-    text: 'Nos contactaremos para verificar la información',
-    showConfirmButton: true,
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom',
+    showConfirmButton: false,
     timer: 5000,
-    backdrop: true
+    timerProgressBar: true,
+    customClass: {
+      popup: 'colored-toast'
+    },
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  Toast.fire({
+    icon: 'success',
+    title: 'Verificaremos los datos'
   })
 }
 //Message Error
 messageError(){
-  Swal.fire({
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  Toast.fire({
     icon: 'error',
-    title: 'Oops...',
-    text: 'No pudimos enviar la modificación',
-    showConfirmButton: true,
-    backdrop: true
+    title: 'Ups.. Algo ocurrió'
   })
 }
   
@@ -144,25 +159,43 @@ export class EditServiceComponent implements OnInit{
     }
   }
 
-    //Message successfull
+//Message successfull
 messageSuccessfull(){
-  Swal.fire({
-    icon: 'success',
-    title: 'Modificación enviada correctamente',
-    text: 'Nos contactaremos para verificar la información',
-    showConfirmButton: true,
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom',
+    showConfirmButton: false,
     timer: 5000,
-    backdrop: true
+    timerProgressBar: true,
+    customClass: {
+      popup: 'colored-toast'
+    },
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  Toast.fire({
+    icon: 'success',
+    title: 'Verificaremos los datos',
   })
 }
 //Message Error
 messageError(){
-  Swal.fire({
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  Toast.fire({
     icon: 'error',
-    title: 'Oops...',
-    text: 'No pudimos enviar la modificación',
-    showConfirmButton: true,
-    backdrop: true
+    title: 'Ups.. Algo ocurrió'
   })
 }
 }
@@ -181,7 +214,11 @@ export class EditServiceDialog{
       width:'500px'
     });
   }
+  closeDialog(){
+    this.dialog.closeAll();
+  }
 }
+
 
 
 

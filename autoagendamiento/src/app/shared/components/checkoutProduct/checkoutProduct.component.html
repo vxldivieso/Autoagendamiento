@@ -2,35 +2,35 @@
 <!--if the service is "Despacho" this check doesn´t have to show to the user -->
 
 <div class="checkout ">
-  <ng-container>
-    <div class="px-2">
-      <div class="row">
-        <div class="col-md-12">
+  <div class="px-2">
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="subForm">
           <p>¿El producto está en sus manos?</p>
-          <mat-radio-group color="primary">
-            <mat-radio-button value="Si" (change)="onTrueorFalse(false)">
-              Sí
-            </mat-radio-button>
-            <mat-radio-button value="No"(change)="onTrueorFalse(true)">
-              No
-            </mat-radio-button>
-          </mat-radio-group>
-        </div>
+        <mat-radio-group formControlName="haveProduct" color="primary">
+          <mat-radio-button value="Si" (change)="onTrueorFalse(false)">
+            Si
+          </mat-radio-button>
+          <mat-radio-button  value="No"(change)="onTrueorFalse(true)">
+            No
+          </mat-radio-button>
+        </mat-radio-group>
+        </form>
       </div>
     </div>
-  </ng-container>
+  </div>
 </div>
 
 <!--Hideform no-->
-<!--Aquí se debe mostrar de igual forma el form de abajo-->
-
 <ng-container *ngIf="isTrue then showDatepicker else showProductData" >
 </ng-container>
 <!--Show date picker-->
 <ng-template #showDatepicker>
   <div class="container" >
-    <br>
+    <form [formGroup]="subForm">
+      <br>
         <dateProduct></dateProduct>
+    </form>
   </div>
 </ng-template>
 
@@ -41,6 +41,5 @@
 <ng-template #showProductData>
   <detail-order></detail-order>
 </ng-template>
-
 
 

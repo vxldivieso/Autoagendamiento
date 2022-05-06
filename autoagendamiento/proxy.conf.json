@@ -1,0 +1,8 @@
+{
+    "/v3/*":{
+        "target": "https://api.demo.maydayservicios.com",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin":true
+    }
+}

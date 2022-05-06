@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WrongdataComponent } from './wrongdata.component';
+import { EjecutivoComponent, WrongdataComponent } from './wrongdata.component';
 
 const routes: Routes = [
-  { path: '', component: WrongdataComponent }
+  { path: '', component: WrongdataComponent },
+  { path: 'ejecutivo', component: EjecutivoComponent }
 ];
 
 @NgModule({

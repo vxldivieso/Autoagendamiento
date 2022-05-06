@@ -1,12 +1,9 @@
-export class ClientDataModel{
-    id: number = 0;
-    name: string = '';
-    lastname: string = '';
-    rut: string = '';
-    email: string = '';
-    phone: string = '';
-    phone2: string = '';
-    direccion: string = '';
-    comuna: string = '';
-    city: string = '';
+export class ContactClient{
+    rut:     string = '';
+    address: string = '';
+    phone:   string = '';
+    name:    string = '';
+    county:  string = '';
+    phone2:  string = '';
+    email:   string = '';
 }

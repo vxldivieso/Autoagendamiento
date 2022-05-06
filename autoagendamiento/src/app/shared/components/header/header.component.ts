@@ -1,6 +1,7 @@
 import { Component, } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs';
-import { ClientDataService } from '../client-data/service/clientData.service';
+import { DetailOrderService } from '../../../service/detail.service';
 
 @Component({
   selector: 'app-header',
@@ -10,17 +11,21 @@ import { ClientDataService } from '../client-data/service/clientData.service';
 export class HeaderComponent {
   
   clientData:any;
-  constructor(private api: ClientDataService ) { }
+  order!: number;
+  token!: string;
+  constructor(private api: DetailOrderService ,private route : ActivatedRoute ) {
+    this.order = this.route.snapshot.params['order'];
+    this.token = this.route.snapshot.params['token'];
+   }
 
   ngOnInit(): void {
-    this.getClient();
+    
   }
-  getClient(){
-    this.api.getClient()
-    .subscribe(res=>{
-      this.clientData = res
-    }
-    )
+  getClientData(){
+    this.api.getOrderId(this.order,this.token)
+    .subscribe((res:any)=>{
+      this.clientData = res.contact;
+    })
   }
  
 }

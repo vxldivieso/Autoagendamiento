@@ -1,3 +1,103 @@
-svg{
-    color: #48EE22;
+* {
+	box-sizing: border-box;
+	font-family: 'Inter', sans-serif;
+	h1{
+		font-family: 'Inter', sans-serif;
+	}
+}
+#course{
+	width: 80%;
+	
+}
+
+.course {
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	margin: 20px;
+	overflow: hidden;
+	justify-content: center;
+	align-items: center;
+}
+
+.course h6 {
+	
+	opacity: 0.6;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.course h2 {
+	text-align: center;
+	letter-spacing: 1px;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.course-info{
+	background-color: #424242;
+	color: white;
+}
+
+a {
+	color: #fff;
+	display: inline-block;
+	font-size: 10px;
+	text-decoration: none;
+	text-align: center;
+	letter-spacing: 1px;
+	cursor: pointer;
+}
+a:hover {
+	transition: 1s;
+	border-bottom: #ddd;
+}
+
+
+.btn {
+	background-color: #424242;
+	border-radius: 50px;
+	color: #fff;
+	font-size: 10px;
+	padding: 12px 25px;
+}
+.btn:hover{
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.order{
+	text-align: left;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Inter', sans-serif;
+	
+	.card-body{
+		border-left: 3px solid #00E5FF;
+	}
+}
+
+
+@media screen and (max-width: 800px) {
+	#course{
+		width: 100%;
+	}
+	.course {
+		display: block;
+		max-width: 100%;
+		margin: 10px;
+	}
+	.course-preview {
+		color: #fff;
+		padding: 20px;
+		width: 100%;
+	}
+
+}
+
+@media screen and (max-width: 999px) {
+	#course{
+		width: 100%;
+	}
 }

@@ -1,45 +1,56 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Directive, ElementRef, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { SchedulingService } from './service/scheduling.service';
-import { ReagendarService } from '../detailOrder/service/detail.service';
-import { ChildActivationStart } from '@angular/router';
+import { SchedulingService } from '../../../service/scheduling.service';
+import { ReagendarService } from '../../../service/detail.service';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { ActivatedRoute } from '@angular/router';
+
 
 
 @Component({
   selector: 'scheduling',
   templateUrl: './scheduling.component.html' ,
   styleUrls: ['./scheduling.component.scss'],
+  providers: [FormGroupDirective]
   
 })
 
-export class SchedulingComponent implements OnInit{
+export class SchedulingComponent implements OnInit {
   //table
   displayedColumns : string[] = ['date','bloques']
   dataSource!: MatTableDataSource<any>;
-
-  date!: string;
-  bloque!: number;
+  //variables bloque horario
+  date !: string;
+  bloque !: number;
   blockSelect !: boolean;
-
+  scheduledCorrect !: boolean;
+  //formControl
+  form !: FormGroup;
+  subForm!: FormGroup;
+  //params
+  order!: number;
+  token!: string;
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  
-  constructor(private dialog: MatDialog, private api: SchedulingService) {}
+
+  constructor(private api: SchedulingService, private cdk : CdkStepper, private route : ActivatedRoute) {
+      this.order = this.route.snapshot.params['order'];
+      this.token = this.route.snapshot.params['token'];
+    }
 
   ngOnInit(): void {
-    this.getCalendario()
+    this.getApiSchedule()
   }
-
+  
 
   //Obtener dates y bloques
-  getCalendario(){
-    this.api.getScheduling()
-    .subscribe({
+  getApiSchedule(){
+    this.api.getSchedule(this.order, this.token).subscribe({
       next:(res)=>{
         const res2 = this.bloqueHorario(res)
         this.dataSource = new MatTableDataSource(res2);
@@ -82,15 +93,16 @@ export class SchedulingComponent implements OnInit{
   //Agendar
   agendar(){
     if(this.blockSelect == true ){
-      this.api.postAgendamiento(this.date,this.bloque).subscribe(
+      this.api.putSchedule(this.date,this.bloque, this.order, this.token).subscribe(
         {
           next:(res)=>{
+            this.scheduledCorrect = true;
             console.log(res);
           },
           error: (res) =>{
+            this.scheduledCorrect = false;
             this.messageError();
           }
-
         }
       )
     }
@@ -114,8 +126,13 @@ export class SchedulingComponent implements OnInit{
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire(  `Visita agendada correctamente para el día `, `${this.date}`, 'success')
-          this.agendar()
+          Swal.fire(`Visita Seleccionada para el día`, 
+          `${this.date}`, 'info').then((result) =>{
+            if (result.isConfirmed){
+              this.agendar()
+              this.cdk.next;
+            }
+          });
         }
       })
     }
@@ -123,11 +140,12 @@ export class SchedulingComponent implements OnInit{
     this.messageErrorSelect();
     
   }
+  
   //Message Error
   messageError(){
     Swal.fire({
       icon: 'error',
-      title: 'Oops...',
+      title: 'Oops... Algo ocurrió',
       text: 'No pudimos completar el proceso',
       showConfirmButton: true,
       backdrop: true
@@ -144,6 +162,7 @@ export class SchedulingComponent implements OnInit{
       backdrop: true
     })
   }
+
 
 }
 
@@ -223,8 +242,4 @@ export class ReagendarDialog{
   }
 }
 
-
-function isConfirmed(isConfirmed: any) {
-  throw new Error('Function not implemented.');
-}
 
