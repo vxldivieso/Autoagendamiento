@@ -65,7 +65,7 @@ export class EditProductComponent implements OnInit{
           this.messageError();
         }
       })
-    }
+    } 
   }
 //Message successfull
 messageSuccessfull(){

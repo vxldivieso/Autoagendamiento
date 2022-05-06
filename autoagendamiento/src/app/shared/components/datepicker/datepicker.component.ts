@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector:'dateProduct',
-  templateUrl: './datepicker.component.html',
+  templateUrl: './datepicker.component.html', 
   styleUrls: ['./datepicker.component.scss'],
   providers: [DatePipe],
   animations:[

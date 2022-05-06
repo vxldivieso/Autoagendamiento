@@ -71,7 +71,7 @@ export class ClientDataComponent implements OnInit {
       position: 'bottom',
       showConfirmButton: false,
       timer: 3000,
-      timerProgressBar: true,
+      timerProgressBar: true, 
       customClass: {
         popup: 'colored-toast'
       },
