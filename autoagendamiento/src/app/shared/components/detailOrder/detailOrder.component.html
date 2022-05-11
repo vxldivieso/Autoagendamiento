@@ -1,24 +1,19 @@
 
-<div class="container" *ngIf="details" >
-    <div class="container py-4 " id="course"  *ngFor="let data of details.products">
-        <div class="courses-container text-center">
-            <div class="course" >
-                <div class="course-preview">
-                    <h6>Producto</h6>
-                    <h2> {{data.product_name}} </h2>
-                    <h6>Código del producto</h6>
-                    <h6>{{data.sku}}</h6>
-                    <editproduct-dialog></editproduct-dialog>
-                </div>
-                
-                <div class="course-info card-body"  > 
-                    <h6 class="card-title"> {{details.store}} </h6>
-                    <h2 class="card-text">Tipo Servicio: {{data.service}} </h2>
-                    <h6>Número de orden: {{details.order_id}} </h6>
-                    <editservice-dialog></editservice-dialog>
-                </div>
-            </div>
+ <div class="courses-container py-4 text-center" *ngIf="details" >
+    <div class="course"  id="course"  *ngFor="let data of details.products" >
+        <div class="course-preview">
+            <h6>Producto</h6>
+            <h2> {{data.product_name}} </h2>
+            <h6>Código del producto</h6>
+            <h6>{{data.sku}}</h6>
+            <editproduct-dialog></editproduct-dialog>
         </div>
-    </div>  
+        
+        <div class="course-info card-body"  > 
+            <h6 class="card-title"> {{details.store}} </h6>
+            <h2 class="card-text">Tipo Servicio: {{data.service}} </h2>
+            <h6>Número de orden: {{details.order_id}} </h6>
+            <editservice-dialog></editservice-dialog>
+        </div>
+    </div>
 </div>
-

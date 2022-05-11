@@ -16,7 +16,7 @@ import * as moment from 'moment'
   animations:[
     trigger('enterState',[
       state('void',style({
-        opacity: 0
+        opacity: 0 
       })),
       transition(':enter',[
         animate(300,style({

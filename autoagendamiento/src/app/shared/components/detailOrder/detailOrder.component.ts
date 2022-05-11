@@ -1,10 +1,11 @@
 import { Component, OnInit, isDevMode, enableProdMode } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DetailOrderService, ModifyProductService, ModifyService } from '../../../service/detail.service';
+
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { DetailOrderService, ModifyProductService, ModifyService } from 'src/app/service/detail.service';
 
 //DetailOrder
 @Component({

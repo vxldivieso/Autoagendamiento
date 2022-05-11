@@ -4,7 +4,7 @@
 	font-family: 'Inter', sans-serif;
 }
 #course{
-	width: 80%;
+	width: 100%;
 	
 }
 
@@ -67,7 +67,20 @@ a:hover {
 	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 }
 
+@media screen and (max-width: 500px) {
+	#course{
+		width: 100%;
+	}
+	.course {
+		display: block;
+		max-width: 100%;
+	}
+	.course-preview {
+		color: #fff;
+		width: 100%;
+	}
 
+}
 @media screen and (max-width: 800px) {
 	#course{
 		width: 100%;

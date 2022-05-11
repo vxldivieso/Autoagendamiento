@@ -33,7 +33,7 @@ export class ClientDataComponent implements OnInit {
     this.clientForm = this.formBuilder.group({
       name: [''],
       rut: [''],
-      email: [''],
+      email: [''], 
       phone: ['',[Validators.minLength(9), Validators.maxLength(9)]],
       phone2: ['', [Validators.minLength(9), Validators.maxLength(9)]],
       address: [''],
