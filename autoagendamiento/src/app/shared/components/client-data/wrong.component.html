@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Seleccione los datos que son incorrectos</h1>
+<div mat-dialog-content>
+  <form action="">
+    <section class="example-section" [formGroup]="form">
+      <p><mat-checkbox>Nombre</mat-checkbox></p>
+      <ng-container *ngIf="checked == true then name" ></ng-container>
+      <ng-template #name>
+        <mat-form-field appearance="outline">
+          <mat-label>Ingrese el Nombre correcto</mat-label>
+          <input formControlName="nombre" name="nombre" matInput>
+        </mat-form-field>
+      </ng-template>
+     
+      <p><mat-checkbox>Dirección</mat-checkbox></p>
+      <ng-template #dirección>
+        <mat-form-field appearance="outline">
+          <mat-label>Ingrese la Dirección correcta</mat-label>
+          <input formControlName="direccion" name="direccion" matInput>
+        </mat-form-field>
+      </ng-template>
+      
+      <p><mat-checkbox>Ciudad</mat-checkbox></p>
+      <ng-template #ciudad>
+        <mat-form-field appearance="outline">
+          <mat-label>Ingrese la Ciudad correcta</mat-label>
+          <input formControlName="ciudad" name="ciudad" matInput>
+        </mat-form-field>
+      </ng-template>
+      
+    </section>
+  </form>
+  
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+  <button mat-raised-button color="accent" mat-dialog-close>Cerrar</button>
+  <button type="submit" mat-raised-button color="primary">Enviar</button>
+</div>

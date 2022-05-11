@@ -17,7 +17,7 @@ import { DateFormProduct} from './shared/components/datepicker/datepicker.compon
 import { EndProcessComponent } from './shared/components/end-process/end-process.component';
 import { DetailComponent, EditProductComponent, EditProductDialog, EditServiceComponent, EditServiceDialog} from './shared/components/detailOrder/detailOrder.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { ClientDataComponent } from './shared/components/client-data/client-data.component';
+import { ClientDataComponent, WrongdataComponent, WrongDataDialog } from './shared/components/client-data/client-data.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
@@ -40,7 +40,9 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     DateFormProduct,
     EditServiceComponent,
     EditServiceDialog,
-    ReagendarDialog
+    ReagendarDialog,
+    WrongDataDialog,
+    WrongdataComponent
   ],
   imports: [
     CommonModule,

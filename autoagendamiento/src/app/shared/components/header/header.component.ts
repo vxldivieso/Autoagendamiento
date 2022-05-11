@@ -1,4 +1,4 @@
-import { Component, } from '@angular/core';
+import { Component, isDevMode, } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs';
 import { DetailOrderService } from '../../../service/detail.service';
@@ -19,13 +19,20 @@ export class HeaderComponent {
    }
 
   ngOnInit(): void {
-    
+    this.getClientData()
   }
   getClientData(){
-    this.api.getOrderId(this.order,this.token)
-    .subscribe((res:any)=>{
-      this.clientData = res.contact;
-    })
+    if (isDevMode()) {
+      this.api.getOrderDEV(this.order,this.token)
+      .subscribe((res:any)=>{
+        this.clientData = res.contact;
+      })
+    }
+    else
+      this.api.getOrderId(this.order,this.token)
+      .subscribe((res:any)=>{
+        this.clientData = res.contact;
+      })
   }
  
 }

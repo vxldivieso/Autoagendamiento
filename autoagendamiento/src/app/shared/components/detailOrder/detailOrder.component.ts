@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode, enableProdMode } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DetailOrderService, ModifyProductService, ModifyService } from '../../../service/detail.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 //DetailOrder
 @Component({
@@ -23,12 +24,24 @@ export class DetailComponent implements OnInit {
    }
   ngOnInit(): void {
     this.getOrderId()
+      
+    if (isDevMode()) {
+      console.log('Development!');
+    } else {
+      console.log('Production!');
+    }
 
   }
   getOrderId(){
-    this.api.getOrderId(this.order, this.token).subscribe((resp:any)=>{
-      this.details = resp;
-    })
+    if (isDevMode()) {
+      this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{
+        this.details = resp;
+      })
+    }
+    else
+      this.api.getOrderId(this.order, this.token).subscribe((resp:any)=>{
+        this.details = resp;
+      })
   }
   
 }
@@ -54,18 +67,34 @@ export class EditProductComponent implements OnInit{
     })
   }
 
+  
+
   onSubmit(): void{
-    if(this.changeProductForm.valid){
-      this.api.postChangeProduct(this.changeProductForm.value)
-      .subscribe({
-        next:(res)=>{
-          this.messageSuccessfull();
-        },
-        error: () =>{
-          this.messageError();
-        }
-      })
-    } 
+    if (isDevMode()) {
+      if(this.changeProductForm.valid){
+        this.api.postChangeProduct(this.changeProductForm.value)
+        .subscribe({
+          next:(res)=>{
+            this.messageSuccessfull();
+          },
+          error: () =>{
+            this.messageError();
+          }
+        })
+      } 
+    }
+    else
+      if(this.changeProductForm.valid){
+        this.api.postChangeProduct(this.changeProductForm.value)
+        .subscribe({
+          next:(res)=>{
+            this.messageSuccessfull();
+          },
+          error: () =>{
+            this.messageError();
+          }
+        })
+      } 
   }
 //Message successfull
 messageSuccessfull(){

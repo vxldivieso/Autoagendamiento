@@ -1,11 +1,11 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, isDevMode, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { DateService } from '../../../service/detail.service';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common'
-
 import  {trigger, style, transition, animate,state } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment'
 
 
 @Component({
@@ -51,31 +51,57 @@ export class DateFormProduct{
   }
 
   getDeliveryDate(){
-    this.api.getOrderId(this.order, this.token)
-    .subscribe((res:any)=>{
-      this.delivery_date = res.delivery_date;
-    })
+    if (isDevMode()) {
+      this.api.getOrderIdDEV(this.order, this.token)
+      .subscribe((res:any)=>{
+        this.delivery_date = res.delivery_date;
+      })
+    }
+    else
+      this.api.getOrderId(this.order, this.token)
+      .subscribe((res:any)=>{
+        this.delivery_date = res.delivery_date;
+      })
   }
 
   transformDate(){
+    const myFormat= 'YYYY-MM-DD'
     let obj = this.dateProductForm.value
-    this.datedelivery = (JSON.stringify(obj));
+    this.datedelivery = {delivery_date:moment(obj.dateProduct).format(myFormat)};
+    
     return this.datedelivery
   }
 
   onSubmit(){
-    if(this.dateProductForm.valid){
-      this.api.putDateDelivery(this.datedelivery, this.order, this.token)
-      .subscribe({
-        next:(res)=>{
-          this.messageSuccessfull()
-          this.isSend = !this.isSend;
-        },
-        error: () =>{
-          this.messageError();
-        }
-      })
+    this.transformDate()
+    if (isDevMode()) {
+      if(this.dateProductForm.valid){
+        this.api.putDateDeliveryDEV(this.datedelivery, this.order, this.token)
+        .subscribe({
+          next:(res)=>{
+            this.messageSuccessfull()
+            this.isSend = !this.isSend;
+          },
+          error: () =>{
+            this.messageError();
+          }
+        })
+      }
+
     }
+    else
+      if(this.dateProductForm.valid){
+        this.api.putDateDelivery(this.datedelivery, this.order, this.token)
+        .subscribe({
+          next:(res)=>{
+            this.messageSuccessfull()
+            this.isSend = !this.isSend;
+          },
+          error: () =>{
+            this.messageError();
+          }
+        })
+      }
   }
 
 //Message successfull
@@ -119,3 +145,5 @@ messageError(){
 }
 
 }
+
+

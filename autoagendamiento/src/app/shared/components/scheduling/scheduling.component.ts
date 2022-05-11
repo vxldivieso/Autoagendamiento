@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Directive, ElementRef, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, Directive, ElementRef, isDevMode, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -50,14 +50,25 @@ export class SchedulingComponent implements OnInit {
 
   //Obtener dates y bloques
   getApiSchedule(){
-    this.api.getSchedule(this.order, this.token).subscribe({
-      next:(res)=>{
-        const res2 = this.bloqueHorario(res)
-        this.dataSource = new MatTableDataSource(res2);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }
-    })
+    if (isDevMode()) {
+      this.api.getScheduleDEV(this.order, this.token).subscribe({
+        next:(res)=>{
+          const res2 = this.bloqueHorario(res)
+          this.dataSource = new MatTableDataSource(res2);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+      })
+    }
+    else
+      this.api.getSchedule(this.order, this.token).subscribe({
+        next:(res)=>{
+          const res2 = this.bloqueHorario(res)
+          this.dataSource = new MatTableDataSource(res2);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+      })
   }
 
 
@@ -92,20 +103,37 @@ export class SchedulingComponent implements OnInit {
   
   //Agendar
   agendar(){
-    if(this.blockSelect == true ){
-      this.api.putSchedule(this.date,this.bloque, this.order, this.token).subscribe(
-        {
-          next:(res)=>{
-            this.scheduledCorrect = true;
-            console.log(res);
-          },
-          error: (res) =>{
-            this.scheduledCorrect = false;
-            this.messageError();
+    if (isDevMode()) {
+      if(this.blockSelect == true ){
+        this.api.putScheduleDEV(this.date,this.bloque, this.order, this.token).subscribe(
+          {
+            next:(res)=>{
+              this.scheduledCorrect = true;
+              console.log(res);
+            },
+            error: (res) =>{
+              this.scheduledCorrect = false;
+              this.messageError();
+            }
           }
-        }
-      )
+        )
+      }
     }
+    else
+      if(this.blockSelect == true ){
+        this.api.putSchedule(this.date,this.bloque, this.order, this.token).subscribe(
+          {
+            next:(res)=>{
+              this.scheduledCorrect = true;
+              console.log(res);
+            },
+            error: (res) =>{
+              this.scheduledCorrect = false;
+              this.messageError();
+            }
+          }
+        )
+      }
   }
   //Message successfull
   messageSuccessfull(){
@@ -173,7 +201,7 @@ export class SchedulingComponent implements OnInit {
  templateUrl: './reagendar.component.html',
  styleUrls: ['./scheduling.component.scss'],
  
-})
+}) 
 export class ReagendarComponent implements OnInit{
   minDate = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())
   maxDate = new Date(2022, 11, 1); 

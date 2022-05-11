@@ -7,6 +7,8 @@ import { changeProduct, changeService, reagendar } from "../shared/components/de
     providedIn:'root'
 })
 export class DetailOrderService{
+
+    private apiURL='https://api.demo.maydayservicios.com'
     constructor(private http: HttpClient){
     }
 
@@ -14,12 +16,30 @@ export class DetailOrderService{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         
+        return this.http.get(`${this.apiURL}/v3/orders/`+order,{
+            headers:header
+        })
+    }
+    
+    putContact(data:any, order:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.put<any>(`${this.apiURL}/v3/orders/${order}/contact`,data,{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+    }
+
+    getOrderDEV(order:Number, token:string){
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+        
         return this.http.get('v3/orders/'+order,{
             headers:header
         })
-    } 
-
-    putContact(data:any, order:number, token:string):Observable<any>{
+    }
+    putContactDEV(data:any, order:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
@@ -35,9 +55,31 @@ export class DetailOrderService{
 
 export class DateService{
     headers = new HttpHeaders();
+    private apiURL='https://api.demo.maydayservicios.com'
+
     constructor (private http : HttpClient){}
 
     getOrderId(order:number, token:string){
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+        return this.http.get(`${this.apiURL}/v3/orders/`+order,{
+            headers:header
+        })
+    } 
+
+    putDateDelivery(data: any, order:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        console.log(data);
+        
+        return this.http.put<any>(`${this.apiURL}/v3/orders/${order}/delivery_date`,data,{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+    }
+
+    getOrderIdDEV(order:number, token:string){
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         return this.http.get('v3/orders/'+order,{
@@ -45,7 +87,7 @@ export class DateService{
         })
     } 
 
-    putDateDelivery(data: string, order:number, token:string):Observable<any>{
+    putDateDeliveryDEV(data: string, order:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
@@ -56,6 +98,9 @@ export class DateService{
                 return res;
             })))
     }
+
+
+
 } 
 
 @Injectable({
