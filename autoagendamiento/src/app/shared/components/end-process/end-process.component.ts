@@ -60,4 +60,4 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
   
 
 }
- 
+  

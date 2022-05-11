@@ -10,7 +10,7 @@ import { DetailOrderService } from '../../../service/detail.service';
 })
 export class HeaderComponent {
   
-  clientData:any;
+  clientData:any; 
   order!: number;
   token!: string;
   constructor(private api: DetailOrderService ,private route : ActivatedRoute ) {

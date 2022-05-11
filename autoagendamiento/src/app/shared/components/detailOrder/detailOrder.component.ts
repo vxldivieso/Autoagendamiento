@@ -242,7 +242,7 @@ export class EditServiceDialog{
     this.dialog.open(EditServiceComponent, {
       width:'500px'
     });
-  }
+  } 
   closeDialog(){
     this.dialog.closeAll();
   }

@@ -62,7 +62,7 @@ export class DateFormProduct{
       .subscribe((res:any)=>{
         this.delivery_date = res.delivery_date;
       })
-  }
+  } 
 
   transformDate(){
     const myFormat= 'YYYY-MM-DD'

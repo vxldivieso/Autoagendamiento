@@ -11,7 +11,7 @@ export class EjecutivoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+ 
 }
 
 

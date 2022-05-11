@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './client-data.component.html',
   styleUrls: ['./client-data.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
-})
+}) 
 export class ClientDataComponent implements OnInit {
   //form control stepper
   form !: FormGroup;

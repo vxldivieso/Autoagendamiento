@@ -249,7 +249,7 @@ messageError(){
     text: 'No pudimos completar el proceso',
     showConfirmButton: true,
     backdrop: true
-  })
+  }) 
 }
 }
 
