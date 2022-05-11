@@ -9,9 +9,9 @@ export class EjecutivoComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
   }
- 
+  
 }
 
 

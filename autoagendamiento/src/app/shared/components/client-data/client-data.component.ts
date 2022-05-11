@@ -3,10 +3,10 @@ import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirecti
 import { text } from 'express';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router'; 
-import { DetailOrderService } from 'src/app/service/detail.service';
 import { MatDialog } from '@angular/material/dialog';
+import { DetailOrderService } from 'src/app/service/detail.service';
 
-@Component({
+@Component({ 
   selector: 'client-data',
   templateUrl: './client-data.component.html',
   styleUrls: ['./client-data.component.scss'],
