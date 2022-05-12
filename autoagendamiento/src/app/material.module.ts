@@ -17,6 +17,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { CdkTableModule } from "@angular/cdk/table";
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatExpansionModule} from '@angular/material/expansion';
  
 @NgModule({
     exports:[
@@ -36,7 +37,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MatTableModule,
         MatPaginatorModule,
         CdkTableModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatExpansionModule
     ]
 })
 

@@ -155,11 +155,6 @@ export class WrongdataComponent implements OnInit {
   ngOnInit(): void {
     
   }
-
-
-
-
-
 }
 
 @Component({

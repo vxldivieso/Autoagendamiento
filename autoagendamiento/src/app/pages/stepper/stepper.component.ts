@@ -37,12 +37,9 @@ export class StepperComponent implements OnInit{
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
-
-      
     }
   
   ngOnInit(): void {
-    
     this.checkoutFormGroup = this._formBuilder.group({});
     this.clientDataFormGroup = this._formBuilder.group({});
     this.schedulingFormGroup = this._formBuilder.group({});

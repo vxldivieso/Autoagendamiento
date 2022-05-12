@@ -48,6 +48,7 @@ export class DateFormProduct{
     this.dateProductForm = this.formBuilder.group({
       dateProduct: ['',Validators.required],
     });
+    this.getDeliveryDate()
   }
 
   getDeliveryDate(){
@@ -55,6 +56,8 @@ export class DateFormProduct{
       this.api.getOrderIdDEV(this.order, this.token)
       .subscribe((res:any)=>{
         this.delivery_date = res.delivery_date;
+        console.log(this.delivery_date);
+        
       })
     }
     else

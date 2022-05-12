@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, Observable} from "rxjs";
+import { catchError, map, Observable, throwError} from "rxjs";
 import { changeProduct, changeService, reagendar } from "../shared/components/detailOrder/interfaces/changes.interface";
+import { RouterModule, Routes, Router } from '@angular/router';
 
 @Injectable({
     providedIn:'root'
@@ -9,7 +10,7 @@ import { changeProduct, changeService, reagendar } from "../shared/components/de
 export class DetailOrderService{
 
     private apiURL='https://api.demo.maydayservicios.com'
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient, private router: Router){
     }
 
     getOrderId(order:number, token:string){
@@ -18,7 +19,11 @@ export class DetailOrderService{
         
         return this.http.get(`${this.apiURL}/v3/orders/`+order,{
             headers:header
-        })
+        }).pipe(
+            catchError((error) =>{
+                return this.herrorHandler(error);
+            })
+        )
     }
     
     putContact(data:any, order:number, token:string):Observable<any>{
@@ -31,13 +36,17 @@ export class DetailOrderService{
             })))
     }
 
-    getOrderDEV(order:Number, token:string){
+    getOrderDEV(order:Number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         
         return this.http.get('v3/orders/'+order,{
             headers:header
-        })
+        }).pipe(
+            catchError((error) =>{
+                return this.herrorHandler(error);
+            })
+        )
     }
     putContactDEV(data:any, order:number, token:string):Observable<any>{
         let header = new HttpHeaders()
@@ -47,6 +56,21 @@ export class DetailOrderService{
             (map((res:any)=>{
                 return res;
             })))
+    }
+
+    herrorHandler(error:HttpErrorResponse){
+        if(error instanceof HttpErrorResponse){
+            if(error.error instanceof ErrorEvent){
+                console.log('Client Error');
+            }else{
+                console.log('Service Error');
+                this.router.navigate(['error'])
+            }
+        }else{
+            console.log('Other Type');
+            
+        }
+        return throwError(error)
     }
 }
 @Injectable({

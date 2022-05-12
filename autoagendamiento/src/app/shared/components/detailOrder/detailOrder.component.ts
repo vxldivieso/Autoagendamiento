@@ -25,14 +25,8 @@ export class DetailComponent implements OnInit {
    }
   ngOnInit(): void {
     this.getOrderId()
-      
-    if (isDevMode()) {
-      console.log('Development!');
-    } else {
-      console.log('Production!');
-    }
-
   }
+  
   getOrderId(){
     if (isDevMode()) {
       this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{

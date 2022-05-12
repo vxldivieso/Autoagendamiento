@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SchedulingService } from '../../../service/scheduling.service';
-import { ReagendarService } from '../../../service/detail.service';
+import { DateService, DetailOrderService, ReagendarService } from '../../../service/detail.service';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { ActivatedRoute } from '@angular/router';
 
@@ -25,6 +25,7 @@ export class SchedulingComponent implements OnInit {
   displayedColumns : string[] = ['date','bloques']
   dataSource!: MatTableDataSource<any>;
   //variables bloque horario
+  delivery_date : any;
   date !: string;
   bloque !: number;
   blockSelect !: boolean;
@@ -38,13 +39,28 @@ export class SchedulingComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api: SchedulingService, private cdk : CdkStepper, private route : ActivatedRoute) {
+  constructor(private api: SchedulingService, private apiDate : DateService, private cdk : CdkStepper, private route : ActivatedRoute) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
     }
 
   ngOnInit(): void {
+    this.getDeliveryDate()
     this.getApiSchedule()
+  }
+
+  getDeliveryDate(){
+    if (isDevMode()) {
+      this.apiDate.getOrderIdDEV(this.order, this.token)
+      .subscribe((res:any)=>{
+        this.delivery_date = res.delivery_date;
+      })
+    }
+    else
+      this.apiDate.getOrderId(this.order, this.token)
+      .subscribe((res:any)=>{
+        this.delivery_date = res.delivery_date;
+      })
   }
   
 
@@ -75,9 +91,10 @@ export class SchedulingComponent implements OnInit {
   //Transform json
   bloqueHorario(item:any){
     const transformJson = Object.keys(item).map(key => {
+      //const dates = Object.keys(item[key]).map(key =>)
       const blocks = Object.keys(item[key]).map(key=>parseInt(key));
       return {
-        date:key, 
+        date: key, 
         morning: blocks.reduce((prev: boolean | number, next)=>{
           return prev == false && next < 3? next:prev}
         ,false), 
@@ -158,7 +175,7 @@ export class SchedulingComponent implements OnInit {
           `${this.date}`, 'info').then((result) =>{
             if (result.isConfirmed){
               this.agendar()
-              this.cdk.next;
+              this.cdk.next();
             }
           });
         }

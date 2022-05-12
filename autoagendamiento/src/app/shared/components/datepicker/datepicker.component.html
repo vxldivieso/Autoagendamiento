@@ -1,22 +1,37 @@
-<div class="container" id="card" @enterState>
-    <div class="card" *ngIf="!isSend" >
-        <div class="card-body">
-          <h5 class="card-title">Ingrese la fecha estimada de despacho de su(s) producto(s).</h5>
-          <div class="card-text">
-                <form [formGroup]="dateProductForm">
-                    <mat-form-field color="primary" appearance="outline">
-                        <mat-label>Seleccione una fecha</mat-label>
-                        <input formControlName="dateProduct" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1">
-                        <mat-hint>MM/DD/AAAA</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
-                    </mat-form-field>
-                </form>
-            </div>
-            <button [disabled]="!dateProductForm.valid" type="submit" (click)="onSubmit()" mat-raised-button color="primary">Guardar fecha</button>
+
+<div class="container">
+    <div class="order ">
+        <div class="card-body" >
+            <div class="row">
+                <div class="col-md-4">
+                  <h5 class="card-title text-uppercase"> fecha de despacho</h5>
+                  <h4> <strong>{{delivery_date}}</strong>  </h4>
+                </div>
+                <div class="col-md-8">
+                    <h5 class="card-title text-uppercase"> 
+                        Modificar fecha de despacho 
+                        <form [formGroup]="dateProductForm">
+                            <mat-form-field color="primary" appearance="outline">
+                                <mat-label>Seleccione una fecha</mat-label>
+                                <input formControlName="dateProduct" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1">
+                                <mat-hint>MM/DD/AAAA</mat-hint>
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                                
+                            </mat-form-field> &nbsp;
+                            <button [disabled]="!dateProductForm.valid" type="submit" (click)="onSubmit()" mat-raised-button color="primary">Guardar</button>
+                        </form>
+                        
+                    </h5>
+                </div>
         </div>
-      </div>
+    </div>
 </div>
+
+</div>
+
+
+
 
 
 
