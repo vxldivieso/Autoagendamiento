@@ -21,7 +21,7 @@ export class DetailOrderService{
             headers:header
         }).pipe(
             catchError((error) =>{
-                return this.herrorHandler(error);
+                return this.errorHandler(error);
             })
         )
     }
@@ -44,7 +44,7 @@ export class DetailOrderService{
             headers:header
         }).pipe(
             catchError((error) =>{
-                return this.herrorHandler(error);
+                return this.errorHandler(error);
             })
         )
     }
@@ -58,7 +58,7 @@ export class DetailOrderService{
             })))
     }
 
-    herrorHandler(error:HttpErrorResponse){
+    errorHandler(error:HttpErrorResponse){
         if(error instanceof HttpErrorResponse){
             if(error.error instanceof ErrorEvent){
                 console.log('Client Error');

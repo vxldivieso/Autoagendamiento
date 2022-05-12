@@ -160,7 +160,10 @@ export class WrongdataComponent implements OnInit {
 @Component({
   selector: 'button-wrongdata',
   template: `
-  <button mat-raised-button color="accent" (click)="openDialog()">Los datos son incorrectos</button>
+  <div class="d-grid d-md-flex justify-content-md-center">
+    <button mat-raised-button color="accent" (click)="openDialog()">Datos Incorrectos</button>
+  </div>
+  
   
   `,
   styleUrls: ['./wrong.component.scss'],

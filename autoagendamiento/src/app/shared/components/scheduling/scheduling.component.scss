@@ -33,12 +33,12 @@ table {
 
 .principalButtons{
     button{
-    font-family: 'Inter', sans-serif;
-    border-radius: 50px;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 5px 25px;
-    letter-spacing: 1px;
+        font-family: 'Inter', sans-serif;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 5px 25px;
+        letter-spacing: 1px;
     }
 }
 
@@ -52,7 +52,7 @@ mat-form-field{
 }
 
 .mat-raised-button{
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 @media(max-width: 500px){

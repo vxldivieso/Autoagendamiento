@@ -6,7 +6,7 @@
 	}
 }
 #course{
-	width: 80%;
+	width:100%;
 	
 }
 
@@ -15,15 +15,26 @@
 	border-radius: 5px;
 	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 	display: flex;
-	margin: 20px;
 	overflow: hidden;
 	justify-content: center;
 	align-items: center;
 }
 
+.course h5{
+	font-size: 10px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	border-right: 3px solid #00E5FF;
+}
+
+#noborder {
+	border-right: 0px;
+}
+
 .course h6 {
 	
 	opacity: 0.6;
+	font-size: 10px;
 	letter-spacing: 1px;
 	text-transform: uppercase;
 }
@@ -40,44 +51,28 @@
 	color: white;
 }
 
-a {
-	color: #fff;
-	display: inline-block;
-	font-size: 10px;
-	text-decoration: none;
-	text-align: center;
-	letter-spacing: 1px;
-	cursor: pointer;
-}
-a:hover {
-	transition: 1s;
-	border-bottom: #ddd;
-}
-
-
-.btn {
-	background-color: #424242;
-	border-radius: 50px;
-	color: #fff;
-	font-size: 10px;
-	padding: 12px 25px;
-}
-.btn:hover{
-	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-}
 
 .order{
-	text-align: left;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: 'Inter', sans-serif;
-	
+	border-left: 3px solid #00E5FF;
 	.card-body{
-		border-left: 3px solid #00E5FF;
+		text-align: left;
+		display: flex;
+		font-family: 'Inter', sans-serif;
+		
+	}
+	.card-text{
+		font-size: calc(1.000rem + 0.05vw);
+		font-family: 'Inter', sans-serif;
 	}
 }
 
+
+@media screen and (max-width: 765px){
+	.course h5{
+		border-right: 0px;
+	}
+	
+}
 
 @media screen and (max-width: 800px) {
 	#course{
@@ -86,7 +81,6 @@ a:hover {
 	.course {
 		display: block;
 		max-width: 100%;
-		margin: 10px;
 	}
 	.course-preview {
 		color: #fff;

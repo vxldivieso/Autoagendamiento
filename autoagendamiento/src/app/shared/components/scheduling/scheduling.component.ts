@@ -112,7 +112,6 @@ export class SchedulingComponent implements OnInit {
     this.bloque = bloque;
     if (this.date,this.bloque){
       this.blockSelect = true;
-      return console.log(`bloque ${bloque} del día ${date}`);
     }
     else
       this.blockSelect = false;
@@ -125,11 +124,9 @@ export class SchedulingComponent implements OnInit {
         this.api.putScheduleDEV(this.date,this.bloque, this.order, this.token).subscribe(
           {
             next:(res)=>{
-              this.scheduledCorrect = true;
-              console.log(res);
+              this.cdk.next()
             },
             error: (res) =>{
-              this.scheduledCorrect = false;
               this.messageError();
             }
           }
@@ -141,11 +138,9 @@ export class SchedulingComponent implements OnInit {
         this.api.putSchedule(this.date,this.bloque, this.order, this.token).subscribe(
           {
             next:(res)=>{
-              this.scheduledCorrect = true;
-              console.log(res);
+              this.cdk.next()
             },
             error: (res) =>{
-              this.scheduledCorrect = false;
               this.messageError();
             }
           }
@@ -155,27 +150,20 @@ export class SchedulingComponent implements OnInit {
   //Message successfull
   messageSuccessfull(){
     if(this.blockSelect == true){
-      Swal.fire({
-        icon: 'info',
-        title: 'Condiciones del servicio',
-        html: 
-        '<ol class="text-left">'+
-        '<li>Cajas deben encontrarse selladas</li>'+
-        '<li>Las cajas deben estar en el lugar exacto donde va a quedar producto armado para uso</li>'+
-        '<li>Debe contar con el espacio suficiente para que técnico pueda manipular las piezas</li>'+
-        '</ol>',
-        showDenyButton: true,
-        confirmButtonColor:'black',
-        confirmButtonText: 'Agendar',
-        denyButtonText: `Cancelar`,
-      }).then((result) => {
+      Swal.fire(`Visita Seleccionada para el día`, 
+          `${this.date}`, 'info').then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire(`Visita Seleccionada para el día`, 
-          `${this.date}`, 'info').then((result) =>{
+          Swal.fire({
+            icon: 'info',
+            title: 'Condiciones del servicio',
+            html: '<div class="container" style="text-align: left"><ol><li>Cajas deben encontrarse selladas.</li> <li>Las cajas deben estar en el lugar exacto donde va a quedar producto armado para uso.</li> <li>Debe contar con el espacio suficiente para que técnico pueda manipular las piezas.</li></ol></div>',
+            showDenyButton: true,
+            confirmButtonText: 'Agendar',
+            denyButtonText: `Cancelar`,
+          }).then((result) =>{
             if (result.isConfirmed){
-              this.agendar()
-              this.cdk.next();
+              this.agendar();
             }
           });
         }
@@ -273,7 +261,10 @@ messageError(){
 @Component({
   selector: 'button-reagendar',
   template: `
-  <button mat-raised-button color="accent" (click)="openDialog()">Deseo agendar en otro momento</button>
+  <div class="d-grid d-md-flex justify-content-md-center">
+    <button mat-raised-button color="accent" (click)="openDialog()">Deseo agendar en otro momento</button>
+  </div>
+  
   
   `,
   styleUrls: ['./scheduling.component.scss'],

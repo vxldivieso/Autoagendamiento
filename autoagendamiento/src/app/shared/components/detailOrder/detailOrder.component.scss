@@ -13,7 +13,6 @@
 	border-radius: 5px;
 	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 	display: flex;
-	margin: 20px;
 	overflow: hidden;
 	justify-content: center;
 	align-items: center;
@@ -58,7 +57,7 @@ a:hover {
 
 .btn {
 	background-color: #424242;
-	border-radius: 50px;
+	border-radius: 10px;
 	color: #fff;
 	font-size: 10px;
 	padding: 12px 25px;
@@ -68,9 +67,6 @@ a:hover {
 }
 
 @media screen and (max-width: 500px) {
-	#course{
-		width: 100%;
-	}
 	.course {
 		display: block;
 		max-width: 100%;
@@ -82,13 +78,9 @@ a:hover {
 
 }
 @media screen and (max-width: 800px) {
-	#course{
-		width: 100%;
-	}
 	.course {
 		display: block;
 		max-width: 100%;
-		margin: 10px;
 	}
 	.course-preview {
 		color: #fff;
@@ -96,10 +88,4 @@ a:hover {
 		width: 100%;
 	}
 
-}
-
-@media screen and (max-width: 999px) {
-	#course{
-		width: 100%;
-	}
 }
