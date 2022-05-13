@@ -167,6 +167,10 @@ export class ReagendarService{
         return this.http.post<reagendar>(`${this.apiURL}/reagendar`, data );
     }
 
+    putReagendar(data: reagendar): Observable<reagendar>{
+        return this.http.put<reagendar>(`${this.apiURL}/reagendar`, data );
+    }
+
     getReagendar():Observable<reagendar[]>{
         return this.http.get<reagendar[]>(`${this.apiURL}/reagendar`);
     }

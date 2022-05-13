@@ -2,11 +2,23 @@ import { AfterViewInit, Component, isDevMode, OnInit, ViewChild } from '@angular
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DetailOrderService } from 'src/app/service/detail.service';
-
+import  {trigger, style, transition, animate,state } from '@angular/animations';
 @Component({
   selector: 'app-end-process',
   templateUrl: './end-process.component.html',
-  styleUrls: ['./end-process.component.scss']
+  styleUrls: ['./end-process.component.scss'],
+  animations:[
+    trigger('enterState',[
+      state('void',style({
+        opacity: 0 
+      })),
+      transition(':enter',[
+        animate(300,style({
+          opacity: 1
+        }))
+      ])
+    ])
+  ]
 })
 export class EndProcessComponent implements OnInit, AfterViewInit{
   savedDate: any ;

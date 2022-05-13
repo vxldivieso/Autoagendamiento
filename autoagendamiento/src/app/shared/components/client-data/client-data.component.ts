@@ -5,11 +5,24 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router'; 
 import { MatDialog } from '@angular/material/dialog';
 import { DetailOrderService } from 'src/app/service/detail.service';
+import  {trigger, style, transition, animate,state } from '@angular/animations';
 
 @Component({ 
   selector: 'client-data',
   templateUrl: './client-data.component.html',
   styleUrls: ['./client-data.component.scss'],
+  animations:[
+    trigger('enterState',[
+      state('void',style({
+        opacity: 0 
+      })),
+      transition(':enter',[
+        animate(300,style({
+          opacity: 1
+        }))
+      ])
+    ])
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 }) 
 export class ClientDataComponent implements OnInit {
@@ -40,6 +53,7 @@ export class ClientDataComponent implements OnInit {
       county: [''],
     });
     this.form = this.ctrlContainer.form;
+    this.form.addControl("clientData", this.clientForm);
     this.getClientData(); 
   }
 
@@ -137,24 +151,46 @@ export class ClientDataComponent implements OnInit {
 })
 export class WrongdataComponent implements OnInit {
   form!: FormGroup;
-  checked !: boolean
-  constructor() { 
-    this.form = new FormGroup({
-      nombre: new FormControl({
-        value: ''
-      }),
-      direccion: new FormControl({
-        value: ''
-      }),
-      ciudad: new FormControl({
-        value: ''
-      }),
-    });
-  }
-  
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog) {}
   ngOnInit(): void {
-    
+    this.form = this.formBuilder.group({
+      nombre: [''],
+      email: [''],
+      direccion: [''],
+      ciudad: ['']
+    })
   }
+
+
+  onSubmit(){
+    if (this.form.valid){
+      console.log(this.form.value);
+      this.dialog.closeAll();
+      this.messageSuccessfull()
+    }
+  }
+
+  //Message successfull
+messageSuccessfull(){
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom',
+    showConfirmButton: false,
+    timer: 5000,
+    timerProgressBar: true,
+    customClass: {
+      popup: 'colored-toast'
+    },
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  Toast.fire({
+    icon: 'success',
+    title: 'Verificaremos los datos'
+  })
+}
 }
 
 @Component({

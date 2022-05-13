@@ -1,11 +1,10 @@
 
- <div class="courses-container py-4 text-center" *ngIf="details" >
+ <div class="courses-container py-4 text-center" *ngIf="details" @enterState >
     <div class="course"  id="course"  *ngFor="let data of details.products" >
         <div class="course-preview">
             <h6>Producto</h6>
             <h2> {{data.product_name}} </h2>
-            <h6>Código del producto</h6>
-            <h6>{{data.sku}}</h6>
+            <h6>Código del producto: {{data.sku}}</h6>
             <editproduct-dialog></editproduct-dialog>
         </div>
         

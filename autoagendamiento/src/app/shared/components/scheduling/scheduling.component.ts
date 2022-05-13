@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Directive, ElementRef, isDevMode, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
+import { Component, isDevMode, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -9,14 +9,27 @@ import { SchedulingService } from '../../../service/scheduling.service';
 import { DateService, DetailOrderService, ReagendarService } from '../../../service/detail.service';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { ActivatedRoute } from '@angular/router';
-
+import  {trigger, style, transition, animate,state } from '@angular/animations';
+import { RouterModule, Routes, Router } from '@angular/router';
 
 
 @Component({
   selector: 'scheduling',
   templateUrl: './scheduling.component.html' ,
   styleUrls: ['./scheduling.component.scss'],
-  providers: [FormGroupDirective]
+  providers: [FormGroupDirective],
+  animations:[
+    trigger('enterState',[
+      state('void',style({
+        opacity: 0 
+      })),
+      transition(':enter',[
+        animate(300,style({
+          opacity: 1
+        }))
+      ])
+    ])
+  ]
   
 })
 
@@ -39,12 +52,15 @@ export class SchedulingComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api: SchedulingService, private apiDate : DateService, private cdk : CdkStepper, private route : ActivatedRoute) {
+  constructor(private api: SchedulingService, private apiDate : DateService, private cdk : CdkStepper, private route : ActivatedRoute,
+    private ctrlContainer: FormGroupDirective, private fb: FormBuilder) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
     }
 
   ngOnInit(): void {
+    this.form = this.ctrlContainer.form;
+
     this.getDeliveryDate()
     this.getApiSchedule()
   }
@@ -66,6 +82,7 @@ export class SchedulingComponent implements OnInit {
 
   //Obtener dates y bloques
   getApiSchedule(){
+    
     if (isDevMode()) {
       this.api.getScheduleDEV(this.order, this.token).subscribe({
         next:(res)=>{
@@ -91,10 +108,11 @@ export class SchedulingComponent implements OnInit {
   //Transform json
   bloqueHorario(item:any){
     const transformJson = Object.keys(item).map(key => {
+      const myFormat= 'DD-MM-YYYY'
       //const dates = Object.keys(item[key]).map(key =>)
       const blocks = Object.keys(item[key]).map(key=>parseInt(key));
       return {
-        date: key, 
+        date: key,
         morning: blocks.reduce((prev: boolean | number, next)=>{
           return prev == false && next < 3? next:prev}
         ,false), 
@@ -211,7 +229,8 @@ export class ReagendarComponent implements OnInit{
   minDate = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())
   maxDate = new Date(2022, 11, 1); 
   reagendarForm !: FormGroup;
-  constructor(private formBuilder: FormBuilder, private api: ReagendarService) {}
+  constructor(private formBuilder: FormBuilder, private api: ReagendarService, private router : Router,
+    private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.reagendarForm = this.formBuilder.group({
@@ -225,7 +244,8 @@ export class ReagendarComponent implements OnInit{
       .subscribe(
         {
           next:(res)=>{
-            this.messageSuccessfull();
+            this.dialog.closeAll()
+            this.messageSuccessfull()
           },
           error: () =>{
             this.messageError();
@@ -241,10 +261,14 @@ messageSuccessfull(){
   Swal.fire({
     icon: 'success',
     title: 'Proceso guardado correctamente',
-    text: 'Recuerda que este link expirará, se te enviará uno nuevo para completar el agendamiento',
     showConfirmButton: true,
-    backdrop: true
-  })
+    backdrop: true,
+    allowOutsideClick: false,
+  }).then((result) =>{
+    if (result.isConfirmed){
+      this.router.navigate([':order/:token/wrong/save'])
+    }
+  });
 }
 //Message Error
 messageError(){
@@ -254,8 +278,9 @@ messageError(){
     text: 'No pudimos completar el proceso',
     showConfirmButton: true,
     backdrop: true
-  }) 
+  })
 }
+
 }
 
 @Component({
@@ -264,8 +289,6 @@ messageError(){
   <div class="d-grid d-md-flex justify-content-md-center">
     <button mat-raised-button color="accent" (click)="openDialog()">Deseo agendar en otro momento</button>
   </div>
-  
-  
   `,
   styleUrls: ['./scheduling.component.scss'],
 })
@@ -275,6 +298,9 @@ export class ReagendarDialog{
     this.dialog.open(ReagendarComponent, {
       width:'400px'
     });
+  }
+  closeDialog(){
+    this.dialog.closeAll();
   }
 }
 

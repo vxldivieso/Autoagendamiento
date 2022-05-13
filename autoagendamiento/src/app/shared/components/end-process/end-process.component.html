@@ -1,9 +1,9 @@
 
-<div class="container" *ngIf="details">
+<div class="container" *ngIf="details" >
     <h1>Detalle de la orden</h1>
-    <div class="course">
-        <div class="course-info card-body">
-            <div class="row">
+    <div class="course" >
+        <div class="course-info card-body" @enterState  >
+            <div class="row" >
                 <div class="col-md-4" *ngIf="clientData" >
                     <h5 class="card-title">Nombre titular</h5>
                     <h2 class="card-text">{{clientData.name}}</h2>
@@ -14,16 +14,16 @@
                     <h2 class="card-text">{{clientData.address}}</h2>
                     <h6>{{clientData.county}}</h6>
                 </div>
-                <div class="col-md-4" >
+                <div class="col-md-4"  >
                     <h5 class="card-title" id="noborder" >Fecha agendamiento del servicio</h5>
-                    <h2 class="card-text"> {{savedDate && savedDate.date}} </h2>
+                    <h2 class="card-text" > {{savedDate && savedDate.date}} </h2>
                     <h6> {{savedDate && savedDate.block}} </h6>
                 </div>
             </div>
         </div>
     </div>
     <div class="order-container py-4" *ngFor="let data of details.products">
-        <div class="order card-body">
+        <div class="order card-body" @enterState>
             <div class="row">
                 <div class="col-md-4">
                     <h5 class="card-title text-uppercase"> código producto {{data.sku}} </h5>

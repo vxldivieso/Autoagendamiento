@@ -14,6 +14,19 @@ export class EjecutivoComponent implements OnInit {
   
 }
 
+@Component({
+  selector: 'app-saveprocess',
+  templateUrl: './saveprocess.component.html',
+  styleUrls: ['./wrongdata.component.scss']
+})
+export class SaveProcessComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void { 
+  }
+  
+}
 
 
 

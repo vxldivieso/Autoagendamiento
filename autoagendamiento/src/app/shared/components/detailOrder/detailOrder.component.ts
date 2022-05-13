@@ -6,12 +6,25 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DetailOrderService, ModifyProductService, ModifyService } from 'src/app/service/detail.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 //DetailOrder
 @Component({
   selector: 'detail-order',
   templateUrl: './detailOrder.component.html',
-  styleUrls: ['./detailOrder.component.scss']
+  styleUrls: ['./detailOrder.component.scss'],
+  animations:[
+    trigger('enterState',[
+      state('void',style({
+        opacity: 0 
+      })),
+      transition(':enter',[
+        animate(300,style({
+          opacity: 1
+        }))
+      ])
+    ])
+  ]
 })
 export class DetailComponent implements OnInit {
   details:any
@@ -52,7 +65,7 @@ export class DetailComponent implements OnInit {
 export class EditProductComponent implements OnInit{
   changeProductForm !: FormGroup;
   constructor(private formBuilder: FormBuilder, 
-    private api: ModifyProductService){}
+    private api: ModifyProductService, private dialog: MatDialog){}
   
   ngOnInit(): void {
     this.changeProductForm = this.formBuilder.group({
@@ -70,6 +83,7 @@ export class EditProductComponent implements OnInit{
         this.api.postChangeProduct(this.changeProductForm.value)
         .subscribe({
           next:(res)=>{
+            this.dialog.closeAll();
             this.messageSuccessfull();
           },
           error: () =>{
@@ -137,7 +151,7 @@ messageError(){
 //Form edit product dialog
 @Component({
   selector: 'editproduct-dialog',
-  template: `<a (click)="openDialog()">Editar producto</a>`,
+  template: `<a (click)="openDialog()" class="btn">Editar Producto</a>`,
   styleUrls: ['./detailOrder.component.scss']
 })
 export class EditProductDialog{
@@ -160,7 +174,7 @@ export class EditServiceComponent implements OnInit{
   services = ["Armado Mueble", "Armado Parrilla", "Inspección Técnica de muebles", "Retiro ecológico"];
   changeServiceForm !: FormGroup;
   constructor(private formBuilder: FormBuilder, 
-    private api: ModifyService){}
+    private api: ModifyService, private dialog: MatDialog){}
   
   ngOnInit(): void {
     this.changeServiceForm = this.formBuilder.group({
@@ -173,8 +187,8 @@ export class EditServiceComponent implements OnInit{
       this.api.postChangeService(this.changeServiceForm.value)
       .subscribe({
         next:(res)=>{
+          this.dialog.closeAll();
           this.messageSuccessfull();
-          
         },
         error: () =>{
           this.messageError();  
