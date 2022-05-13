@@ -1,11 +1,12 @@
-import {AfterViewInit, Component, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, isDevMode, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {MatStepper, StepperOrientation} from '@angular/material/stepper';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { ActivatedRoute } from '@angular/router';
+import { DetailOrderService } from 'src/app/service/detail.service';
 
 
 //Stepper component
@@ -31,12 +32,19 @@ export class StepperComponent implements OnInit{
   endProcessFormGroup!: FormGroup;
   stepperOrientation: Observable<StepperOrientation>;
 
+  @ViewChild('stepper') stepper!: MatStepper;
+  details:any;
+  order!: number;
+  token!: string;
   
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, 
-    public dialog: MatDialog) {
-    this.stepperOrientation = breakpointObserver
+    public dialog: MatDialog,  private route : ActivatedRoute, private api: DetailOrderService) {
+      this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
+
+      this.order = this.route.snapshot.params['order'];
+      this.token = this.route.snapshot.params['token'];
     }
   
   ngOnInit(): void {
@@ -44,6 +52,31 @@ export class StepperComponent implements OnInit{
     this.clientDataFormGroup = this._formBuilder.group({});
     this.schedulingFormGroup = this._formBuilder.group({});
     this.endProcessFormGroup = this._formBuilder.group({});
+    this.getOrderId()
+  }
+
+  getOrderId(){
+    if (isDevMode()) {
+      this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{
+        this.details = resp.scheduled_at;
+        this.processEnd()
+      })
+    }
+    else
+      this.api.getOrderId(this.order, this.token).subscribe((resp:any)=>{
+        this.details = resp.scheduled_at;
+      })
+  }
+
+  processEnd(){
+    if (this.details != undefined){
+      this.stepper.linear = false;
+      this.move(3)
+    }
+  }
+
+  move(index: number) {
+    this.stepper.selectedIndex = index;
   }
   
 
