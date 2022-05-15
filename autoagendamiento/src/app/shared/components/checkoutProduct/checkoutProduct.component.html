@@ -5,15 +5,15 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <form [formGroup]="subForm">
+        <form>
           <p>¿El producto está en sus manos?</p>
-        <mat-radio-group formControlName="haveProduct" color="primary">
-          <mat-radio-button value="Si" (change)="onTrueorFalse(false)">
-            Si
-          </mat-radio-button>
-          <mat-radio-button  value="No"(change)="onTrueorFalse(true)">
-            No
-          </mat-radio-button>
+          <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group" [(ngModel)]="optionselect" name="optionselect" color="primary">
+            <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option"  >
+              {{option}}
+            </mat-radio-button>
+            <!--<p>tu seleccion es {{optionselect}} </p>--> 
         </mat-radio-group>
         </form>
       </div>
@@ -22,7 +22,7 @@
 </div>
 
 <!--Hideform no-->
-<ng-container *ngIf="isTrue then showDatepicker else showProductData" >
+<ng-container *ngIf="optionselect=='No' then showDatepicker else showProductData" >
 </ng-container>
 <!--Show date picker-->
 <ng-template #showDatepicker>
@@ -33,7 +33,7 @@
 
 
 <!--Hideform si-->
-<ng-container *ngIf="isFalse then showProductData">
+<ng-container *ngIf="optionselect=='No' then showProductData">
 </ng-container>
 <ng-template #showProductData>
   <detail-order></detail-order>

@@ -59,7 +59,7 @@ export class StepperComponent implements OnInit{
     if (isDevMode()) {
       this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{
         this.details = resp.scheduled_at;
-        this.processEnd()
+        
       })
     }
     else

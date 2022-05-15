@@ -32,9 +32,10 @@ export class DateFormProduct{
   maxDate = new Date(2030, 11, 1); 
   dateProductForm !: FormGroup;
   isSend:boolean = false;
-  delivery_date : any;
+  delivery_date = new Date() ;
   datedelivery : any;
 
+  //params
   order!: number;
   token!: string;
   
@@ -48,7 +49,7 @@ export class DateFormProduct{
     this.dateProductForm = this.formBuilder.group({
       dateProduct: ['',Validators.required],
     });
-    this.getDeliveryDate()
+    this.getDeliveryDate() 
   }
 
   getDeliveryDate(){
@@ -56,8 +57,6 @@ export class DateFormProduct{
       this.api.getOrderIdDEV(this.order, this.token)
       .subscribe((res:any)=>{
         this.delivery_date = res.delivery_date;
-        console.log(this.delivery_date);
-        
       })
     }
     else
@@ -71,7 +70,6 @@ export class DateFormProduct{
     const myFormat= 'YYYY-MM-DD'
     let obj = this.dateProductForm.value
     this.datedelivery = {delivery_date:moment(obj.dateProduct).format(myFormat)};
-    
     return this.datedelivery
   }
 

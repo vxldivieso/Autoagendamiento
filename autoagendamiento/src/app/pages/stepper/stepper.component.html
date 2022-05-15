@@ -29,18 +29,13 @@
         <form [formGroup]="clientDataFormGroup">
           <div class="py-4 px-4">
             <h1 class="title">Datos de contacto</h1>
-            <p class="subtitle">Corrobore sus datos de contacto. Puede agregar un teléfono extra.</p>
+            <p class="subtitle">Corrobore sus datos de contacto. Agregue o modifique referencias a su dirección y/o un telefono extra.</p>
           </div>
           <!--Client data-->
           <div>
             <client-data></client-data>
           </div>
         </form>
-        <!--Actions-->
-        <h4 class="py-2">Si está todo en orden, presione siguiente. Si cree que hay un error, presione el botón 'Datos Incorrectos'.</h4>
-        <div class="px-4 d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
-          <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
-        </div>
       </ng-template>
       
     </mat-step>

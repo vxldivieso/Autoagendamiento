@@ -10,26 +10,20 @@ import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validator
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class CheckoutProductComponent implements OnInit {
-  //variables hidden forms
-  isFalse = false;
-  isTrue = false;
-  
   form!: FormGroup;
   subForm!: FormGroup;
+
+  options: string[] = ['Si', 'No']
+  optionselect !: string;
 
   constructor(private ctrlContainer: FormGroupDirective, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.subForm = this.fb.group({
-      haveProduct: ['', [Validators.required]],
+      optionselect: ['', [Validators.required]],
     });
     this.form = this.ctrlContainer.form;
     this.form.addControl("checkout", this.subForm);
-  }
-  //Have product or no (radio button)
-  onTrueorFalse(value: boolean): void{
-    this.isTrue = value;
-    this.isFalse = value;
   }
   
 }

@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-ejecutivo',
   templateUrl: './contact.component.html',
   styleUrls: ['./wrongdata.component.scss']
 })
 export class EjecutivoComponent implements OnInit {
-
-  constructor() { }
+  order!: number;
+  token!: string;
+  constructor(private route : ActivatedRoute) {
+    this.order = this.route.snapshot.params['order'];
+    this.token = this.route.snapshot.params['token'];
+  }
 
   ngOnInit(): void { 
   }
@@ -20,8 +25,12 @@ export class EjecutivoComponent implements OnInit {
   styleUrls: ['./wrongdata.component.scss']
 })
 export class SaveProcessComponent implements OnInit {
-
-  constructor() { }
+  order!: number;
+  token!: string;
+  constructor(private route : ActivatedRoute) {
+    this.order = this.route.snapshot.params['order'];
+    this.token = this.route.snapshot.params['token'];
+  }
 
   ngOnInit(): void { 
   }

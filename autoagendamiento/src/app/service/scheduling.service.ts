@@ -1,6 +1,9 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Injectable, isDevMode } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import * as moment from "moment";
 import { Observable } from "rxjs";
+import { DateService } from "./detail.service";
 
 export interface Agendamiento{
     date: string;
@@ -11,15 +14,36 @@ export interface Agendamiento{
 })
 export class SchedulingService{
     headers = new HttpHeaders();
+    //params
+    order!: number;
+    token!: string;
 
+    delivery_date = new Date() ;
+    datedelivery : any;
+    fechaFrom : any;
+    fechaTo: any;
+    scheduledFrom:any;
+    scheduledTo:any;
+    
+  
     private apiURL='https://api.demo.maydayservicios.com'
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private apiDate: DateService,
+        private route : ActivatedRoute){
+            this.order = this.route.snapshot.params['order'];
+            this.token = this.route.snapshot.params['token'];
+        }
+    
+    
 
-    getSchedule(order:number, token:string): Observable<any>{
+    getSchedule(from:any, to:any,order:number, token:string): Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
+        let parameters = {"from":from,"to":to};
+        //schedule?from=2022-06-01&to=2022-06-30
+        const params = new HttpParams({ fromObject: parameters });
+
         return this.http.get(`${this.apiURL}/v3/orders/${order}/schedule`,{
-            headers:header
+            headers:header, params:params
         }) 
     }
     putSchedule(date:any, block:any, order:number, token:string):Observable<Agendamiento>{
@@ -27,14 +51,22 @@ export class SchedulingService{
         .set('Type-content','aplication/json').set('token',token);
         return this.http.put<Agendamiento>(`${this.apiURL}/v3/orders/${order}/schedule`,{date,block},{headers:header})
     }
-
-    getScheduleDEV(order:number, token:string): Observable<any>{
+    
+    getScheduleDEV(from:string, to:string, order:number, token:string, ): Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
+
+        //let parameters = {"from":from,"to":to};
+        //const params = new HttpParams({ fromObject: parameters });
+
+        let params = new HttpParams()
+        .set('from', from)
+        .set('to', to)
+
         return this.http.get(`v3/orders/${order}/schedule`,{
-            headers:header
-        })
+            params:params, headers:header, })
     }
+    
     putScheduleDEV(date:any, block:any, order:number, token:string):Observable<Agendamiento>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);

@@ -35,7 +35,7 @@ export class DetailComponent implements OnInit {
   constructor(private api: DetailOrderService, private route : ActivatedRoute) {
     this.order = this.route.snapshot.params['order'];
     this.token = this.route.snapshot.params['token'];
-   }
+  }
   ngOnInit(): void {
     this.getOrderId()
   }
@@ -64,8 +64,14 @@ export class DetailComponent implements OnInit {
 
 export class EditProductComponent implements OnInit{
   changeProductForm !: FormGroup;
+  requests : any;
+  order!: number;
+  token!: string;
   constructor(private formBuilder: FormBuilder, 
-    private api: ModifyProductService, private dialog: MatDialog){}
+    private api: ModifyProductService, private dialog: MatDialog, private route : ActivatedRoute){
+      this.order = this.route.snapshot.params['order'];
+      this.token = this.route.snapshot.params['token'];
+    }
   
   ngOnInit(): void {
     this.changeProductForm = this.formBuilder.group({
@@ -75,7 +81,13 @@ export class EditProductComponent implements OnInit{
     })
   }
 
-  
+  getRequests(){
+    this.api.getRequestsLogDEV(this.order, this.token)
+    .subscribe((resp:any)=>{
+      this.requests = resp;
+      console.log(this.requests);
+    })
+  }
 
   onSubmit(): void{
     if (isDevMode()) {
@@ -97,6 +109,7 @@ export class EditProductComponent implements OnInit{
         this.api.postChangeProduct(this.changeProductForm.value)
         .subscribe({
           next:(res)=>{
+            this.dialog.closeAll();
             this.messageSuccessfull();
           },
           error: () =>{
@@ -174,7 +187,7 @@ export class EditServiceComponent implements OnInit{
   services = ["Armado Mueble", "Armado Parrilla", "Inspección Técnica de muebles", "Retiro ecológico"];
   changeServiceForm !: FormGroup;
   constructor(private formBuilder: FormBuilder, 
-    private api: ModifyService, private dialog: MatDialog){}
+    private api: ModifyService, private dialog: MatDialog, ){}
   
   ngOnInit(): void {
     this.changeServiceForm = this.formBuilder.group({
@@ -183,6 +196,21 @@ export class EditServiceComponent implements OnInit{
   }
 
   onSubmit(): void{
+    if (isDevMode()) {
+      if(this.changeServiceForm.valid){
+        this.api.postChangeService(this.changeServiceForm.value)
+        .subscribe({
+          next:(res)=>{
+            this.dialog.closeAll();
+            this.messageSuccessfull();
+          },
+          error: () =>{
+            this.messageError();  
+          }
+        })
+      }
+    }
+
     if(this.changeServiceForm.valid){
       this.api.postChangeService(this.changeServiceForm.value)
       .subscribe({

@@ -1,27 +1,19 @@
 <h2 mat-dialog-title>Datos de contacto</h2>
-<p>Por favor, corrija los datos que están erróneos</p>
+<p>Estos son los campos disponibles para corregir. Por favor, ingrese la información correcta en el campo que ud. considera erróneo.</p>
 <div mat-dialog-content>
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
-      <mat-label>Nombre</mat-label>
-      <input formControlName="nombre" matInput>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label >Email</mat-label>
-      <input formControlName="email" matInput placeholder="alguien@mail.com"  >
-    </mat-form-field>
-    <mat-form-field appearance="fill">
       <mat-label>Dirección</mat-label>
-      <input formControlName="direccion" matInput placeholder="calle XXXX - comuna" >
+      <input formControlName="direccion" matInput placeholder="calle XXXX" >
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Ciudad</mat-label>
-      <input formControlName="ciudad" matInput>
+      <mat-label>Comuna</mat-label>
+      <input formControlName="comuna" matInput>
     </mat-form-field>
   </form>
 </div>
 
 <div mat-dialog-actions [align]="'end'">
   <button mat-raised-button color="accent" mat-dialog-close>Cerrar</button>
-  <button type="submit" mat-raised-button color="primary" (click)="onSubmit()" >Enviar</button>
+  <button type="submit" mat-raised-button color="primary" (click)="onSubmit()">Enviar</button>
 </div>

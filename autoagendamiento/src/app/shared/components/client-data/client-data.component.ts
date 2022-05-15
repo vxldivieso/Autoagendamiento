@@ -1,11 +1,14 @@
-import { Component, isDevMode, OnInit} from '@angular/core';
+import { Component, Inject, isDevMode, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { text } from 'express';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router'; 
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DetailOrderService } from 'src/app/service/detail.service';
 import  {trigger, style, transition, animate,state } from '@angular/animations';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { DialogData } from 'src/app/pages/stepper/stepper.component';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({ 
   selector: 'client-data',
@@ -37,7 +40,7 @@ export class ClientDataComponent implements OnInit {
   token!: string;
   constructor( private formBuilder: FormBuilder,
     private api: DetailOrderService, private ctrlContainer: FormGroupDirective
-    ,private route : ActivatedRoute) {
+    ,private route : ActivatedRoute, private cdk : CdkStepper) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
      }
@@ -72,13 +75,14 @@ export class ClientDataComponent implements OnInit {
   }
 
   updateClientContact(){
+    this.clientForm.controls['phone2'].patchValue(this.clientData.phone2);
     if (isDevMode()) {
-      this.clientForm.controls['phone2'].patchValue(this.clientData.phone2);
       if(this.clientForm.valid){
         this.api.putContactDEV(this.clientForm.value, this.order, this.token)
         .subscribe({
           next:(res)=>{
             this.messageSuccessfull();
+            this.cdk.next()
           },
           error: () =>{
             this.messageError();
@@ -87,12 +91,12 @@ export class ClientDataComponent implements OnInit {
       }
     }
     else
-      this.clientForm.controls['phone2'].patchValue(this.clientData.phone2);
       if(this.clientForm.valid){
         this.api.putContact(this.clientForm.value, this.order, this.token)
         .subscribe({
           next:(res)=>{
             this.messageSuccessfull();
+            this.cdk.next();
           },
           error: () =>{
             this.messageError();
@@ -107,7 +111,7 @@ export class ClientDataComponent implements OnInit {
       toast: true,
       position: 'bottom',
       showConfirmButton: false,
-      timer: 3000,
+      timer: 2000,
       timerProgressBar: true,   
       customClass: {
         popup: 'colored-toast'
@@ -128,7 +132,7 @@ export class ClientDataComponent implements OnInit {
       toast: true,
       position: 'bottom',
       showConfirmButton: false,
-      timer: 3000,
+      timer: 2000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -147,17 +151,20 @@ export class ClientDataComponent implements OnInit {
 @Component({
   selector: 'app-wrongdata',
   templateUrl: './wrong.component.html',
-  styleUrls: ['./wrong.component.scss']
+  styleUrls: ['./wrong.component.scss'],
+  providers: [{ provide: CdkStepper}]
 })
 export class WrongdataComponent implements OnInit {
   form!: FormGroup;
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog) {}
+
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private cdk: CdkStepper
+) {
+    
+  }
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      nombre: [''],
-      email: [''],
       direccion: [''],
-      ciudad: ['']
+      comuna: ['']
     })
   }
 
@@ -171,26 +178,28 @@ export class WrongdataComponent implements OnInit {
   }
 
   //Message successfull
-messageSuccessfull(){
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'bottom',
-    showConfirmButton: false,
-    timer: 5000,
-    timerProgressBar: true,
-    customClass: {
-      popup: 'colored-toast'
-    },
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
-  Toast.fire({
-    icon: 'success',
-    title: 'Verificaremos los datos'
-  })
-}
+  messageSuccessfull(){
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,   
+      customClass: {
+        popup: 'colored-toast'
+      },
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    Toast.fire({
+      icon: 'success',
+      title: 'Guardado'
+    })
+  }
+
+
 }
 
 @Component({
@@ -205,10 +214,12 @@ messageSuccessfull(){
   styleUrls: ['./wrong.component.scss'],
 })
 export class WrongDataDialog{
-  constructor(private dialog: MatDialog ){}
+  constructor(private dialog: MatDialog){}
   openDialog() {
     this.dialog.open(WrongdataComponent, {
       width:'500px'
     });
   }
+
+
 }

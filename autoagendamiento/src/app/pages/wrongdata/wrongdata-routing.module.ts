@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: 'ejecutivo', component: EjecutivoComponent },
   { path: 'save', component: SaveProcessComponent}
 ];
-
+ 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

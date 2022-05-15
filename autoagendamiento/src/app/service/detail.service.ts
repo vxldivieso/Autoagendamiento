@@ -91,7 +91,7 @@ export class DateService{
         })
     } 
 
-    putDateDelivery(data: any, order:number, token:string):Observable<any>{
+    putDateDelivery(data: string, order:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
@@ -131,6 +131,9 @@ export class DateService{
     providedIn:'root'
 })
 export class ModifyProductService{
+
+    headers = new HttpHeaders();
+    private apiURL2 ='https://api.demo.maydayservicios.com'
     
     private apiURL='http://localhost:3030';
 
@@ -141,6 +144,35 @@ export class ModifyProductService{
     getChangeProduct():Observable<changeProduct[]>{
         return this.http.get<changeProduct[]>(`${this.apiURL}/editProduct`);
     }
+
+    getRequestsLogDEV(order:number, token:string): Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+        
+        return this.http.get(`v3/requests/${order}/log`,{
+            headers:header
+        })
+    } 
+
+    putChangeProduct(data:any, order:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.put<any>(`v3/requests/${order}/log`,data,{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+    }
+    putChangeProductDEV(data:any, order:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.put<any>(`v3/requests/${order}/log`,data,{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+    }
+   
 }
 
 @Injectable({

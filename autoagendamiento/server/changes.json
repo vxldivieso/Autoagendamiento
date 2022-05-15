@@ -11,6 +11,12 @@
       "skuProduct": "",
       "img": "",
       "id": 2
+    },
+    {
+      "nameProduct": "comedor",
+      "skuProduct": "",
+      "img": "",
+      "id": 3
     }
   ],
   "editService": [
@@ -37,6 +43,18 @@
     {
       "selectService": "Armado Parrilla",
       "id": "fMUoyjm"
+    },
+    {
+      "selectService": "Inspección Técnica de muebles",
+      "id": "nMfaxOG"
+    },
+    {
+      "selectService": "Armado Parrilla",
+      "id": "-YZELNr"
+    },
+    {
+      "selectService": "Armado Parrilla",
+      "id": "yyE3rZ4"
     }
   ],
   "dateProduct": [
@@ -93,6 +111,14 @@
     {
       "date": "2022-05-26T04:00:00.000Z",
       "id": 10
+    },
+    {
+      "date": "2022-05-18T04:00:00.000Z",
+      "id": 11
+    },
+    {
+      "date": "2022-05-25T04:00:00.000Z",
+      "id": 12
     }
   ]
 }

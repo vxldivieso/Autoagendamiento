@@ -1,7 +1,7 @@
 
 <div class="container py-4 justify-content-center align-items-center" >
     <div class="container-fluid">
-        <form *ngIf="clientData" @enterState >
+        <form *ngIf="clientData" @enterState  >
             <div class="row">
                 <!--Nombre-->
                 <mat-form-field class="col-md-6 " appearance="fill" >
@@ -11,12 +11,12 @@
                 <!--Rut-->
                 <mat-form-field class="col-md-6 "  appearance="fill">
                     <mat-label for="rut" class="form-label">Rut</mat-label>
-                    <input matInput type="text" name="rut" id="rut" [(ngModel)]="clientData.rut" readonly  >
+                    <input matInput type="text" name="rut" id="rut" [(ngModel)]="clientData.rut" readonly >
                 </mat-form-field>
                 <!--Email-->
                 <mat-form-field class="col-md-6 "  appearance="fill">
                     <mat-label for="email" class="form-label">Email </mat-label>
-                    <input matInput type="email" name="email" id="email" [(ngModel)]="clientData.email"  readonly  > 
+                    <input matInput type="email" name="email" id="email" [(ngModel)]="clientData.email"  readonly > 
                 </mat-form-field>
                 <!--Telefono-->
                 <mat-form-field class="col-md-6 "  appearance="fill">
@@ -24,7 +24,7 @@
                     
                     <input matInput type="phone" id="phone" name="phone" [(ngModel)]="clientData.phone" readonly>
                 </mat-form-field>
-                <mat-form-field class="col-md-6 "  appearance="fill">
+                <mat-form-field class="col-md-6 "  appearance="outline">
                     <mat-label for="phone2" class="form-label">Teléfono 2 </mat-label>
                     <span matPrefix>+56 &nbsp;</span>
                     <input required matInput type="tel" id="phone" placeholder="(9)XXX-XX-XXX" name="phone2" [(ngModel)]="clientData.phone2" pattern="([0-9]{9})">
@@ -32,22 +32,25 @@
                 </mat-form-field>
                 <!--Direccion-->
                 <mat-form-field class="col-md-6" appearance="fill">
-                    
-                    <mat-label for="county" class="form-label">Comuna</mat-label>
-                    <input matInput type="text" id="county" name="county"  [(ngModel)]="clientData.county" readonly  > 
-                
-                </mat-form-field>
-                <mat-form-field class="col-md-12" appearance="fill">
                     <mat-label for="address" class="form-label">Dirección</mat-label>
-                    <input matInput type="text" id="address" name="address" [(ngModel)]="clientData.address" readonly >
+                    <input matInput type="text" id="address" name="address" [(ngModel)]="clientData.address" readonly>
+                </mat-form-field>
+                <!--Comuna-->
+                <mat-form-field class="col-md-6" appearance="fill">
+                    <mat-label for="county" class="form-label">Comuna</mat-label>
+                    <input matInput type="text" id="county" name="county"  [(ngModel)]="clientData.county" readonly > 
+                </mat-form-field>
+                <!--Referencias-->
+                <mat-form-field class="col-md-6" appearance="outline">
+                    <mat-label for="reference" class="form-label">Referencias</mat-label>
+                    <input id="input" matInput type="text" id="reference" name="reference">
                 </mat-form-field>
             </div>
-            <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
-                <button mat-raised-button color="primary" (click)="updateClientContact()" >Actualizar datos</button>
-                <button-wrongdata></button-wrongdata>
-            </div>
-            
         </form>
+        <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
+            <button mat-raised-button color="primary" (click)="updateClientContact()">Confirmar datos</button>
+            <button-wrongdata></button-wrongdata>
+        </div>
     </div>
     
 </div>
