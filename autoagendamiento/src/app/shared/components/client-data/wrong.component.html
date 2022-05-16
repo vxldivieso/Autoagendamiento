@@ -3,12 +3,20 @@
 <div mat-dialog-content>
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
+      <mat-label>Telefono 2</mat-label>
+      <input formControlName="phone2" matInput placeholder="+569XXXXXXXX" >
+    </mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Dirección</mat-label>
-      <input formControlName="direccion" matInput placeholder="calle XXXX" >
+      <input formControlName="direccion" matInput placeholder="calle - enumeración" >
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Comuna</mat-label>
       <input formControlName="comuna" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Referencias</mat-label>
+      <input formControlName="referencias" matInput>
     </mat-form-field>
   </form>
 </div>

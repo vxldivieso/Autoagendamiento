@@ -55,6 +55,14 @@
     {
       "selectService": "Armado Parrilla",
       "id": "yyE3rZ4"
+    },
+    {
+      "selectService": "Inspección Técnica de muebles",
+      "id": "IFRYdpu"
+    },
+    {
+      "selectService": "Inspección Técnica de muebles",
+      "id": "xBupsi3"
     }
   ],
   "dateProduct": [
@@ -131,6 +139,14 @@
     {
       "date": "2022-05-31T04:00:00.000Z",
       "id": 15
+    },
+    {
+      "date": "2022-05-18T04:00:00.000Z",
+      "id": 16
+    },
+    {
+      "date": "2022-05-19T04:00:00.000Z",
+      "id": 17
     }
   ]
 }

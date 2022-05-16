@@ -41,19 +41,29 @@
 }
 
 a {
-	color: #fff;
+	color: #424242;
+	background-color: white;
 	display: inline-block;
-	font-size: 10px;
 	text-decoration: none;
 	text-align: center;
 	letter-spacing: 1px;
 	cursor: pointer;
+	border-radius: 10px;
+	font-size: 10px;
+	padding: 12px 25px;
 }
-a:hover {
-	transition: 1s;
-	border-bottom: #ddd;
+#btn{
+	color: #424242;
+	background-color: white;
+	display: inline-block;
+	text-decoration: none;
+	text-align: center;
+	letter-spacing: 1px;
+	cursor: pointer;
+	border-radius: 10px;
+	font-size: 10px;
+	padding: 12px 25px;
 }
-
 
 .btn {
 	background-color: #424242;

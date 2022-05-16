@@ -116,6 +116,8 @@ export class EditProductComponent implements OnInit{
       skuProduct: [''],
       img: ['']
     })
+
+    //params nonroute
     this.pathParam = this.service.pathParam;
     this.pathParam.subscribe(res=>{
       this.orderParam = res
@@ -126,33 +128,21 @@ export class EditProductComponent implements OnInit{
       this.tokenParam = res
       
     })
-    this.getRequest()
+    this.getRequestId()
     
   }
 
-  getRequest(){
+  getRequestId(){
     if (isDevMode()) {
       this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
         this.requests = resp.request_id;
       })
     }
     else
-      this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+      this.api.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
         this.requests = resp;
       })
   }
-
-  onSubmit1(){
-    this.name = this.changeProductForm.controls['nameProduct'].value
-    this.api.putRequestDEV(this.name, this.requests, this.tokenParam)
-          .subscribe({
-            next:(res)=>{
-              res
-              console.log(this.name, 'Envío exitoso');
-            }
-          })
-  }
-
 
   onSubmit(): void{
     this.name = this.changeProductForm.controls['nameProduct'].value
@@ -160,60 +150,52 @@ export class EditProductComponent implements OnInit{
     this.img = this.changeProductForm.controls['img'].value
     if (isDevMode()) {
       if(this.changeProductForm.valid){
-        if (this.name != null){
-          this.api.putRequestDEV(this.name, this.requests, this.tokenParam)
-          .subscribe({
-            next:(res)=>{
-              res
-            }
-          })
+        let message :string = "Datos Producto (Modificados): \n";
+        if (this.name != null ){
+          message += `Nombre Producto: ${this.name} \n`
         }
         if (this.sku != null){
-          this.api.putRequestDEV(this.sku, this.requests, this.tokenParam)
+          message += `SkuProducto: ${this.sku} \n`
+        }
+        this.api.putRequestDEV(message, this.requests, this.tokenParam)
           .subscribe({
             next:(res)=>{
               res
+              this.dialog.closeAll();
+              this.messageSuccessfull();
+            },
+            error: () =>{
+              this.messageError();
             }
-          })
-        }
-        if (this.img != null){
-          this.api.putRequestDEV(this.img, this.requests, this.tokenParam)
-          .subscribe({
-            next:(res)=>{
-              res
-            }
-          })
-        }
-        
+          }) 
       }
-      
-    }
-      /*if(this.changeProductForm.valid){
-        this.api.postChangeProduct(this.changeProductForm.value)
-        .subscribe({
-          next:(res)=>{
-            this.dialog.closeAll();
-            this.messageSuccessfull();
-          },
-          error: () =>{
-            this.messageError();
-          }
-        })
-      } 
+      else
+      this.messageError(); 
     }
     else
-      if(this.changeProductForm.valid){
-        this.api.postChangeProduct(this.changeProductForm.value)
+    if(this.changeProductForm.valid){
+      let message :string = "Datos Producto (Modificados): \n";
+      if (this.name != null ){
+        message += `NombreProducto: ${this.name} \n`
+      }
+      if (this.sku != null){
+        message += `SkuProducto: ${this.sku} \n`
+      }
+      this.api.putRequest(message, this.requests, this.tokenParam)
         .subscribe({
           next:(res)=>{
+            res
             this.dialog.closeAll();
             this.messageSuccessfull();
           },
           error: () =>{
             this.messageError();
           }
-        })
-      } */
+        }) 
+    }
+    else
+    this.messageError(); 
+
   }
 //Message successfull
 messageSuccessfull(){
@@ -261,7 +243,7 @@ messageError(){
 //Form edit product dialog
 @Component({
   selector: 'editproduct-dialog',
-  template: `<a (click)="openDialog()" class="btn">Editar Producto</a>`,
+  template: `<a (click)="openDialog()" class="btn" id="btn">Editar Producto</a>`,
   styleUrls: ['./detailOrder.component.scss']
 })
 export class EditProductDialog{
@@ -281,20 +263,20 @@ export class EditProductDialog{
   styleUrls: ['./editService/editService.component.scss']
 })
 export class EditServiceComponent implements OnInit{
-  services = ["Armado Mueble", "Armado Parrilla", "Inspección Técnica de muebles", "Retiro ecológico"];
   changeServiceForm !: FormGroup;
+  requests : any;
 
-  orderParam!: string | null;
-  tokenParam!: string | null;
+  orderParam!: any;
+  tokenParam!: any;
   
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
   constructor(private formBuilder: FormBuilder, 
-    private api: ModifyService, private dialog: MatDialog, private service : RouteService ){}
+    private api: ModifyProductService, private dialog: MatDialog, private service : RouteService ){}
   
   ngOnInit(): void {
     this.changeServiceForm = this.formBuilder.group({
-      selectService: ['', Validators.required]
+      servicioModificado: ['', Validators.required]
     })
     //route order
     this.pathParam = this.service.pathParam;
@@ -307,12 +289,26 @@ export class EditServiceComponent implements OnInit{
       this.tokenParam = res
       
     })
+    this.getRequestId()
+  }
+  getRequestId(){
+    if (isDevMode()) {
+      this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+        this.requests = resp.request_id;
+      })
+    }
+    else
+      this.api.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+        this.requests = resp;
+      })
   }
 
   onSubmit(): void{
+    let valor = this.changeServiceForm.value
+    let parseString = JSON.stringify(valor)
     if (isDevMode()) {
       if(this.changeServiceForm.valid){
-        this.api.postChangeService(this.changeServiceForm.value)
+        this.api.putRequestDEV(parseString, this.requests, this.tokenParam)
         .subscribe({
           next:(res)=>{
             this.dialog.closeAll();
@@ -324,9 +320,9 @@ export class EditServiceComponent implements OnInit{
         })
       }
     }
-
+    else
     if(this.changeServiceForm.valid){
-      this.api.postChangeService(this.changeServiceForm.value)
+      this.api.putRequest(parseString, this.requests, this.tokenParam)
       .subscribe({
         next:(res)=>{
           this.dialog.closeAll();
@@ -338,6 +334,7 @@ export class EditServiceComponent implements OnInit{
       })
     }
   }
+  
 
 //Message successfull
 messageSuccessfull(){

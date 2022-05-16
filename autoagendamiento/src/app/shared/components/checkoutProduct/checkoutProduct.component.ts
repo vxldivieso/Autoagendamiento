@@ -1,6 +1,8 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, isDevMode, OnInit, Output } from '@angular/core';
 import {MatStepper, StepperOrientation} from '@angular/material/stepper';
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { DateService } from 'src/app/service/detail.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -16,7 +18,17 @@ export class CheckoutProductComponent implements OnInit {
   options: string[] = ['Si', 'No']
   optionselect !: string;
 
-  constructor(private ctrlContainer: FormGroupDirective, private fb: FormBuilder) { }
+  delivery_date = new Date() ;
+
+  //params
+  order!: number;
+  token!: string;
+
+  constructor(private ctrlContainer: FormGroupDirective, private fb: FormBuilder,
+    private api: DateService, private route : ActivatedRoute) { 
+    this.order = this.route.snapshot.params['order'];
+      this.token = this.route.snapshot.params['token'];
+  }
 
   ngOnInit(): void {
     this.subForm = this.fb.group({
@@ -25,5 +37,19 @@ export class CheckoutProductComponent implements OnInit {
     this.form = this.ctrlContainer.form;
     this.form.addControl("checkout", this.subForm);
   }
+
+  getDeliveryDate(){
+    if (isDevMode()) {
+      this.api.getOrderIdDEV(this.order, this.token)
+      .subscribe((res:any)=>{
+        this.delivery_date = res.delivery_date;
+      })
+    }
+    else
+      this.api.getOrderId(this.order, this.token)
+      .subscribe((res:any)=>{
+        this.delivery_date = res.delivery_date;
+      })
+  } 
   
 }

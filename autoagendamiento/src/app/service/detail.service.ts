@@ -134,9 +134,7 @@ export class DateService{
 export class ModifyProductService{
 
     headers = new HttpHeaders();
-    private apiURL2 ='https://api.demo.maydayservicios.com'
-    
-    private apiURL='http://localhost:3030';
+    private apiURL ='https://api.demo.maydayservicios.com'
 
     constructor (private http : HttpClient){}
     
@@ -152,7 +150,7 @@ export class ModifyProductService{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
-        return this.http.put<any>(`${this.apiURL2}/v3/requests/${request_id}/log`,data,{headers:header}).pipe(
+        return this.http.put<any>(`${this.apiURL}/v3/requests/${request_id}/log`,data,{headers:header}).pipe(
             (map((res:any)=>{
                 return res;
             })))
@@ -169,33 +167,13 @@ export class ModifyProductService{
 
     putRequestDEV(data:string, request_id:number, token:string):Observable<any>{
         let header = new HttpHeaders()
-        .set('Type-content','aplication/json').set('token',token);
+        .set('content-type','application/json').set('token',token);
 
-        return this.http.put<any>(`v3/requests/${request_id}/log`,data,{headers:header}).pipe(
+        return this.http.put<any>(`v3/requests/${request_id}/log`,{message:data},{headers:header}).pipe(
             (map((res:any)=>{
                 return res;
             })))
 
-    }
-
-
-    putChangeProduct(data:any, order:number, token:string):Observable<any>{
-        let header = new HttpHeaders()
-        .set('Type-content','aplication/json').set('token',token);
-
-        return this.http.put<any>(`v3/requests/${order}/log`,data,{headers:header}).pipe(
-            (map((res:any)=>{
-                return res;
-            })))
-    }
-    putChangeProductDEV(data:any, order:number, token:string):Observable<any>{
-        let header = new HttpHeaders()
-        .set('Type-content','aplication/json').set('token',token);
-
-        return this.http.put<any>(`v3/requests/${order}/log`,data,{headers:header}).pipe(
-            (map((res:any)=>{
-                return res;
-            })))
     }
    
 }

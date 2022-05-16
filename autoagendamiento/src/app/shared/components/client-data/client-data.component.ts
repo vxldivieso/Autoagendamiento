@@ -1,14 +1,14 @@
-import { Component, Inject, isDevMode, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { text } from 'express';
+import { Component, isDevMode, OnInit} from '@angular/core';
+import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router'; 
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DetailOrderService, ModifyContactData } from 'src/app/service/detail.service';
+import { DetailOrderService, ModifyProductService } from 'src/app/service/detail.service';
 import  {trigger, style, transition, animate,state } from '@angular/animations';
 import { CdkStepper } from '@angular/cdk/stepper';
-import { DialogData } from 'src/app/pages/stepper/stepper.component';
-import { MatStepper } from '@angular/material/stepper';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { RouteService } from 'src/app/service/route.service';
+import { Router } from '@angular/router';
 
 @Component({ 
   selector: 'client-data',
@@ -38,9 +38,11 @@ export class ClientDataComponent implements OnInit {
 
   order!: number;
   token!: string;
+
+  private destroy = new Subject<void>();
   constructor( private formBuilder: FormBuilder,
     private api: DetailOrderService, private ctrlContainer: FormGroupDirective
-    ,private route : ActivatedRoute, private cdk : CdkStepper) {
+    ,private route : ActivatedRoute, private cdk : CdkStepper,  private service : RouteService) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
      }
@@ -58,6 +60,21 @@ export class ClientDataComponent implements OnInit {
     this.form = this.ctrlContainer.form;
     this.form.addControl("clientData", this.clientForm);
     this.getClientData(); 
+
+    //route order
+    this.route.paramMap
+    .pipe(
+      map(paramMap => paramMap.get('order')),
+      takeUntil(this.destroy)
+    )
+    .subscribe(order => this.service.updatePathParamState(order));
+    //route token
+    this.route.paramMap
+    .pipe(
+      map(paramMap => paramMap.get('token')),
+      takeUntil(this.destroy)
+    )
+    .subscribe(token => this.service.updatePathParamStateToken(token));
   }
 
   getClientData(){
@@ -158,28 +175,120 @@ export class WrongdataComponent implements OnInit {
   form!: FormGroup;
   order!: number;
   token!: string;
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private api : ModifyContactData,
-    private route : ActivatedRoute) {}
+  requests : any;
+
+  orderParam!: any;
+  tokenParam!: any;
+  
+  pathParam !: Observable<string | null>
+  pathParamToken !: Observable<string | null>
+
+  //vars
+  phone2!:string;
+  direccion!:string;
+  comuna!:string;
+  referencias!:string;
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private api : ModifyProductService,
+    private router : Router, private service : RouteService) {}
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      phone2: [''],
       direccion: [''],
-      comuna: ['']
+      comuna: [''],
+      referencias: [''],
     })
 
-    
+    //params nonroute
+    this.pathParam = this.service.pathParam;
+    this.pathParam.subscribe(res=>{
+      this.orderParam = res
+    })
+
+    this.pathParamToken = this.service.pathParamToken;
+    this.pathParamToken.subscribe(res=>{
+      this.tokenParam = res
+      
+    })
+    this.getRequestId()
   }
 
-  getRequestsLog(){
-    this.api.getRequestsLogDEV
+  getRequestId(){
+    if (isDevMode()) {
+      this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+        this.requests = resp.request_id;
+      })
+    }
+    else
+      this.api.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+        this.requests = resp;
+      })
   }
 
 
   onSubmit(){
-    if (this.form.valid){
-      
-      //this.dialog.closeAll();
-      //this.messageSuccessfull()
+    this.phone2 = this.form.controls['phone2'].value
+    this.direccion = this.form.controls['direccion'].value
+    this.comuna = this.form.controls['comuna'].value
+    this.referencias = this.form.controls['referencias'].value
+    
+    if (isDevMode()) {
+      if(this.form.valid){
+        let message :string = "Datos Contacto (Modificados): \n";
+        if (this.phone2 != null ){
+          message += `Telefono 2: ${this.phone2} \n`
+        }
+        if (this.direccion != null ){
+          message += `Dirección: ${this.direccion} \n`
+        }
+        if (this.comuna != null){
+          message += `Comuna: ${this.comuna} \n`
+        }
+        if (this.referencias != null ){
+          message += `Referencias: ${this.referencias} \n`
+        }
+        this.api.putRequestDEV(message, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+              this.dialog.closeAll();
+              this.messageSuccessfull();
+              this.router.navigate([`${this.orderParam}/${this.tokenParam}/wrong/ejecutivo`])
+            },
+            error: () =>{
+              this.messageError();
+            }
+          }) 
+      }
     }
+    else
+    if(this.form.valid){
+      let message :string = "Datos Contacto (Modificados): \n";
+        if (this.phone2 != null ){
+          message += `Telefono 2: ${this.phone2} \n`
+        }
+        if (this.direccion != null ){
+          message += `Dirección: ${this.direccion} \n`
+        }
+        if (this.comuna != null){
+          message += `Comuna: ${this.comuna} \n`
+        }
+        if (this.referencias != null ){
+          message += `Referencias: ${this.referencias} \n`
+        }
+      this.api.putRequest(message, this.requests, this.tokenParam)
+        .subscribe({
+          next:(res)=>{
+            res
+            this.dialog.closeAll();
+            this.messageSuccessfull();
+            this.router.navigate([`${this.orderParam}/${this.tokenParam}/wrong/ejecutivo`])
+          },
+          error: () =>{
+            this.messageError();
+          }
+        }) 
+    }
+    
   }
 
   //Message successfull
@@ -203,6 +312,24 @@ export class WrongdataComponent implements OnInit {
       title: 'Guardado'
     })
   }
+  //Message Error
+messageError(){
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  Toast.fire({
+    icon: 'error',
+    title: 'Ups.. Algo ocurrió'
+  })
+}
 
 
 }

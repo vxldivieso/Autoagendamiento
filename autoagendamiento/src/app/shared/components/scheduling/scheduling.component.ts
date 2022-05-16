@@ -118,10 +118,22 @@ export class SchedulingComponent implements OnInit, OnDestroy {
       })
     }
     else
-      this.apiDate.getOrderId(this.order, this.token)
-      .subscribe((res:any)=>{
-        this.delivery_date = res.delivery_date;
-      })
+    this.apiDate.getOrderId(this.order, this.token)
+    .subscribe((res:any)=>{
+      this.delivery_date = res.delivery_date;
+      //fecha from
+      this.fechaFrom = moment(this.delivery_date).add(2,'days')
+      this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
+      
+      //fecha to
+      this.fechaTo = moment(this.delivery_date).add(23,'days')
+      this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
+
+      //method get schedule
+      this.getApiSchedule()
+
+      return this.scheduledTo, this.scheduledFrom
+    })
 
   }
 
@@ -129,6 +141,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   //Obtener dates y bloques
   getApiSchedule(){
     if (isDevMode()) {
+      
       this.api.getScheduleDEV(this.scheduledFrom, this.scheduledTo, this.order, this.token).subscribe({
         next:(res)=>{
           const res2 = this.bloqueHorario(res)

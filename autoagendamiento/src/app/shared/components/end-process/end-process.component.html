@@ -4,27 +4,7 @@
         <div class="course" >
             <div class="course-info card-body" @enterState  >
                 <h1>Detalle del Servicio</h1>
-                <div class="container">
-                    <h4>Datos del cliente</h4>
-                    <div class="row" *ngIf="clientData" >
-                        <div class="col-md-3">
-                            <h5 class="card-title">Nombre titular</h5>
-                            <h2 class="card-text">{{clientData.name}} {{clientData.rut}}</h2>
-                        </div>
-                        <div class="col-md-3">
-                            <h5 class="card-title">Dirección</h5>
-                            <h2 class="card-text">{{clientData.address}}</h2>
-                        </div>
-                        <div class="col-md-3">
-                            <h5 class="card-title">Comuna</h5>
-                            <h2 class="card-text">{{clientData.county}}</h2>
-                        </div>
-                        <div class="col-md-3">
-                            <h5 class="card-title">Referencias</h5>
-                            <h2 class="card-text">Referencias</h2>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="container py-4">
                     <h4>Datos de agendamiento</h4>
                     <div class="row">
@@ -42,6 +22,34 @@
                         </div>
                     </div>
                 </div>
+                <mat-accordion >
+                    <mat-expansion-panel >
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            <h4>Datos del cliente</h4>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row" *ngIf="clientData" >
+                            <div class="col-md-3">
+                                <h5 class="card-title">Nombre titular</h5>
+                                <h2 class="card-text">{{clientData.name}} {{clientData.rut}}</h2>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="card-title">Dirección</h5>
+                                <h2 class="card-text">{{clientData.address}}</h2>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="card-title">Comuna</h5>
+                                <h2 class="card-text">{{clientData.county}}</h2>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="card-title">Referencias</h5>
+                                <h2 class="card-text">Referencias</h2>
+                            </div>
+                        </div>
+                      </mat-expansion-panel>
+                </mat-accordion>
+                
                 
             </div>
         </div>

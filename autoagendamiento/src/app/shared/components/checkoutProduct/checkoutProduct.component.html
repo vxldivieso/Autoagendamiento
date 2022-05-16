@@ -18,9 +18,13 @@
   </div>
 </div>
 
+<ng-container *ngIf="optionselect=='Si' && !delivery_date then showDatepicker">
+</ng-container>
+
 <!--Hideform no-->
 <ng-container *ngIf="optionselect=='No' then showDatepicker else showProductData" >
 </ng-container>
+
 <!--Show date picker-->
 <ng-template #showDatepicker>
   <div class="container" >

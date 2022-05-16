@@ -6,8 +6,8 @@
   display: flexbox;
 }
 
-#input{
-  color: #424949;
+input:disabled {
+  color: black;
 }
 
 .form-label{
