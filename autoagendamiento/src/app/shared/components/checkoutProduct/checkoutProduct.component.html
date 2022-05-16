@@ -10,34 +10,33 @@
             <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option"  >
               {{option}}
             </mat-radio-button>
-            <!--<p>tu seleccion es {{optionselect}} </p>--> 
-        </mat-radio-group>
+          </mat-radio-group>
         </form>
       </div>
     </div>
   </div>
 </div>
 
-<ng-container *ngIf="optionselect=='Si' && !delivery_date then showDatepicker">
+<!--Show form !delivery_date-->
+<ng-container *ngIf="optionselect=='Si' then showDatepicker">
 </ng-container>
-
 <!--Hideform no-->
 <ng-container *ngIf="optionselect=='No' then showDatepicker else showProductData" >
 </ng-container>
+<!--Hideform si-->
+<ng-container *ngIf="optionselect=='No' then showProductData">
+</ng-container>
 
-<!--Show date picker-->
-<ng-template #showDatepicker>
+ <!--Show date picker-->
+ <ng-template #showDatepicker>
   <div class="container" >
     <dateProduct></dateProduct>
   </div>
 </ng-template>
-
-
-<!--Hideform si-->
-<ng-container *ngIf="optionselect=='No' then showProductData">
-</ng-container>
+<!--Show detail order-->
 <ng-template #showProductData>
   <detail-order></detail-order>
 </ng-template>
+
 
 

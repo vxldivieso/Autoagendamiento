@@ -27,7 +27,7 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
 
   form !: FormGroup;
 
-  order!: number;
+  order!: any;
   token!: string;
   constructor(private apiDet : DetailOrderService, private ctrlContainer: FormGroupDirective,
     private route : ActivatedRoute) {

@@ -35,7 +35,7 @@ export class StepperComponent implements OnInit{
   @ViewChild('stepper') stepper!: MatStepper;
   details:any;
   status_order : any;
-  order!: number;
+  order!: any;
   token!: string;
   
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, 

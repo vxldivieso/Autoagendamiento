@@ -13,7 +13,7 @@ export class DetailOrderService{
     constructor(private http: HttpClient, private router: Router){
     }
 
-    getOrderId(order : number, token:string){
+    getOrderId(order : string, token:string){
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         
@@ -26,7 +26,7 @@ export class DetailOrderService{
         )
     }
     
-    putContact(data:any, order:number, token:string):Observable<any>{
+    putContact(data:any, order:string, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
@@ -36,7 +36,7 @@ export class DetailOrderService{
             })))
     }
 
-    getOrderDEV(order:number, token:string):Observable<any>{
+    getOrderDEV(order:string, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         
@@ -49,7 +49,7 @@ export class DetailOrderService{
         )
     }
     
-    putContactDEV(data:any, order:number, token:string):Observable<any>{
+    putContactDEV(data:any, order:string, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
@@ -84,7 +84,7 @@ export class DateService{
 
     constructor (private http : HttpClient){}
 
-    getOrderId(order:number, token:string){
+    getOrderId(order:string, token:string){
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         return this.http.get(`${this.apiURL}/v3/orders/`+order,{
@@ -92,7 +92,7 @@ export class DateService{
         })
     } 
 
-    putDateDelivery(data: string, order:number, token:string):Observable<any>{
+    putDateDelivery(data: string, order:string, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
@@ -104,7 +104,7 @@ export class DateService{
             })))
     }
 
-    getOrderIdDEV(order:number, token:string){
+    getOrderIdDEV(order:string, token:string){
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         return this.http.get('v3/orders/'+order,{
@@ -138,7 +138,7 @@ export class ModifyProductService{
 
     constructor (private http : HttpClient){}
     
-    getRequest(order:number, token:string){
+    getRequest(order:string, token:string){
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         return this.http.get(`${this.apiURL}/v3/orders/`+order,{
@@ -155,12 +155,29 @@ export class ModifyProductService{
                 return res;
             })))
     }
+    getRequestLog(request_id:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.get(`${this.apiURL}/v3/requests/${request_id}/log`,{
+            headers:header
+        })
+    }
 
     getRequestDEV(order:string, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         
         return this.http.get('v3/orders/'+order,{
+            headers:header
+        })
+    }
+
+    getRequestLogDEV(request_id:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.get(`/v3/requests/${request_id}/log`,{
             headers:header
         })
     }
@@ -191,20 +208,6 @@ export class ModifyContactData{
             headers:header
         })
     } 
-}
-
-@Injectable({
-    providedIn:'root'
-})
-export class ModifyService{
-
-    private apiURL='http://localhost:3030';
-
-    constructor (private http : HttpClient){}
-    
-    postChangeService(data: changeService): Observable<changeService>{
-        return this.http.post<changeService>(`${this.apiURL}/editService`, data );
-    }
 }
 
 @Injectable({

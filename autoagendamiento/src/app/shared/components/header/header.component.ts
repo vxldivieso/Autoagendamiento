@@ -11,7 +11,7 @@ import { DetailOrderService } from '../../../service/detail.service';
 export class HeaderComponent {
   
   clientData:any; 
-  order!: number;
+  order!: any;
   token!: string;
   constructor(private api: DetailOrderService ,private route : ActivatedRoute ) {
     this.order = this.route.snapshot.params['order'];

@@ -9,7 +9,7 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
 import { Router } from '@angular/router';
-
+ 
 @Component({ 
   selector: 'client-data',
   templateUrl: './client-data.component.html',
@@ -36,13 +36,21 @@ export class ClientDataComponent implements OnInit {
   //variable que recibe los datos
   clientData:any;
 
-  order!: number;
+  order!: string;
   token!: string;
+
+  orderParam!: any;
+  tokenParam!: any;
+  
+  pathParam !: Observable<string | null>
+  pathParamToken !: Observable<string | null>
+  requests : any;
+  requestsLog:any
 
   private destroy = new Subject<void>();
   constructor( private formBuilder: FormBuilder,
     private api: DetailOrderService, private ctrlContainer: FormGroupDirective
-    ,private route : ActivatedRoute, private cdk : CdkStepper,  private service : RouteService) {
+    ,private route : ActivatedRoute, private cdk : CdkStepper,  private service : RouteService,  private apiMod: ModifyProductService) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
      }
@@ -121,6 +129,34 @@ export class ClientDataComponent implements OnInit {
         })
       }
   }
+
+  getRequestId(){
+    if (isDevMode()) {
+      this.apiMod.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+        this.requests = resp.request_id;
+      })
+    }
+    else
+      this.apiMod.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+        this.requests = resp;
+      })
+  }
+
+  getRequestLog(){
+    if (isDevMode()) {
+      this.apiMod.getRequestLogDEV(this.requests, this.token).subscribe((resp:any)=>{
+        this.requestsLog = resp;
+        console.log(this.requestsLog);
+      })
+    }
+    else
+    this.apiMod.getRequestLog(this.requests, this.token).subscribe((resp:any)=>{
+      this.requestsLog = resp;
+      console.log(this.requestsLog);
+    })
+
+  }
+
 
   //Message Successfull
   messageSuccessfull(){

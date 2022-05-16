@@ -6,13 +6,15 @@ import { DatePipe } from '@angular/common'
 import  {trigger, style, transition, animate,state } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment'
+import { DateAdapter } from '@angular/material/core';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
 
 
 @Component({
   selector:'dateProduct',
   templateUrl: './datepicker.component.html', 
   styleUrls: ['./datepicker.component.scss'],
-  providers: [DatePipe],
+  providers: [DatePipe,{ provide: MAT_DATE_LOCALE, useValue: 'es' }],
   animations:[
     trigger('enterState',[
       state('void',style({
@@ -37,18 +39,21 @@ export class DateFormProduct{
   datedelivery : any;
 
   //params
-  order!: number;
+  order!: any;
   token!: string;
   
   constructor(private formBuilder: FormBuilder, 
-    private api: DateService, public datepipe: DatePipe, private route : ActivatedRoute){
+    private api: DateService, public datepipe: DatePipe, private route : ActivatedRoute, date: DateAdapter<Date>){
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
+
+      date.getFirstDayOfWeek = () => 1;
+      date.setLocale('es');
     }
   
   ngOnInit(): void {
     this.dateProductForm = this.formBuilder.group({
-      dateProduct: ['',Validators.required],
+      dateProduct: ['',Validators.required]
     });
     this.getDeliveryDate() 
   }

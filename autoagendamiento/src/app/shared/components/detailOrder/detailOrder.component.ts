@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { DetailOrderService, ModifyProductService, ModifyService } from 'src/app/service/detail.service';
+import { DetailOrderService, ModifyProductService} from 'src/app/service/detail.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
@@ -32,7 +32,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   details:any
 
   
-  order!: number;
+  order!: any;
   token!: string;
 
   private destroy = new Subject<void>();

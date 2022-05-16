@@ -1,6 +1,6 @@
 import { Component, isDevMode, OnInit, Output } from '@angular/core';
 import {MatStepper, StepperOrientation} from '@angular/material/stepper';
-import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { DateService } from 'src/app/service/detail.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -21,7 +21,7 @@ export class CheckoutProductComponent implements OnInit {
   delivery_date = new Date() ;
 
   //params
-  order!: number;
+  order!: any;
   token!: string;
 
   constructor(private ctrlContainer: FormGroupDirective, private fb: FormBuilder,
@@ -34,8 +34,10 @@ export class CheckoutProductComponent implements OnInit {
     this.subForm = this.fb.group({
       optionselect: ['', [Validators.required]],
     });
+    
     this.form = this.ctrlContainer.form;
     this.form.addControl("checkout", this.subForm);
+    this.getDeliveryDate()
   }
 
   getDeliveryDate(){

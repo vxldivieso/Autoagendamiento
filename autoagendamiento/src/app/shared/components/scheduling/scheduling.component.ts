@@ -14,6 +14,8 @@ import { RouterModule, Routes, Router } from '@angular/router';
 import * as moment from 'moment';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -49,7 +51,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   form !: FormGroup;
   subForm!: FormGroup;
   //params
-  order!: number;
+  order!: any;
   token!: string;
 
   //vars
@@ -396,6 +398,7 @@ export class ContactDialog{
  selector: 'agendar',
  templateUrl: './reagendar.component.html',
  styleUrls: ['./scheduling.component.scss'],
+ providers: [DatePipe,{ provide: MAT_DATE_LOCALE, useValue: 'es' }],
  
 }) 
 export class ReagendarComponent implements OnInit{
@@ -409,7 +412,10 @@ export class ReagendarComponent implements OnInit{
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
   constructor(private formBuilder: FormBuilder, private api: ReagendarService, private router : Router,
-    private dialog: MatDialog, private service: RouteService) {
+    private dialog: MatDialog, private service: RouteService, date: DateAdapter<Date>) {
+      date.getFirstDayOfWeek = () => 1;
+      date.setLocale('es');
+
     }
 
   ngOnInit(): void {
@@ -428,6 +434,7 @@ export class ReagendarComponent implements OnInit{
       
     })
 
+    
   }
   onSubmit(){
     if(this.reagendarForm.valid){
