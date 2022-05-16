@@ -1,4 +1,4 @@
-import { Component, OnInit, isDevMode, enableProdMode } from '@angular/core';
+import { Component, OnInit, isDevMode, enableProdMode, OnDestroy } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DetailOrderService, ModifyProductService, ModifyService } from 'src/app/service/detail.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { RouteService } from 'src/app/service/route.service';
 
 //DetailOrder
 @Component({
@@ -26,18 +28,42 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ])
   ]
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit, OnDestroy {
   details:any
 
   
   order!: number;
   token!: string;
-  constructor(private api: DetailOrderService, private route : ActivatedRoute) {
+
+  private destroy = new Subject<void>();
+  constructor(private api: DetailOrderService, private route : ActivatedRoute, private service : RouteService) {
     this.order = this.route.snapshot.params['order'];
     this.token = this.route.snapshot.params['token'];
   }
   ngOnInit(): void {
     this.getOrderId()
+
+    //route order
+    this.route.paramMap
+    .pipe(
+      map(paramMap => paramMap.get('order')),
+      takeUntil(this.destroy)
+    )
+    .subscribe(order => this.service.updatePathParamState(order));
+    //route token
+    this.route.paramMap
+    .pipe(
+      map(paramMap => paramMap.get('token')),
+      takeUntil(this.destroy)
+    )
+    .subscribe(token => this.service.updatePathParamStateToken(token));
+  }
+
+  ngOnDestroy(): void {
+    this.destroy.next()
+    this.destroy.complete()
+    this.service.updatePathParamState(null);
+    this.service.updatePathParamStateToken(null);
   }
   
   getOrderId(){
@@ -67,8 +93,19 @@ export class EditProductComponent implements OnInit{
   requests : any;
   order!: number;
   token!: string;
+
+  orderParam!: any;
+  tokenParam!: any;
+  
+  pathParam !: Observable<string | null>
+  pathParamToken !: Observable<string | null>
+
+  name!:string;
+  sku!: string;
+  img!:any;
   constructor(private formBuilder: FormBuilder, 
-    private api: ModifyProductService, private dialog: MatDialog, private route : ActivatedRoute){
+    private api: ModifyProductService, private dialog: MatDialog, private route : ActivatedRoute,
+    private service : RouteService){
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
     }
@@ -79,19 +116,79 @@ export class EditProductComponent implements OnInit{
       skuProduct: [''],
       img: ['']
     })
+    this.pathParam = this.service.pathParam;
+    this.pathParam.subscribe(res=>{
+      this.orderParam = res
+    })
+
+    this.pathParamToken = this.service.pathParamToken;
+    this.pathParamToken.subscribe(res=>{
+      this.tokenParam = res
+      
+    })
+    this.getRequest()
+    
   }
 
-  getRequests(){
-    this.api.getRequestsLogDEV(this.order, this.token)
-    .subscribe((resp:any)=>{
-      this.requests = resp;
-      console.log(this.requests);
-    })
+  getRequest(){
+    if (isDevMode()) {
+      this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+        this.requests = resp.request_id;
+      })
+    }
+    else
+      this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+        this.requests = resp;
+      })
   }
+
+  onSubmit1(){
+    this.name = this.changeProductForm.controls['nameProduct'].value
+    this.api.putRequestDEV(this.name, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+              console.log(this.name, 'Envío exitoso');
+            }
+          })
+  }
+
 
   onSubmit(): void{
+    this.name = this.changeProductForm.controls['nameProduct'].value
+    this.sku = this.changeProductForm.controls['skuProduct'].value
+    this.img = this.changeProductForm.controls['img'].value
     if (isDevMode()) {
       if(this.changeProductForm.valid){
+        if (this.name != null){
+          this.api.putRequestDEV(this.name, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+            }
+          })
+        }
+        if (this.sku != null){
+          this.api.putRequestDEV(this.sku, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+            }
+          })
+        }
+        if (this.img != null){
+          this.api.putRequestDEV(this.img, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+            }
+          })
+        }
+        
+      }
+      
+    }
+      /*if(this.changeProductForm.valid){
         this.api.postChangeProduct(this.changeProductForm.value)
         .subscribe({
           next:(res)=>{
@@ -116,7 +213,7 @@ export class EditProductComponent implements OnInit{
             this.messageError();
           }
         })
-      } 
+      } */
   }
 //Message successfull
 messageSuccessfull(){
@@ -186,12 +283,29 @@ export class EditProductDialog{
 export class EditServiceComponent implements OnInit{
   services = ["Armado Mueble", "Armado Parrilla", "Inspección Técnica de muebles", "Retiro ecológico"];
   changeServiceForm !: FormGroup;
+
+  orderParam!: string | null;
+  tokenParam!: string | null;
+  
+  pathParam !: Observable<string | null>
+  pathParamToken !: Observable<string | null>
   constructor(private formBuilder: FormBuilder, 
-    private api: ModifyService, private dialog: MatDialog, ){}
+    private api: ModifyService, private dialog: MatDialog, private service : RouteService ){}
   
   ngOnInit(): void {
     this.changeServiceForm = this.formBuilder.group({
       selectService: ['', Validators.required]
+    })
+    //route order
+    this.pathParam = this.service.pathParam;
+    this.pathParam.subscribe(res=>{
+      this.orderParam = res
+    })
+    //route token
+    this.pathParamToken = this.service.pathParamToken;
+    this.pathParamToken.subscribe(res=>{
+      this.tokenParam = res
+      
     })
   }
 

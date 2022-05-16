@@ -13,7 +13,7 @@ export class DetailOrderService{
     constructor(private http: HttpClient, private router: Router){
     }
 
-    getOrderId(order:number, token:string){
+    getOrderId(order : number, token:string){
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         
@@ -36,7 +36,7 @@ export class DetailOrderService{
             })))
     }
 
-    getOrderDEV(order:Number, token:string):Observable<any>{
+    getOrderDEV(order:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         
@@ -48,6 +48,7 @@ export class DetailOrderService{
             })
         )
     }
+    
     putContactDEV(data:any, order:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
@@ -138,21 +139,45 @@ export class ModifyProductService{
     private apiURL='http://localhost:3030';
 
     constructor (private http : HttpClient){}
-    postChangeProduct(data: changeProduct): Observable<changeProduct>{
-        return this.http.post<changeProduct>(`${this.apiURL}/editProduct`, data );
-    }
-    getChangeProduct():Observable<changeProduct[]>{
-        return this.http.get<changeProduct[]>(`${this.apiURL}/editProduct`);
+    
+    getRequest(order:number, token:string){
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+        return this.http.get(`${this.apiURL}/v3/orders/`+order,{
+            headers:header
+        })
     }
 
-    getRequestsLogDEV(order:number, token:string): Observable<any>{
+    putRequest(data: string, request_id:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.put<any>(`${this.apiURL2}/v3/requests/${request_id}/log`,data,{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+    }
+
+    getRequestDEV(order:string, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         
-        return this.http.get(`v3/requests/${order}/log`,{
+        return this.http.get('v3/orders/'+order,{
             headers:header
         })
-    } 
+    }
+
+    putRequestDEV(data:string, request_id:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.put<any>(`v3/requests/${request_id}/log`,data,{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+
+    }
+
 
     putChangeProduct(data:any, order:number, token:string):Observable<any>{
         let header = new HttpHeaders()
@@ -173,6 +198,21 @@ export class ModifyProductService{
             })))
     }
    
+}
+@Injectable({
+    providedIn:'root'
+})
+export class ModifyContactData{
+
+    constructor (private http : HttpClient){}
+    getRequestsLogDEV(request_id:number, token:string): Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+        
+        return this.http.get(`v3/requests/${request_id}/log`,{
+            headers:header
+        })
+    } 
 }
 
 @Injectable({

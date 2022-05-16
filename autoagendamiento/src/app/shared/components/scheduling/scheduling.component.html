@@ -9,7 +9,7 @@
             <th mat-header-cell *matHeaderCellDef="let row" mat-sort-header sortActionDescription="Sort by number">
                 Fechas disponibles
             </th>
-            <td mat-cell *matCellDef="let row" @enterState > {{row.date}} </td>
+            <td mat-cell *matCellDef="let row" @enterState > {{dates(row.date)}} </td>
         </ng-container>
     
         <!-- Name Column -->

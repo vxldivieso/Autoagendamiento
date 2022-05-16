@@ -34,6 +34,7 @@ export class StepperComponent implements OnInit{
 
   @ViewChild('stepper') stepper!: MatStepper;
   details:any;
+  status_order : any;
   order!: number;
   token!: string;
   
@@ -59,12 +60,15 @@ export class StepperComponent implements OnInit{
     if (isDevMode()) {
       this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{
         this.details = resp.scheduled_at;
-        
+        this.status_order = resp.order_status;
+        this.processEnd()
       })
     }
     else
       this.api.getOrderId(this.order, this.token).subscribe((resp:any)=>{
         this.details = resp.scheduled_at;
+        this.status_order = resp.order_status;
+        this.processEnd()
       })
   }
 
@@ -73,6 +77,7 @@ export class StepperComponent implements OnInit{
       this.stepper.linear = false;
       this.move(3)
     }
+
   }
 
   move(index: number) {

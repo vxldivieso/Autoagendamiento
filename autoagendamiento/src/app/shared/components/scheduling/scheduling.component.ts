@@ -1,4 +1,4 @@
-import { Component, isDevMode, OnInit, ViewChild } from '@angular/core';
+import { Component, isDevMode, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -12,6 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 import  {trigger, style, transition, animate,state } from '@angular/animations';
 import { RouterModule, Routes, Router } from '@angular/router';
 import * as moment from 'moment';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { RouteService } from 'src/app/service/route.service';
 
 
 @Component({
@@ -34,7 +36,7 @@ import * as moment from 'moment';
   
 })
 
-export class SchedulingComponent implements OnInit {
+export class SchedulingComponent implements OnInit, OnDestroy {
   //table
   displayedColumns : string[] = ['date','bloques']
   dataSource!: MatTableDataSource<any>;
@@ -51,24 +53,49 @@ export class SchedulingComponent implements OnInit {
   token!: string;
 
   //vars
+  dates = (value:string) => {return moment(value).format('DD-MM-YYYY')}
   delivery_date:any;
   datedelivery : any;
   fechaFrom : any;
   fechaTo: any;
   scheduledFrom:any;
   scheduledTo:any;
+
+  private destroy = new Subject<void>();
+
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private api: SchedulingService, private apiDate : DateService, private cdk : CdkStepper, private route : ActivatedRoute,
-    private ctrlContainer: FormGroupDirective) {
+    private ctrlContainer: FormGroupDirective,  private service : RouteService) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
     }
 
   ngOnInit(): void {
     this.form = this.ctrlContainer.form;
-    this.getApiSchedule()
+    this.getDeliveryDate()
+    //route order
+    this.route.paramMap
+    .pipe(
+      map(paramMap => paramMap.get('order')),
+      takeUntil(this.destroy)
+    )
+    .subscribe(order => this.service.updatePathParamState(order));
+    //route token
+    this.route.paramMap
+    .pipe(
+      map(paramMap => paramMap.get('token')),
+      takeUntil(this.destroy)
+    )
+    .subscribe(token => this.service.updatePathParamStateToken(token));
+  }
+
+  ngOnDestroy(): void {
+    this.destroy.next()
+    this.destroy.complete()
+    this.service.updatePathParamState(null);
+    this.service.updatePathParamStateToken(null);
   }
 
   getDeliveryDate(){
@@ -78,14 +105,15 @@ export class SchedulingComponent implements OnInit {
         this.delivery_date = res.delivery_date;
         //fecha from
         this.fechaFrom = moment(this.delivery_date).add(2,'days')
-        this.scheduledFrom = {delivery_date:moment(this.fechaFrom._d).format('YYYY-MM-DD')}
-        console.log(this.scheduledFrom);
+        this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
         
         //fecha to
         this.fechaTo = moment(this.delivery_date).add(23,'days')
-        this.scheduledTo = {delivery_date:moment(this.fechaTo._d).format('YYYY-MM-DD')}
-        console.log(this.scheduledTo);
-      
+        this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
+
+        //method get schedule
+        this.getApiSchedule()
+
         return this.scheduledTo, this.scheduledFrom
       })
     }
@@ -125,8 +153,7 @@ export class SchedulingComponent implements OnInit {
   //Transform json
   bloqueHorario(item:any){
     const transformJson = Object.keys(item).map(key => {
-      const myFormat= 'DD-MM-YYYY'
-      //const dates = Object.keys(item[key]).map(key =>)
+      const myFormat= 'DD-MM-YYYY';
       const blocks = Object.keys(item[key]).map(key=>parseInt(key));
       return {
         date: key,
@@ -244,15 +271,24 @@ export class SchedulingComponent implements OnInit {
 
 export class NoDisponibilityComponent implements OnInit{
   //params
-  order!: number;
-  token!: string;
-  constructor(private dialog: MatDialog, private router : Router,
-    private route : ActivatedRoute){
-      this.order = this.route.snapshot.params['order'];
-      this.token = this.route.snapshot.params['token'];
-    }
-  ngOnInit(): void {
+  order!: string | null;
+  token!: string | null;
   
+  pathParam !: Observable<string | null>
+  pathParamToken !: Observable<string | null>
+  
+  constructor(private dialog: MatDialog, private router : Router, private service : RouteService){}
+  ngOnInit(): void {
+    this.pathParam = this.service.pathParam;
+    this.pathParam.subscribe(res=>{
+      this.order = res
+    })
+
+    this.pathParamToken = this.service.pathParamToken;
+    this.pathParamToken.subscribe(res=>{
+      this.token = res
+      
+    })
   }
 
   onSubmit(){
@@ -272,11 +308,10 @@ export class NoDisponibilityComponent implements OnInit{
   styleUrls: ['./scheduling.component.scss'],
 })
 export class NoDisponibilityDialog{
-  constructor(private dialog: MatDialog ){}
+  constructor(private dialog: MatDialog){
+  }
   openDialog() {
-    this.dialog.open(NoDisponibilityComponent, {
-      width:'400px'
-    });
+    this.dialog.open(NoDisponibilityComponent, {width:'400px'});
   }
   closeDialog(){
     this.dialog.closeAll();
@@ -293,15 +328,24 @@ export class NoDisponibilityDialog{
 
 export class ContactComponent implements OnInit{
   //params
-  order!: number;
-  token!: string;
-  constructor(private dialog: MatDialog, private router : Router, 
-    private route : ActivatedRoute ){
-      this.order = this.route.snapshot.params['order'];
-      this.token = this.route.snapshot.params['token'];
+  order!: string | null;
+  token!: string | null;
+
+  pathParam !: Observable<string | null>
+  pathParamToken !: Observable<string | null>
+  constructor(private dialog: MatDialog, private router : Router, private service : RouteService){
     }
   ngOnInit(): void {
-    
+    this.pathParam = this.service.pathParam;
+    this.pathParam.subscribe(res=>{
+      this.order = res
+    })
+
+    this.pathParamToken = this.service.pathParamToken;
+    this.pathParamToken.subscribe(res=>{
+      this.token = res
+      
+    })
   }
 
   onSubmit(){
@@ -346,17 +390,29 @@ export class ReagendarComponent implements OnInit{
   maxDate = new Date(2022, 11, 1); 
   reagendarForm !: FormGroup;
   //params
-  order!: number;
-  token!: string;
+  order!: string | null;
+  token!: string | null;
+
+  pathParam !: Observable<string | null>
+  pathParamToken !: Observable<string | null>
   constructor(private formBuilder: FormBuilder, private api: ReagendarService, private router : Router,
-    private dialog: MatDialog, private route : ActivatedRoute) {
-      this.order = this.route.snapshot.params['order'];
-      this.token = this.route.snapshot.params['token'];
+    private dialog: MatDialog, private service: RouteService) {
     }
 
   ngOnInit(): void {
     this.reagendarForm = this.formBuilder.group({
       date: ['', Validators.required],
+    })
+
+    this.pathParam = this.service.pathParam;
+    this.pathParam.subscribe(res=>{
+      this.order = res
+    })
+
+    this.pathParamToken = this.service.pathParamToken;
+    this.pathParamToken.subscribe(res=>{
+      this.token = res
+      
     })
 
   }
@@ -388,7 +444,7 @@ messageSuccessfull(){
     allowOutsideClick: false,
   }).then((result) =>{
     if (result.isConfirmed){
-      this.router.navigate([`${this.order}/${this.token}/wrong/ejecutivo`])
+      this.router.navigate([`${this.order}/${this.token}/wrong/save`])
     }
   });
 }

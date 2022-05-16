@@ -5,21 +5,24 @@
   <mat-stepper class="example-stepper" #stepper color="primary" [orientation]="(stepperOrientation | async)!" linear>
     <!--Verificar el producto-->
     <mat-step [stepControl]="checkoutFormGroup" label="Verifica tu Producto" [editable]="false" >
-      <form [formGroup]="checkoutFormGroup">
-        <div class="py-4 px-4">
-          <h1 class="title">Datos del producto</h1>
-          <p class="subtitle col-md-10">Corrobore los siguientes datos asociados a su producto.<br> Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
+      <ng-template matStepContent>
+        <form [formGroup]="checkoutFormGroup">
+          <div class="py-4 px-4">
+            <h1 class="title">Datos del producto</h1>
+            <p class="subtitle col-md-10">Corrobore los siguientes datos asociados a su producto.<br> Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
+          </div>
+          <!--Checkout product-->
+          <div class="py-4 px-4" >
+            <checkoutproduct></checkoutproduct>
+          </div>
+        </form>
+        <!--Actions-->
+        <p>Si está todo en orden, presione 'Continuar'</p>
+        <div class="px-4 d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
+          <button mat-raised-button class="btn-lg" color="primary" matStepperNext>Continuar</button>
         </div>
-        <!--Checkout product-->
-        <div class="py-4 px-4" >
-          <checkoutproduct></checkoutproduct>
-        </div>
-      </form>
-      <!--Actions-->
-      <p>Si está todo en orden, presione 'Continuar'</p>
-      <div class="px-4 d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
-        <button mat-raised-button class="btn-lg" color="primary" matStepperNext>Continuar</button>
-      </div>
+      </ng-template>
+      
     </mat-step>
     
 

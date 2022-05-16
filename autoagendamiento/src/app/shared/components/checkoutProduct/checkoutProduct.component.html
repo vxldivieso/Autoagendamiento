@@ -1,15 +1,12 @@
-<!--Radiobutton - answer if the client have the product or no-->
-<!--if the service is "Despacho" this check doesn´t have to show to the user -->
-
 <div class="checkout ">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <form>
+        <form [formGroup] = "subForm">
           <p>¿El producto está en sus manos?</p>
           <mat-radio-group
             aria-labelledby="example-radio-group-label"
-            class="example-radio-group" [(ngModel)]="optionselect" name="optionselect" color="primary">
+            class="example-radio-group" [(ngModel)]="optionselect" name="optionselect" color="primary" formControlName="optionselect">
             <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option"  >
               {{option}}
             </mat-radio-button>

@@ -7,7 +7,7 @@ const routes: Routes = [
   {path: 'error', loadChildren: () => import('./pages/errores/errores.module').then(m=>m.ErroresModule)},
   {path: '**', redirectTo:'error', pathMatch:'full'}
 ];
-
+ 
 @NgModule({
   imports: [RouterModule.forRoot(routes)], 
   exports: [RouterModule]

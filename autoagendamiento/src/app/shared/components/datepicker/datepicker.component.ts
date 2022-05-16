@@ -33,6 +33,7 @@ export class DateFormProduct{
   dateProductForm !: FormGroup;
   isSend:boolean = false;
   delivery_date = new Date() ;
+  fecha!: string;
   datedelivery : any;
 
   //params

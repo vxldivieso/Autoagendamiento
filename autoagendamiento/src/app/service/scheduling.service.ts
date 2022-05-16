@@ -17,24 +17,14 @@ export class SchedulingService{
     //params
     order!: number;
     token!: string;
-
-    delivery_date = new Date() ;
-    datedelivery : any;
-    fechaFrom : any;
-    fechaTo: any;
-    scheduledFrom:any;
-    scheduledTo:any;
-    
   
     private apiURL='https://api.demo.maydayservicios.com'
-    constructor(private http: HttpClient, private apiDate: DateService,
+    constructor(private http: HttpClient,
         private route : ActivatedRoute){
             this.order = this.route.snapshot.params['order'];
             this.token = this.route.snapshot.params['token'];
         }
     
-    
-
     getSchedule(from:any, to:any,order:number, token:string): Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
@@ -52,12 +42,9 @@ export class SchedulingService{
         return this.http.put<Agendamiento>(`${this.apiURL}/v3/orders/${order}/schedule`,{date,block},{headers:header})
     }
     
-    getScheduleDEV(from:string, to:string, order:number, token:string, ): Observable<any>{
+    getScheduleDEV(from:string, to:string, order:number, token:string): Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
-
-        //let parameters = {"from":from,"to":to};
-        //const params = new HttpParams({ fromObject: parameters });
 
         let params = new HttpParams()
         .set('from', from)

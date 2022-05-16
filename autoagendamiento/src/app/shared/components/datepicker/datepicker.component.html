@@ -1,10 +1,20 @@
 <div class="order" @enterState>
     <div class="card-body" >
         <div class="row">
-            <div class="col-md-4">
-              <h5 class="card-title text-uppercase"> fecha de despacho</h5>
-              <h4> <strong>{{delivery_date}}</strong>  </h4>
-            </div>
+            <ng-container *ngIf="delivery_date then date else nodate"></ng-container>
+                <ng-template #date>
+                    <div class="col-md-4" >
+                        <h5 class="card-title text-uppercase"> fecha de despacho</h5>
+                        <h4> <strong>{{delivery_date}}</strong>  </h4>
+                    </div>
+                </ng-template>
+                <ng-template #nodate>
+                    <div class="col-md-4" >
+                        <h5 class="card-title text-uppercase"> fecha de despacho</h5>
+                        <h4><strong>No ingresada</strong></h4>
+                        <h5>Por favor, ingrese la fecha de despacho.</h5>
+                    </div>
+                </ng-template>
             <div class="col-md-8">
                 <h5 class="card-title text-uppercase"> 
                     Modificar fecha de despacho 

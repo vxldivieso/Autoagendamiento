@@ -1,56 +1,77 @@
 
-<div class="container"  *ngIf="details" >
-    <h1>Detalle de la orden</h1>
-    <div class="card">
-        <div class="course" >
-            <div class="course-info py-4 card-body" @enterState  >
-                <div class="row" >
-                    <div class="col-md-4" *ngIf="clientData" >
-                        <h5 class="card-title">Nombre titular</h5>
-                        <h2 class="card-text">{{clientData.name}}</h2>
-                        <h6>Rut: {{clientData.rut}}</h6>
-                    </div>
-                    <div class="col-md-4" *ngIf="clientData" >
-                        <h5 class="card-title">Dirección</h5>
-                        <h2 class="card-text">{{clientData.address}}</h2>
-                        <h6>{{clientData.county}}</h6>
-                    </div>
-                    <div class="col-md-4"  >
-                        <h5 class="card-title" id="noborder" >Fecha agendamiento del servicio</h5>
-                        <h2 class="card-text" > {{savedDate && savedDate.date}} </h2>
-                        <h6> {{savedDate && savedDate.block}} </h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="order-container py-4" *ngFor="let data of details.products">
-            <div class="order card-body" @enterState>
-                <div class="row">
-                    <div class="col-md-2">
-                        <h5 class="card-title text-uppercase">código producto</h5>
-                        <h4 class="card-text">{{data.sku}}</h4>
-                    </div>
-                    <div class="col-md-4">
-                        <h5 class="card-title text-uppercase">producto</h5>
-                        <h4 class="card-text">{{data.product_name}}</h4>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="card-title text-uppercase">retail</h5>
-                        <h4 class="card-text">{{details.store}}</h4>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="card-title text-uppercase">Tipo Servicio </h5>
-                        <h4 class="card-text">{{data.service | uppercase}}</h4>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="card-title text-uppercase">Número de Orden</h5>
-                        <h4 class="card-text">{{details.order_id}}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-   
 
+<div class="container"  *ngIf="details"  >
+        <div class="course" >
+            <div class="course-info card-body" @enterState  >
+                <h1>Detalle del Servicio</h1>
+                <div class="container">
+                    <h4>Datos del cliente</h4>
+                    <div class="row" *ngIf="clientData" >
+                        <div class="col-md-3">
+                            <h5 class="card-title">Nombre titular</h5>
+                            <h2 class="card-text">{{clientData.name}} {{clientData.rut}}</h2>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="card-title">Dirección</h5>
+                            <h2 class="card-text">{{clientData.address}}</h2>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="card-title">Comuna</h5>
+                            <h2 class="card-text">{{clientData.county}}</h2>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="card-title">Referencias</h5>
+                            <h2 class="card-text">Referencias</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="container py-4">
+                    <h4>Datos de agendamiento</h4>
+                    <div class="row">
+                        <div class="col-md-4" *ngFor="let data of details.products" >
+                            <h5 class="card-title"  >Tipo Servicio</h5>
+                            <h2 class="card-text" > {{data.service}} </h2>
+                        </div>
+                        <div class="col-md-4"  >
+                            <h5 class="card-title" >Fecha agendamiento</h5>
+                            <h2 class="card-text" > {{savedDate && savedDate.date}} </h2>
+                        </div>
+                        <div class="col-md-4"  >
+                            <h5 class="card-title" >Horario</h5>
+                            <h2 class="card-text" > {{savedDate && savedDate.block}} </h2>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="card">
+            <div class="order-container py-4" *ngFor="let data of details.products">
+                <h1>Detalle de la Orden</h1>
+                <div class="order card-body" @enterState>
+                    <div class="container ">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h5 class="card-title text-uppercase">Número de Orden</h5>
+                                <h4 class="card-text">{{details.order_id}}</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="card-title text-uppercase">producto</h5>
+                                <h4 class="card-text">{{data.product_name}}</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="card-title text-uppercase">código producto</h5>
+                                <h4 class="card-text">{{data.sku}}</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h5 class="card-title text-uppercase"  id="noborder">retail</h5>
+                                <h4 class="card-text">{{details.store}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
 </div>
     

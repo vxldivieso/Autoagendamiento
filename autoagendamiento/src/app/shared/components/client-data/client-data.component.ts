@@ -4,7 +4,7 @@ import { text } from 'express';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router'; 
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DetailOrderService } from 'src/app/service/detail.service';
+import { DetailOrderService, ModifyContactData } from 'src/app/service/detail.service';
 import  {trigger, style, transition, animate,state } from '@angular/animations';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { DialogData } from 'src/app/pages/stepper/stepper.component';
@@ -156,24 +156,29 @@ export class ClientDataComponent implements OnInit {
 })
 export class WrongdataComponent implements OnInit {
   form!: FormGroup;
-
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private cdk: CdkStepper
-) {
-    
-  }
+  order!: number;
+  token!: string;
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private api : ModifyContactData,
+    private route : ActivatedRoute) {}
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       direccion: [''],
       comuna: ['']
     })
+
+    
+  }
+
+  getRequestsLog(){
+    this.api.getRequestsLogDEV
   }
 
 
   onSubmit(){
     if (this.form.valid){
-      console.log(this.form.value);
-      this.dialog.closeAll();
-      this.messageSuccessfull()
+      
+      //this.dialog.closeAll();
+      //this.messageSuccessfull()
     }
   }
 
