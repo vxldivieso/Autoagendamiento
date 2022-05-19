@@ -61,13 +61,14 @@ export class ClientDataComponent implements OnInit {
       rut: [''],
       email: [''], 
       phone: ['',[Validators.minLength(9), Validators.maxLength(9)]],
-      phone2: ['', [Validators.minLength(9), Validators.maxLength(9)]],
+      phone2: ['', Validators.compose([Validators.required,Validators.minLength(9), Validators.maxLength(9)])],
       address: [''],
       county: [''],
+      references: ['', Validators.required]
     });
     this.form = this.ctrlContainer.form;
     this.form.addControl("clientData", this.clientForm);
-    this.getClientData(); 
+    this.getClientData();
 
     //route order
     this.route.paramMap
@@ -101,6 +102,8 @@ export class ClientDataComponent implements OnInit {
 
   updateClientContact(){
     this.clientForm.controls['phone2'].patchValue(this.clientData.phone2);
+    this.clientForm.controls['references'].patchValue(this.clientData.references);
+    
     if (isDevMode()) {
       if(this.clientForm.valid){
         this.api.putContactDEV(this.clientForm.value, this.order, this.token)
@@ -138,7 +141,7 @@ export class ClientDataComponent implements OnInit {
     }
     else
       this.apiMod.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
-        this.requests = resp;
+        this.requests = resp.request_id;
       })
   }
 
@@ -256,7 +259,7 @@ export class WrongdataComponent implements OnInit {
     }
     else
       this.api.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
-        this.requests = resp;
+        this.requests = resp.request_id;
       })
   }
 
@@ -288,7 +291,7 @@ export class WrongdataComponent implements OnInit {
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
-              this.router.navigate([`${this.orderParam}/${this.tokenParam}/wrong/ejecutivo`])
+              this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
             },
             error: () =>{
               this.messageError();

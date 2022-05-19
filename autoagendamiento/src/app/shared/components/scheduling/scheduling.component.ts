@@ -62,6 +62,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   fechaTo: any;
   scheduledFrom:any;
   scheduledTo:any;
+  dateToday = new Date() ;
 
   private destroy = new Subject<void>();
 
@@ -105,6 +106,43 @@ export class SchedulingComponent implements OnInit, OnDestroy {
       this.apiDate.getOrderIdDEV(this.order, this.token)
       .subscribe((res:any)=>{
         this.delivery_date = res.delivery_date;
+        
+        if(this.delivery_date != null){
+          //fecha from
+          this.fechaFrom = moment(this.delivery_date).add(2,'days')
+          this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
+          
+          //fecha to
+          this.fechaTo = moment(this.delivery_date).add(23,'days')
+          this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
+
+          //method get schedule
+          this.getApiSchedule()
+
+          return this.scheduledTo, this.scheduledFrom
+        }
+        else
+        //fecha from
+        this.fechaFrom = moment(this.dateToday).add(2,'days')
+        this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
+        
+        //fecha to
+        this.fechaTo = moment(this.dateToday).add(23,'days')
+        this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
+
+        //method get schedule
+        this.getApiSchedule()
+        
+        return this.scheduledTo, this.scheduledFrom
+
+        
+      })
+    }
+    else
+    this.apiDate.getOrderId(this.order, this.token)
+    .subscribe((res:any)=>{
+      this.delivery_date = res.delivery_date;
+      if(this.delivery_date != null){
         //fecha from
         this.fechaFrom = moment(this.delivery_date).add(2,'days')
         this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
@@ -117,23 +155,19 @@ export class SchedulingComponent implements OnInit, OnDestroy {
         this.getApiSchedule()
 
         return this.scheduledTo, this.scheduledFrom
-      })
-    }
-    else
-    this.apiDate.getOrderId(this.order, this.token)
-    .subscribe((res:any)=>{
-      this.delivery_date = res.delivery_date;
+      }
+      else
       //fecha from
-      this.fechaFrom = moment(this.delivery_date).add(2,'days')
+      this.fechaFrom = moment(this.dateToday).add(2,'days')
       this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
       
       //fecha to
-      this.fechaTo = moment(this.delivery_date).add(23,'days')
+      this.fechaTo = moment(this.dateToday).add(23,'days')
       this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
 
       //method get schedule
       this.getApiSchedule()
-
+      
       return this.scheduledTo, this.scheduledFrom
     })
 
@@ -234,7 +268,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
           Swal.fire({
             icon: 'info',
             title: 'Condiciones del servicio',
-            html: '<div class="container" style="text-align: left"><ol><li>Debe encontrarse una persona mayor de 18 años en el domicilio al momento de ejecutarse el servicio.</li><li>Cajas deben encontrarse selladas.</li> <li>Las cajas deben estar en el lugar exacto donde va a quedar producto armado para uso.</li> <li>Debe contar con el espacio suficiente para que técnico pueda manipular las piezas.</li></ol></div>',
+            html: '<div class="container w-75" style="text-align: left"><ol><li>Debe encontrarse una persona mayor de 18 años en el domicilio al momento de ejecutarse el servicio.</li><li>Cajas deben encontrarse selladas.</li> <li>Las cajas deben estar en el lugar exacto donde va a quedar producto armado para uso.</li> <li>Debe contar con el espacio suficiente para que técnico pueda manipular las piezas.</li></ol></div>',
             showDenyButton: true,
             confirmButtonText: 'Agendar',
             denyButtonText: `Cancelar`,
@@ -308,7 +342,7 @@ export class NoDisponibilityComponent implements OnInit{
 
   onSubmit(){
     this.dialog.closeAll()
-    this.router.navigate([`${this.order}/${this.token}/wrong/ejecutivo`])
+    this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
   }
 
 }
@@ -365,7 +399,7 @@ export class ContactComponent implements OnInit{
 
   onSubmit(){
     this.dialog.closeAll()
-    this.router.navigate([`${this.order}/${this.token}/wrong/ejecutivo`])
+    this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
   }
 
 }
@@ -464,7 +498,7 @@ messageSuccessfull(){
     allowOutsideClick: false,
   }).then((result) =>{
     if (result.isConfirmed){
-      this.router.navigate([`${this.order}/${this.token}/wrong/save`])
+      this.router.navigate([`${this.order}/${this.token}/contact/save`])
     }
   });
 }

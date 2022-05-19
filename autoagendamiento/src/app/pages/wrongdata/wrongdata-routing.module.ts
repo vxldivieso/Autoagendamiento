@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EjecutivoComponent, SaveProcessComponent} from './wrongdata.component';
+import { EjecutivoComponent, ModifyContactComponent, SaveProcessComponent} from './wrongdata.component';
 
 const routes: Routes = [
   { path: 'ejecutivo', component: EjecutivoComponent },
-  { path: 'save', component: SaveProcessComponent}
+  { path: 'save', component: SaveProcessComponent},
+  { path: 'data', component:ModifyContactComponent}
 ];
  
 @NgModule({

@@ -36,13 +36,7 @@ $autoagendamiento-theme: mat.define-light-theme((
 //styles index.html
 
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/scss/bootstrap';
-@import '~bootstrap/scss/bootstrap-reboot';
-@import '~bootstrap/scss/bootstrap-grid';
-//as-grid css
-@import "ag-grid-community/dist/styles/ag-grid.css";
-@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-
+//@import "~bootstrap/scss/bootstrap";
 
 body{
     margin: 0;

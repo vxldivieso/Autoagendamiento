@@ -96,8 +96,6 @@ export class DateService{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
-        console.log(data);
-        
         return this.http.put<any>(`${this.apiURL}/v3/orders/${order}/delivery_date`,data,{headers:header}).pipe(
             (map((res:any)=>{
                 return res;
@@ -116,8 +114,6 @@ export class DateService{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
-        console.log(data);
-        
         return this.http.put<any>(`v3/orders/${order}/delivery_date`,data,{headers:header}).pipe(
             (map((res:any)=>{
                 return res;
@@ -137,7 +133,8 @@ export class ModifyProductService{
     private apiURL ='https://api.demo.maydayservicios.com'
 
     constructor (private http : HttpClient){}
-    
+    //Modify Product 
+    //GET request id 
     getRequest(order:string, token:string){
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
@@ -145,16 +142,38 @@ export class ModifyProductService{
             headers:header
         })
     }
-
+    //Put message request
     putRequest(data: string, request_id:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
 
-        return this.http.put<any>(`${this.apiURL}/v3/requests/${request_id}/log`,data,{headers:header}).pipe(
+        return this.http.put<any>(`${this.apiURL}/v3/requests/${request_id}/log`,{message:data},{headers:header}).pipe(
             (map((res:any)=>{
                 return res;
             })))
     }
+    //Put img Modify Product
+    putRequestIMG(data: string, img:string, request_id:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.put<any>(`${this.apiURL}/v3/requests/${request_id}/log`,{message:data, attachment:img},{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+    }
+    //Put img Modify Product DEV
+    putRequestIMGDEV(data:string, img:string, request_id:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('content-type','application/json').set('token',token);
+
+        return this.http.put<any>(`v3/requests/${request_id}/log`,{message:data, attachment:img},{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+
+    }
+    //GET request message
     getRequestLog(request_id:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
@@ -163,7 +182,8 @@ export class ModifyProductService{
             headers:header
         })
     }
-
+    
+    //GET request id DEV
     getRequestDEV(order:string, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
@@ -172,7 +192,7 @@ export class ModifyProductService{
             headers:header
         })
     }
-
+    //GET request message DEV
     getRequestLogDEV(request_id:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
@@ -181,7 +201,7 @@ export class ModifyProductService{
             headers:header
         })
     }
-
+    //Put message DEV
     putRequestDEV(data:string, request_id:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('content-type','application/json').set('token',token);
@@ -192,6 +212,7 @@ export class ModifyProductService{
             })))
 
     }
+    
    
 }
 @Injectable({

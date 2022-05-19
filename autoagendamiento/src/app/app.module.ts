@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
@@ -20,6 +20,9 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ClientDataComponent, WrongdataComponent, WrongDataDialog } from './shared/components/client-data/client-data.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { SpinnerModule } from './shared/components/spinner/spinner.module';
+import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
+
 
 //I keep the new line
 @NgModule({
@@ -58,12 +61,15 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     ReactiveFormsModule,
     HttpClientModule,
     AgGridModule,
-    CdkTableModule
+    CdkTableModule,
+    SpinnerModule
   ],
-  providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS,
-    useValue: { displayDefaultIndicatorType: false}
-  }],
+  providers: [
+    {provide: STEPPER_GLOBAL_OPTIONS,
+    useValue: { displayDefaultIndicatorType: false}},
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi:true}
+  
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

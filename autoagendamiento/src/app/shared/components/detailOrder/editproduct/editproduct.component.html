@@ -14,7 +14,8 @@
     <!--Comprobante-->
     <mat-form-field appearance="outline">
       <mat-label>Adjunte Comprobante: Boleta o foto del producto</mat-label>
-      <input matInput disabled> <input formControlName="img" name="img"  type="file">
+      <input matInput disabled><input [src]="img" type="file" formControlName="img" id="img"
+      name="img" (change)="onFileSelected($any($event.target).files)" />
     </mat-form-field>
   </form>
 </div>

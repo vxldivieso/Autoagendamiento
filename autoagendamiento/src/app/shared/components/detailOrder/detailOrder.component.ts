@@ -7,8 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DetailOrderService, ModifyProductService} from 'src/app/service/detail.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { map, Observable, ReplaySubject, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 //DetailOrder
 @Component({
@@ -80,6 +81,8 @@ export class DetailComponent implements OnInit, OnDestroy {
   
 }
 
+
+
 //EditProduct
 @Component({
   selector: 'edit-product',
@@ -102,10 +105,14 @@ export class EditProductComponent implements OnInit{
 
   name!:string;
   sku!: string;
-  img!:any;
+  img?:string | void;
+  base64Output !: string;
+  fileSelected!: Blob
+
+  
   constructor(private formBuilder: FormBuilder, 
     private api: ModifyProductService, private dialog: MatDialog, private route : ActivatedRoute,
-    private service : RouteService){
+    private service : RouteService, private sant: DomSanitizer){
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
     }
@@ -140,14 +147,36 @@ export class EditProductComponent implements OnInit{
     }
     else
       this.api.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
-        this.requests = resp;
+        this.requests = resp.request_id;
       })
   }
+  
+  onFileSelected(files: FileList):void {
+    this.fileSelected = files[0];
+    this.img = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
+    this.base64Output;
+    this.convertFileToBase64()
+  }
+
+  convertFileToBase64(){
+    let reader = new FileReader();
+    if (this.fileSelected){
+      reader.readAsDataURL(this.fileSelected as Blob)
+      reader.onloadend = () => {this.base64Output = reader.result as string;}
+    }
+    
+  }
+
 
   onSubmit(): void{
+    
     this.name = this.changeProductForm.controls['nameProduct'].value
-    this.sku = this.changeProductForm.controls['skuProduct'].value
-    this.img = this.changeProductForm.controls['img'].value
+    this.sku = this.changeProductForm.controls['skuProduct'].value 
+    this.changeProductForm.controls['img'].patchValue(this.requests.attachment)
+
+    this.convertFileToBase64()
+    let imgB64 = JSON.stringify(this.base64Output)
+    
     if (isDevMode()) {
       if(this.changeProductForm.valid){
         let message :string = "Datos Producto (Modificados): \n";
@@ -157,7 +186,62 @@ export class EditProductComponent implements OnInit{
         if (this.sku != null){
           message += `SkuProducto: ${this.sku} \n`
         }
+        if (imgB64 != null){
+          let attachment = imgB64;
+          this.api.putRequestIMGDEV(message, attachment, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+              this.dialog.closeAll();
+              this.messageSuccessfull();
+            },
+            error: () =>{
+              this.messageError();
+            }
+          })
+        }
+        else
         this.api.putRequestDEV(message, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+              this.dialog.closeAll();
+              this.messageSuccessfull();
+            },
+            error: () =>{
+              this.messageError();
+            }
+          })
+      }
+      else
+      this.messageError(); 
+    }
+    else
+      if(this.changeProductForm.valid){
+        let message :string = "Datos Producto (Modificados): \n";
+        
+        if (this.name != null ){
+          message += `NombreProducto: ${this.name} \n`
+        }
+        if (this.sku != null){
+          message += `SkuProducto: ${this.sku} \n`
+        }
+        if (imgB64 != null){
+          let attachment = imgB64;
+          this.api.putRequestIMG(message, attachment, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+              this.dialog.closeAll();
+              this.messageSuccessfull();
+            },
+            error: () =>{
+              this.messageError();
+            }
+          }) 
+        }
+        else
+        this.api.putRequest(message, this.requests, this.tokenParam)
           .subscribe({
             next:(res)=>{
               res
@@ -171,32 +255,9 @@ export class EditProductComponent implements OnInit{
       }
       else
       this.messageError(); 
-    }
-    else
-    if(this.changeProductForm.valid){
-      let message :string = "Datos Producto (Modificados): \n";
-      if (this.name != null ){
-        message += `NombreProducto: ${this.name} \n`
-      }
-      if (this.sku != null){
-        message += `SkuProducto: ${this.sku} \n`
-      }
-      this.api.putRequest(message, this.requests, this.tokenParam)
-        .subscribe({
-          next:(res)=>{
-            res
-            this.dialog.closeAll();
-            this.messageSuccessfull();
-          },
-          error: () =>{
-            this.messageError();
-          }
-        }) 
-    }
-    else
-    this.messageError(); 
 
-  }
+}
+
 //Message successfull
 messageSuccessfull(){
   const Toast = Swal.mixin({
@@ -299,7 +360,7 @@ export class EditServiceComponent implements OnInit{
     }
     else
       this.api.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
-        this.requests = resp;
+        this.requests = resp.request_id;
       })
   }
 

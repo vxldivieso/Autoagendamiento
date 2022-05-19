@@ -37,6 +37,19 @@ export class SaveProcessComponent implements OnInit {
   
 }
 
+@Component({
+  selector: 'app-modifycontact',
+  templateUrl: './modifycontact.component.html',
+  styleUrls: ['./wrongdata.component.scss']
+})
+export class ModifyContactComponent{
+  order!: number;
+  token!: string;
+  constructor(private route : ActivatedRoute) {
+    this.order = this.route.snapshot.params['order'];
+    this.token = this.route.snapshot.params['token'];
+  }
+}
 
 
 
