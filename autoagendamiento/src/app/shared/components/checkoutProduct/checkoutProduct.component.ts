@@ -19,7 +19,6 @@ export class CheckoutProductComponent implements OnInit {
   optionselect !: string;
 
   delivery_date = new Date() ;
-
   //params
   order!: any;
   token!: string;
@@ -29,7 +28,7 @@ export class CheckoutProductComponent implements OnInit {
     this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
   }
-
+    
   ngOnInit(): void {
     this.subForm = this.fb.group({
       optionselect: ['', [Validators.required]],

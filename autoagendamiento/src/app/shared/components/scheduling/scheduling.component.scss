@@ -12,6 +12,10 @@ table {
         align-items: center;
         
     }
+    p{
+        display: none;
+    }
+   
 }
 .table-responsive{
     width: 75%;
@@ -22,9 +26,6 @@ table {
     margin-bottom: 5px;
     font-family: 'Inter', sans-serif;
     margin-left: 10px;
-}
-#btnblocks::cue{
-    background-color: red;
 }
 #btnblocks:disabled{
     color: grey;
@@ -39,6 +40,7 @@ table {
         font-weight: bold;
         padding: 5px 25px;
         letter-spacing: 1px;
+        
     }
 }
 
@@ -53,6 +55,26 @@ mat-form-field{
 
 .mat-raised-button{
     border-radius: 10px;
+}
+
+@media(max-width: 400px){
+    
+tr{
+    th{
+        display:none;
+    }
+    td{
+        display: flow-root;
+        text-align: left;
+
+        button{
+            width:100%;
+        }
+    }
+    p{
+        display: flow-root;
+    }
+}
 }
 
 @media(max-width: 500px){
@@ -71,21 +93,20 @@ mat-form-field{
         text-align:center;
         
     }
+    
+
     .mat-raised-button{
         margin-top: 10px;
     }
-    .table td::before{
-        content: attr(data-label);
-        position: absolute;
-        width: 50%;
-        font-weight: bold;
-        text-align: center;
-    }
+    
     #btnblocks{
         margin-top: 10px;
+        margin-left: 0;
     }
 
+
 }
+
 @media(max-width: 1000px){
     .table, .table tbody, .table tr.mat-header-row, .table id{
         width: 100%;
@@ -97,17 +118,10 @@ mat-form-field{
     .table tr.mat-header-row{
         margin-bottom: 15px;
     }
-    .table td::before{
-        content: attr(data-label);
-        width: 100%;
-        font-weight: bold;
-        text-align: center;
-    }
     .btn{
         display: grid;
     }
     #btnblocks{
-        display: flex;
+        width: 100%;
     }
-
 }

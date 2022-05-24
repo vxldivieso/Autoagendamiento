@@ -1,22 +1,23 @@
+
 <h1 mat-dialog-title>Modificar Producto</h1>
+
 <div mat-dialog-content >
-  <form [formGroup]="changeProductForm" >
-    <!--Nombre producto-->
-    <mat-form-field appearance="fill">
-      <mat-label>Ingrese el nombre del producto</mat-label>
-      <input formControlName="nameProduct" name="nameProduct" matInput>
-    </mat-form-field>
-    <!--Código producto-->
-    <mat-form-field appearance="fill">
-      <mat-label>Ingrese el código del producto</mat-label>
-      <input formControlName="skuProduct" name="skuProduct" matInput>
-    </mat-form-field>
-    <!--Comprobante-->
-    <mat-form-field appearance="outline">
-      <mat-label>Adjunte Comprobante: Boleta o foto del producto</mat-label>
-      <input matInput disabled><input [src]="img" type="file" formControlName="img" id="img"
-      name="img" (change)="onFileSelected($any($event.target).files)" />
-    </mat-form-field>
+  <form [formGroup]="changeProductForm" id="formElem">
+      <!--Nombre producto-->
+      <mat-form-field appearance="fill">
+        <mat-label>Ingrese el nombre del producto</mat-label>
+        <input formControlName="nameProduct" name="nameProduct" matInput>
+      </mat-form-field>
+      <!--Código producto-->
+      <mat-form-field appearance="fill">
+        <mat-label>Ingrese el código del producto</mat-label>
+        <input formControlName="skuProduct" name="skuProduct" matInput>
+      </mat-form-field>
+      <!--Comprobante-->
+      <label for="img"> &nbsp; Adjunte comprobante</label>
+      <input class="form-control" [src]="img" accept="image/png,image/jpeg" type="file" formControlName="img" id="img"
+        name="img" (change)="onFileSelected($any($event.target).files)" 
+        data-validation-error-msg="Elija una imagen con formato JPG." data-validation-max-size="1M" data-validation="required" />
   </form>
 </div>
 
@@ -24,3 +25,4 @@
   <button mat-raised-button color="accent" mat-dialog-close>Cerrar</button>
   <button type="submit" mat-raised-button color="primary" (click)="onSubmit()" >Enviar</button>
 </div>
+

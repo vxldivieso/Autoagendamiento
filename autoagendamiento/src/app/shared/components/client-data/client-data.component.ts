@@ -9,6 +9,7 @@ import { CdkStepper } from '@angular/cdk/stepper';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
 import { Router } from '@angular/router';
+import { TaskService } from 'src/app/service/task.service';
  
 @Component({ 
   selector: 'client-data',
@@ -35,6 +36,7 @@ export class ClientDataComponent implements OnInit {
   clientForm !: FormGroup;
   //variable que recibe los datos
   clientData:any;
+  order_visit_status : any;
 
   order!: string;
   token!: string;
@@ -50,7 +52,8 @@ export class ClientDataComponent implements OnInit {
   private destroy = new Subject<void>();
   constructor( private formBuilder: FormBuilder,
     private api: DetailOrderService, private ctrlContainer: FormGroupDirective
-    ,private route : ActivatedRoute, private cdk : CdkStepper,  private service : RouteService,  private apiMod: ModifyProductService) {
+    ,private route : ActivatedRoute, private cdk : CdkStepper,  private service : RouteService,  private apiMod: ModifyProductService,
+    private router : Router) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
      }
@@ -91,12 +94,14 @@ export class ClientDataComponent implements OnInit {
       this.api.getOrderDEV(this.order,this.token)
       .subscribe((res:any)=>{
         this.clientData = res.contact;
+        this.order_visit_status = res.order_visit_status;
       })
     }
     else
       this.api.getOrderId(this.order,this.token)
       .subscribe((res:any)=>{
         this.clientData = res.contact;
+        this.order_visit_status = res.order_visit_status;
       })
   }
 
@@ -109,8 +114,15 @@ export class ClientDataComponent implements OnInit {
         this.api.putContactDEV(this.clientForm.value, this.order, this.token)
         .subscribe({
           next:(res)=>{
-            this.messageSuccessfull();
-            this.cdk.next()
+            if(this.order_visit_status == 'need_correction'){
+              this.messageSuccessfull();
+              this.router.navigate([`${this.order}/${this.token}/contact/data`])
+            }
+            if(this.order_visit_status == 'in_campaing'){
+              this.messageSuccessfull();
+              this.cdk.next()
+            }
+            
           },
           error: () =>{
             this.messageError();
@@ -123,8 +135,14 @@ export class ClientDataComponent implements OnInit {
         this.api.putContact(this.clientForm.value, this.order, this.token)
         .subscribe({
           next:(res)=>{
-            this.messageSuccessfull();
-            this.cdk.next();
+            if(this.order_visit_status == 'need_correction'){
+              this.messageSuccessfull();
+              this.router.navigate([`${this.order}/${this.token}/contact/data`])
+            }
+            if(this.order_visit_status == 'in_campaing'){
+              this.messageSuccessfull();
+              this.cdk.next()
+            }
           },
           error: () =>{
             this.messageError();
@@ -212,7 +230,7 @@ export class ClientDataComponent implements OnInit {
 })
 export class WrongdataComponent implements OnInit {
   form!: FormGroup;
-  order!: number;
+  order!: string;
   token!: string;
   requests : any;
 
@@ -227,8 +245,12 @@ export class WrongdataComponent implements OnInit {
   direccion!:string;
   comuna!:string;
   referencias!:string;
+
+  //vars task
+  kind: string = 'need_correction'
+  details: string = 'Necesita corrección de datos de contacto.'
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private api : ModifyProductService,
-    private router : Router, private service : RouteService) {}
+    private router : Router, private service : RouteService, private task:TaskService) {}
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       phone2: [''],
@@ -263,6 +285,21 @@ export class WrongdataComponent implements OnInit {
       })
   }
 
+  postTaskDEV(){
+    this.task.postTaskDEV(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+      next:(res)=>{
+          res
+      }
+    })
+  }
+  postTask(){
+    this.task.postTask(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+      next:(res)=>{
+          res
+      }
+    })
+  }
+
 
   onSubmit(){
     this.phone2 = this.form.controls['phone2'].value
@@ -286,17 +323,20 @@ export class WrongdataComponent implements OnInit {
           message += `Referencias: ${this.referencias} \n`
         }
         this.api.putRequestDEV(message, this.requests, this.tokenParam)
-          .subscribe({
-            next:(res)=>{
-              res
-              this.dialog.closeAll();
-              this.messageSuccessfull();
-              this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
-            },
-            error: () =>{
-              this.messageError();
-            }
-          }) 
+              .subscribe({
+                next:(res)=>{
+                  res
+                  this.dialog.closeAll();
+                  this.messageSuccessfull();
+                  this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
+                  this.postTaskDEV()
+                },
+                error: () =>{
+                  this.messageError();
+                }
+              }) 
+        
+        
       }
     }
     else
@@ -314,18 +354,20 @@ export class WrongdataComponent implements OnInit {
         if (this.referencias != null ){
           message += `Referencias: ${this.referencias} \n`
         }
-      this.api.putRequest(message, this.requests, this.tokenParam)
-        .subscribe({
-          next:(res)=>{
-            res
-            this.dialog.closeAll();
-            this.messageSuccessfull();
-            this.router.navigate([`${this.orderParam}/${this.tokenParam}/wrong/ejecutivo`])
-          },
-          error: () =>{
-            this.messageError();
-          }
-        }) 
+        this.api.putRequest(message, this.requests, this.tokenParam)
+              .subscribe({
+                next:(res)=>{
+                  res
+                  this.dialog.closeAll();
+                  this.messageSuccessfull();
+                  this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
+                  this.postTask();
+                },
+                error: () =>{
+                  this.messageError();
+                }
+              }) 
+        
     }
     
   }

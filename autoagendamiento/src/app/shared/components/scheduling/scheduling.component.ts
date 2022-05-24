@@ -16,6 +16,7 @@ import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
+import { TaskService } from 'src/app/service/task.service';
 
 
 @Component({
@@ -55,7 +56,8 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   token!: string;
 
   //vars
-  dates = (value:string) => {return moment(value).format('DD-MM-YYYY')}
+  dates = (value:string) => {return moment(value).format('dddd, DD-MM-YYYY')}
+
   delivery_date:any;
   datedelivery : any;
   fechaFrom : any;
@@ -70,11 +72,13 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private api: SchedulingService, private apiDate : DateService, private cdk : CdkStepper, private route : ActivatedRoute,
-    private ctrlContainer: FormGroupDirective,  private service : RouteService) {
+    private ctrlContainer: FormGroupDirective,  private service : RouteService, date: DateAdapter<Date>) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
+      moment.locale('es');
     }
 
+    
   ngOnInit(): void {
     this.form = this.ctrlContainer.form;
     this.getDeliveryDate()
@@ -102,6 +106,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   }
 
   getDeliveryDate(){
+    
     if (isDevMode()) {
       this.apiDate.getOrderIdDEV(this.order, this.token)
       .subscribe((res:any)=>{
@@ -113,7 +118,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
           this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
           
           //fecha to
-          this.fechaTo = moment(this.delivery_date).add(23,'days')
+          this.fechaTo = moment(this.delivery_date).add(31,'days')
           this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
 
           //method get schedule
@@ -127,7 +132,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
         this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
         
         //fecha to
-        this.fechaTo = moment(this.dateToday).add(23,'days')
+        this.fechaTo = moment(this.dateToday).add(31,'days')
         this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
 
         //method get schedule
@@ -148,7 +153,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
         this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
         
         //fecha to
-        this.fechaTo = moment(this.delivery_date).add(23,'days')
+        this.fechaTo = moment(this.delivery_date).add(31,'days')
         this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
 
         //method get schedule
@@ -162,7 +167,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
       this.scheduledFrom = moment(this.fechaFrom._d).format('YYYY-MM-DD')
       
       //fecha to
-      this.fechaTo = moment(this.dateToday).add(23,'days')
+      this.fechaTo = moment(this.dateToday).add(31,'days')
       this.scheduledTo = moment(this.fechaTo._d).format('YYYY-MM-DD')
 
       //method get schedule
@@ -181,6 +186,8 @@ export class SchedulingComponent implements OnInit, OnDestroy {
       this.api.getScheduleDEV(this.scheduledFrom, this.scheduledTo, this.order, this.token).subscribe({
         next:(res)=>{
           const res2 = this.bloqueHorario(res)
+          console.log();
+          
           this.dataSource = new MatTableDataSource(res2);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -320,13 +327,16 @@ export class SchedulingComponent implements OnInit, OnDestroy {
 
 export class NoDisponibilityComponent implements OnInit{
   //params
-  order!: string | null;
-  token!: string | null;
+  order!: any;
+  token!: any;
   
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
+
+  kind: string = 'contact_support'
+  details: string = 'No encuentra disponibilidad. Contacto con ejecutivo.'
   
-  constructor(private dialog: MatDialog, private router : Router, private service : RouteService){}
+  constructor(private dialog: MatDialog, private router : Router, private service : RouteService, private task:TaskService){}
   ngOnInit(): void {
     this.pathParam = this.service.pathParam;
     this.pathParam.subscribe(res=>{
@@ -341,6 +351,19 @@ export class NoDisponibilityComponent implements OnInit{
   }
 
   onSubmit(){
+    if (isDevMode()) {
+      this.task.postTaskDEV(this.kind, this.details, this.order, this.token).subscribe({
+        next:(res)=>{
+           res
+        }
+      })
+    }
+    else
+    this.task.postTask(this.kind, this.details, this.order, this.token).subscribe({
+      next:(res)=>{
+         res
+      }
+    })
     this.dialog.closeAll()
     this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
   }
@@ -377,12 +400,15 @@ export class NoDisponibilityDialog{
 
 export class ContactComponent implements OnInit{
   //params
-  order!: string | null;
-  token!: string | null;
+  order!: any;
+  token!: any;
+
+  kind: string = 'contact_support'
+  details: string = 'Necesita contactarse con un ejecutivo.'
 
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
-  constructor(private dialog: MatDialog, private router : Router, private service : RouteService){
+  constructor(private dialog: MatDialog, private router : Router, private service : RouteService, private task:TaskService){
     }
   ngOnInit(): void {
     this.pathParam = this.service.pathParam;
@@ -398,6 +424,19 @@ export class ContactComponent implements OnInit{
   }
 
   onSubmit(){
+    if (isDevMode()) {
+      this.task.postTaskDEV(this.kind, this.details, this.order, this.token).subscribe({
+        next:(res)=>{
+           res
+        }
+      })
+    }
+    else
+    this.task.postTask(this.kind, this.details, this.order, this.token).subscribe({
+      next:(res)=>{
+         res
+      }
+    })
     this.dialog.closeAll()
     this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
   }
@@ -408,7 +447,7 @@ export class ContactComponent implements OnInit{
   selector: 'button-contact',
   template: `
   <div class="d-grid d-md-flex justify-content-md-center">
-    <button mat-raised-button color="accent" (click)="openDialog()">Necesito que me contacte un ejecutivo</button>
+    <button mat-raised-button color="accent" (click)="openDialog()">Necesito contactar a un ejecutivo</button>
   </div>
   `,
   styleUrls: ['./scheduling.component.scss'],

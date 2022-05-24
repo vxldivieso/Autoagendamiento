@@ -8,7 +8,29 @@
             <editproduct-dialog></editproduct-dialog>
         </div>
         
-        <div class="course-info card-body">
+        <div class="course-info card-body py-4">
+            <ng-container *ngIf="details.store =='Ripley' then ripley">
+            </ng-container>
+            <ng-container *ngIf="details.store =='BBQ GRILL' then bbqgrill">
+            </ng-container>
+            <ng-container *ngIf="details.store =='Mercado Ripley' then mercadoripley">
+            </ng-container>
+            <ng-container *ngIf="details.store =='ABCDIN' then abcdin">
+            </ng-container>
+            <ng-container *ngIf="details.store =='Paris' then paris">
+            </ng-container>
+            <ng-container *ngIf="details.store =='SODIMAC' then sodimac">
+            </ng-container>
+            <ng-container *ngIf="details.store =='Hites' then hites">
+            </ng-container>
+            <ng-container *ngIf="details.store =='Easy' then easy">
+            </ng-container>
+            <ng-container *ngIf="details.store =='Falabella' then falabella">
+            </ng-container>
+            <ng-container *ngIf="details.store =='CIC' then cic">
+            </ng-container>
+            <ng-container *ngIf="details.store =='PRUEBA' then prueba">
+            </ng-container>
             <h6 class="card-title"> {{details.store}} </h6>
             <h2 class="card-text">Tipo Servicio: {{data.service}} </h2>
             <h6>Número de orden: {{details.order_id}} </h6>
@@ -16,3 +38,37 @@
         </div>
     </div>
 </div>
+
+<ng-template #ripley>
+    <img src="https://theme.zdassets.com/theme_assets/9853675/0191f6eb785e2ea8fa5b8e94b7f596580598135a.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #bbqgrill>
+    <img src="https://bbqgrill.cl/wp-content/uploads/2019/11/logo-bbq-grill-scaled.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #mercadoripley>
+    <img src="https://minisitios.ripley.cl/minisitios/estatico/mercado-ripley/conocenos/img/logo-market.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #abcdin>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/AbcdinLogo.svg/2560px-AbcdinLogo.svg.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #paris>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Logo_Paris_Cencosud.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #sodimac>
+    <img src="https://logodownload.org/wp-content/uploads/2019/09/sodimac-logo-6.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #hites>
+    <img src="https://dx23yqi1tewca.cloudfront.net/images/poiLogo/2e88fd76-e507-4ebc-b2b7-b5b0f00154a5.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #easy>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Easy-Logo.svg/1200px-Easy-Logo.svg.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #falabella>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Falabella.svg/1280px-Falabella.svg.png" alt="" width="50" height="24">
+</ng-template>
+<ng-template #cic>
+    <img src="https://media-exp1.licdn.com/dms/image/C4E0BAQHgQlul2NV9TA/company-logo_200_200/0/1519906928287?e=2147483647&v=beta&t=FIfQ5YQCshOpuIZuHCWXTOJy2vcOwTdaWwCGGvYn9HM" alt="" width="50" height="24">
+</ng-template>
+<ng-template #prueba>
+    <img src="https://maydayservicios.cl/wp-content/uploads/2019/05/Logo_Mayday0.png" alt="" width="50" height="24">
+</ng-template>

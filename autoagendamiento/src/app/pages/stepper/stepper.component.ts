@@ -99,6 +99,8 @@ export class StepperComponent implements OnInit{
   move(index: number) {
     this.stepper.selectedIndex = index;
   }
+
+  
   
 
 }

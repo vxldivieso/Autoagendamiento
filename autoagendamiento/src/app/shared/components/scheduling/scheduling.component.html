@@ -1,54 +1,49 @@
-<script src ="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
+<table class="table" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
+    
+    <!-- Position Column -->
+    <ng-container matColumnDef="date" >
+        <th mat-header-cell *matHeaderCellDef="let row" mat-sort-header sortActionDescription="Sort by number">
+            Fechas disponibles
+        </th>
+        <td mat-cell *matCellDef="let row" @enterState  > 
+            <p style="font-weight:bold;">Fecha:</p>
+            {{dates(row.date)}} 
+        </td>
+    </ng-container>
 
-    <div class="container table-responsive"  >
-        <table class="table" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" >
-    
-        <!-- Position Column -->
-        <ng-container matColumnDef="date" >
-            <th mat-header-cell *matHeaderCellDef="let row" mat-sort-header sortActionDescription="Sort by number">
-                Fechas disponibles
-            </th>
-            <td mat-cell *matCellDef="let row" @enterState > {{dates(row.date)}} </td>
-        </ng-container>
-    
-        <!-- Name Column -->
-        <ng-container matColumnDef="bloques"  >
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-                Bloques de Horario <br>
-                Mañana / Tarde
-            </th>
-            <td mat-cell *matCellDef="let row" @enterState >
-                
-                <button id="btnblocks" type="input" class="btn btn-outline-info" [disabled]="!row.morning" 
-                (click)="select(row.date, row.morning)">
-                    09:00 am - 13:00 pm
-                </button>
-                <button id="btnblocks" type="input" class="btn btn-outline-dark" [disabled]="!row.afternoon" 
-                (click)="select(row.date, row.afternoon)" >
-                    13:00 pm - 19:00 pm
-                </button>
-                <script>
-                    $("#btnmorning").click(function(){
-                        $("btnmorning").removeClass("btn-danger");
-                        $(this).addClass("btn-success");
-                });
-                </script>
-                
-             </td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    
-        <mat-paginator [length]="200" [pageSizeOptions]="[7]" aria-label="Select page">
-        </mat-paginator>
-    
-    </div>
+    <!-- Name Column -->
+    <ng-container matColumnDef="bloques" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+            Bloques de Horario <br>
+            Mañana / Tarde
+        </th>
+        <td mat-cell *matCellDef="let row" @enterState >
+            <p style="font-weight:bold;">Horarios Disponibles:</p>
+            <button id="btnblocks" type="input" class="btn btn-outline-info text-center" [disabled]="!row.morning" 
+            (click)="select(row.date, row.morning)">
+                09:00 am - 13:00 pm
+            </button>
+            <button id="btnblocks" type="input" class="btn btn-outline-dark text-center" [disabled]="!row.afternoon" 
+            (click)="select(row.date, row.afternoon)" >
+                13:00 pm - 19:00 pm
+            </button>
+            <script>
+                $("#btnmorning").click(function(){
+                    $("btnmorning").removeClass("btn-danger");
+                    $(this).addClass("btn-success");
+            });
+            </script>
+            
+         </td>
+    </ng-container>
 
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
 
-
+    <mat-paginator [length]="200" [pageSizeOptions]="[7]" aria-label="Select page">
+    </mat-paginator>
 <div class="principalButtons">
 <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-2 ">
     <button mat-raised-button color="primary" (click)="messageSuccessfull()">Agendar</button>

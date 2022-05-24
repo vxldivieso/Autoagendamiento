@@ -1,12 +1,16 @@
-import { AfterViewInit, Component, isDevMode, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, isDevMode, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DetailOrderService } from 'src/app/service/detail.service';
 import  {trigger, style, transition, animate,state } from '@angular/animations';
+import * as moment from 'moment';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-end-process',
   templateUrl: './end-process.component.html',
   styleUrls: ['./end-process.component.scss'],
+  providers: [DatePipe,{ provide: MAT_DATE_LOCALE, useValue: 'es' }],
   animations:[
     trigger('enterState',[
       state('void',style({
@@ -24,8 +28,11 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
   savedDate: any ;
   details : any;
   clientData : any;
-
+  scheduled_at:any;
   form !: FormGroup;
+  dates = (value:string) => {return moment(value).format('dddd, DD-MM-YYYY')}
+  
+  
 
   order!: any;
   token!: string;
@@ -33,6 +40,7 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
     private route : ActivatedRoute) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
+      moment.locale('es');
     }
 
   ngOnInit(): void {
@@ -69,6 +77,9 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
       .subscribe({
         next:(res)=>{
           this.details = res;
+          this.scheduled_at = res.scheduled_at
+          console.log(this.scheduled_at);
+          
         }
       })
     }

@@ -1,27 +1,27 @@
 <!--Stepper-->
 <app-header></app-header>
 
-<div class="container ">
+<div class="container">
   
   <mat-stepper class="example-stepper" #stepper color="primary" [orientation]="(stepperOrientation | async)!" linear>
-    
+  
     <!--Verificar el producto-->
     <mat-step [stepControl]="checkoutFormGroup" label="Verifica tu Producto" [editable]="false" >
       
       <ng-template matStepContent>
         <form [formGroup]="checkoutFormGroup">
-          <div class="py-4 px-4">
+          <div class="py-4">
             <h1 class="title">Datos del producto</h1>
-            <p class="subtitle col-md-10">Corrobore los siguientes datos asociados a su producto.<br> Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
+            <p class="subtitle">Corrobore los siguientes datos asociados a su producto. Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
           </div>
           <!--Checkout product-->
-          <div class="py-4 px-4" >
+          <div class="py-4" >
             <checkoutproduct></checkoutproduct>
           </div>
         </form>
         <!--Actions-->
         <p>Si está todo en orden, presione 'Continuar'</p>
-        <div class="px-4 d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
+        <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
           <button mat-raised-button class="btn-lg" color="primary" matStepperNext>Continuar</button>
         </div>
       </ng-template>
@@ -33,7 +33,7 @@
     <mat-step [stepControl]="clientDataFormGroup" label="Confirma tus datos" [editable]="false">
       <ng-template matStepContent>
         <form [formGroup]="clientDataFormGroup">
-          <div class="py-4 px-4">
+          <div class="py-4">
             <h1 class="title">Datos de contacto</h1>
             <p class="subtitle">Corrobore sus datos de contacto. Agregue o modifique referencias a su dirección y/o un telefono extra.</p>
           </div>
@@ -50,12 +50,12 @@
     <mat-step [stepControl]="schedulingFormGroup" label="Selección de horario" [editable]="false">
       <ng-template matStepContent>
         <form [formGroup]="schedulingFormGroup" >
-          <div class="py-4 px-4">
+          <div class="py-4">
             <h1 class="title">Selección de horario</h1>
             <p class="subtitle">Para agendar el servicio, seleccione el bloque horario de su preferencia según las fechas disponibles.</p>
           </div>
           <!--Scheduling Component-->
-          <div class="container py-2">
+          <div>
             <scheduling></scheduling>
           </div>
         </form>
@@ -67,22 +67,15 @@
     <mat-step [stepControl]="endProcessFormGroup" label="Listo" [editable]="false">
       <ng-template matStepContent>
         <form [formGroup]="endProcessFormGroup">
-          <div class="py-4 px-4">
+          <div class="py-4">
             <h1 class="title">Todo listo</h1>
             <p class="subtitle">La visita se agendó correctamente. Te enviaremos un correo con la información detallada.</p>
             
           </div>
           <!--End process all done-->
-          <div class="container py-2">
-            <app-end-process></app-end-process>
-          </div>
+          <app-end-process></app-end-process>
+          
         </form>
-        <!--Actions-->
-        <div class="py-4 px-4 d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
-          <button mat-raised-button color="accent" type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Si tienes dudas">
-            Contáctanos
-          </button>
-      </div>
     </ng-template>
     </mat-step>
       

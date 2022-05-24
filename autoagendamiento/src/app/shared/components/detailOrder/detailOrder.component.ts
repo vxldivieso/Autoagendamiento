@@ -10,6 +10,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { map, Observable, ReplaySubject, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TaskService } from 'src/app/service/task.service';
 
 //DetailOrder
 @Component({
@@ -31,7 +32,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class DetailComponent implements OnInit, OnDestroy {
   details:any
-
   
   order!: any;
   token!: string;
@@ -109,10 +109,14 @@ export class EditProductComponent implements OnInit{
   base64Output !: string;
   fileSelected!: Blob
 
+  //vars task
+  kind: string = 'need_correction'
+  details: string = 'Realizó una modificación al producto.'
+
   
   constructor(private formBuilder: FormBuilder, 
     private api: ModifyProductService, private dialog: MatDialog, private route : ActivatedRoute,
-    private service : RouteService, private sant: DomSanitizer){
+    private service : RouteService, private sant: DomSanitizer, private task: TaskService){
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
     }
@@ -150,12 +154,21 @@ export class EditProductComponent implements OnInit{
         this.requests = resp.request_id;
       })
   }
+
   
   onFileSelected(files: FileList):void {
-    this.fileSelected = files[0];
-    this.img = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
-    this.base64Output;
-    this.convertFileToBase64()
+    this.fileSelected = files[0]
+    let tmp_pr = 0;
+    if(this.fileSelected.type != 'image/jpeg' && this.fileSelected.type != 'image/png'){
+      tmp_pr = 1;
+      alert("El archivo no es una imagen.");
+    }
+    if(tmp_pr == 0){
+      this.img = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fileSelected)) as string;
+      this.base64Output;
+      this.convertFileToBase64()
+    }
+    
   }
 
   convertFileToBase64(){
@@ -167,14 +180,27 @@ export class EditProductComponent implements OnInit{
     
   }
 
+  postTaskDEV(){
+    this.task.postTaskDEV(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+      next:(res)=>{
+          res
+      }
+    })
+  }
+  postTask(){
+    this.task.postTask(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+      next:(res)=>{
+          res
+      }
+    })
+  }
+
 
   onSubmit(): void{
-    
     this.name = this.changeProductForm.controls['nameProduct'].value
     this.sku = this.changeProductForm.controls['skuProduct'].value 
     this.changeProductForm.controls['img'].patchValue(this.requests.attachment)
 
-    this.convertFileToBase64()
     let imgB64 = JSON.stringify(this.base64Output)
     
     if (isDevMode()) {
@@ -194,6 +220,7 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
+              this.postTaskDEV();
             },
             error: () =>{
               this.messageError();
@@ -207,6 +234,7 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
+              this.postTaskDEV();
             },
             error: () =>{
               this.messageError();
@@ -234,6 +262,7 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
+              this.postTask();
             },
             error: () =>{
               this.messageError();
@@ -247,6 +276,7 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
+              this.postTask();
             },
             error: () =>{
               this.messageError();
@@ -332,8 +362,13 @@ export class EditServiceComponent implements OnInit{
   
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
+
+   //vars task
+   kind: string = 'need_correction'
+   details: string = 'Realizó una modificación al Tipo de Servicio.'
+
   constructor(private formBuilder: FormBuilder, 
-    private api: ModifyProductService, private dialog: MatDialog, private service : RouteService ){}
+    private api: ModifyProductService, private dialog: MatDialog, private service : RouteService, private task: TaskService ){}
   
   ngOnInit(): void {
     this.changeServiceForm = this.formBuilder.group({
@@ -364,6 +399,21 @@ export class EditServiceComponent implements OnInit{
       })
   }
 
+  postTaskDEV(){
+    this.task.postTaskDEV(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+      next:(res)=>{
+          res
+      }
+    })
+  }
+  postTask(){
+    this.task.postTask(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+      next:(res)=>{
+          res
+      }
+    })
+  }
+
   onSubmit(): void{
     let valor = this.changeServiceForm.value
     let parseString = JSON.stringify(valor)
@@ -374,6 +424,7 @@ export class EditServiceComponent implements OnInit{
           next:(res)=>{
             this.dialog.closeAll();
             this.messageSuccessfull();
+            this.postTaskDEV();
           },
           error: () =>{
             this.messageError();  
@@ -388,6 +439,7 @@ export class EditServiceComponent implements OnInit{
         next:(res)=>{
           this.dialog.closeAll();
           this.messageSuccessfull();
+          this.postTask();
         },
         error: () =>{
           this.messageError();  

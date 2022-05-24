@@ -1,4 +1,4 @@
-import { Component, isDevMode, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, isDevMode, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { DateService } from '../../../service/detail.service';
 import Swal from 'sweetalert2';
@@ -35,9 +35,8 @@ export class DateFormProduct{
   dateProductForm !: FormGroup;
   isSend:boolean = false;
   delivery_date = new Date() ;
-  fecha!: string;
   datedelivery : any;
-
+  visible:boolean = true;
   //params
   order!: any;
   token!: string;
@@ -78,7 +77,7 @@ export class DateFormProduct{
     this.datedelivery = {delivery_date:moment(obj.dateProduct).format(myFormat)};
     return this.datedelivery
   }
-
+  
   onSubmit(){
     this.transformDate()
     if (isDevMode()) {
@@ -88,6 +87,7 @@ export class DateFormProduct{
           next:(res)=>{
             this.messageSuccessfull()
             this.isSend = !this.isSend;
+            
           },
           error: () =>{
             this.messageError();

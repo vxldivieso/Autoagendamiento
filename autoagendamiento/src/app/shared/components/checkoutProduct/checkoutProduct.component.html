@@ -11,16 +11,15 @@
               {{option}}
             </mat-radio-button>
           </mat-radio-group>
-          
         </form>
       </div>
     </div>
   </div>
 </div>
 
-<!--Show form !delivery_date
-<ng-container *ngIf="optionselect=='Si' then showDatepicker">
-</ng-container>-->
+
+<ng-container *ngIf="optionselect=='No'">
+</ng-container>
 <!--Hideform no-->
 <ng-container *ngIf="optionselect=='No' then showDatepicker else showProductData" >
 </ng-container>
