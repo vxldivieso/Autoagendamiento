@@ -7,6 +7,7 @@ import {map} from 'rxjs/operators';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DetailOrderService } from 'src/app/service/detail.service';
+import * as moment from 'moment';
 
 
 //Stepper component
@@ -33,13 +34,15 @@ export class StepperComponent implements OnInit{
   stepperOrientation: Observable<StepperOrientation>;
 
   @ViewChild('stepper') stepper!: MatStepper;
-  details:any;
+  savedDate: any ;
+  details : any;
+  clientData : any;
   scheduled_at:any;
   order_visit_status : any;
   order_status:any;
   order!: any;
   token!: string;
-  
+  dates = (value:string) => {return moment(value).format('dddd, DD-MM-YYYY')}
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, 
     public dialog: MatDialog,  private route : ActivatedRoute, private api: DetailOrderService, private router : Router) {
       this.stepperOrientation = breakpointObserver
@@ -63,6 +66,7 @@ export class StepperComponent implements OnInit{
       this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{
         this.scheduled_at = resp.scheduled_at;
         this.details = resp
+        this.clientData = resp.contact
         this.order_status = resp.order_status
         this.order_visit_status = resp.order_visit_status;
         this.processEnd()

@@ -1,43 +1,50 @@
-
- <div class="courses-container py-4 text-center" *ngIf="details" @enterState >
-    <div class="course"  id="course"  *ngFor="let data of details.products" >
-        <div class="course-preview">
-            <h6>Producto</h6>
-            <h2> {{data.product_name}} </h2>
-            <h6>Código del producto: {{data.sku}}</h6>
-            <editproduct-dialog></editproduct-dialog>
-        </div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-lg-8">
         
-        <div class="course-info card-body py-4">
-            <ng-container *ngIf="details.store =='Ripley' then ripley">
-            </ng-container>
-            <ng-container *ngIf="details.store =='BBQ GRILL' then bbqgrill">
-            </ng-container>
-            <ng-container *ngIf="details.store =='Mercado Ripley' then mercadoripley">
-            </ng-container>
-            <ng-container *ngIf="details.store =='ABCDIN' then abcdin">
-            </ng-container>
-            <ng-container *ngIf="details.store =='Paris' then paris">
-            </ng-container>
-            <ng-container *ngIf="details.store =='SODIMAC' then sodimac">
-            </ng-container>
-            <ng-container *ngIf="details.store =='Hites' then hites">
-            </ng-container>
-            <ng-container *ngIf="details.store =='Easy' then easy">
-            </ng-container>
-            <ng-container *ngIf="details.store =='Falabella' then falabella">
-            </ng-container>
-            <ng-container *ngIf="details.store =='CIC' then cic">
-            </ng-container>
-            <ng-container *ngIf="details.store =='PRUEBA' then prueba">
-            </ng-container>
-            <h6 class="card-title"> {{details.store}} </h6>
-            <h2 class="card-text">Tipo Servicio: {{data.service}} </h2>
-            <h6>Número de orden: {{details.order_id}} </h6>
-            <editservice-dialog></editservice-dialog>
+        <div class="courses-container py-4 text-center" *ngIf="detailsOrder" @enterState >
+            <div class="course"  id="course"  *ngFor="let data of detailsOrder.products" >
+                <div class="course-preview">
+                    <h6>Producto</h6>
+                    <h2> {{data.product_name}} </h2>
+                    <h6>Código del producto: {{data.sku}}</h6>
+                    <editproduct-dialog></editproduct-dialog>
+                </div>
+                
+                <div class="course-info card-body py-4">
+                    <ng-container *ngIf="detailsOrder.store =='Ripley' then ripley">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='BBQ GRILL' then bbqgrill">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='Mercado Ripley' then mercadoripley">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='ABCDIN' then abcdin">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='Paris' then paris">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='SODIMAC' then sodimac">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='Hites' then hites">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='Easy' then easy">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='Falabella' then falabella">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='CIC' then cic">
+                    </ng-container>
+                    <ng-container *ngIf="detailsOrder.store =='PRUEBA' then prueba">
+                    </ng-container>
+                    <h6 class="card-title"> {{detailsOrder.store}} </h6>
+                    <h2 class="card-text text-uppercase">Tipo Servicio: {{data.service}} </h2>
+                    <h6>Número de orden: {{detailsOrder.order_id}} </h6>
+                    <editservice-dialog></editservice-dialog>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="col-md-2"></div>
 </div>
+ 
 
 <ng-template #ripley>
     <img src="https://theme.zdassets.com/theme_assets/9853675/0191f6eb785e2ea8fa5b8e94b7f596580598135a.png" alt="" width="50" height="24">
@@ -55,7 +62,7 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Logo_Paris_Cencosud.png" alt="" width="50" height="24">
 </ng-template>
 <ng-template #sodimac>
-    <img src="https://logodownload.org/wp-content/uploads/2019/09/sodimac-logo-6.png" alt="" width="50" height="24">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Logotipo_Sodimac.svg/3000px-Logotipo_Sodimac.svg.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #hites>
     <img src="https://dx23yqi1tewca.cloudfront.net/images/poiLogo/2e88fd76-e507-4ebc-b2b7-b5b0f00154a5.png" alt="" width="50" height="24">

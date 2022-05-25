@@ -6,6 +6,8 @@ import { map } from "rxjs";
     providedIn:'root'
 })
 export class TaskService{
+    productModify : boolean = false;
+    serviceModify : boolean = false;
     private apiURL='https://api.demo.maydayservicios.com'
     constructor(private http: HttpClient){
     }
@@ -28,4 +30,5 @@ export class TaskService{
                 return res;
             })))
     }
+
 }

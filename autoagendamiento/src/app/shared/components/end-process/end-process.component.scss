@@ -1,5 +1,18 @@
+.bg-pay{
+	background-color: #eee;
+	border-radius: 5px;
+	
+	.fw-500{
+		text-align: left;
+		font-weight: bold;
+
+	}
+	.right{
+		text-align: right;
+	}
+}
 * {
-	box-sizing: border-box;
+	
 	font-family: 'Inter', sans-serif;
 	h1{
 		font-family: 'Inter', sans-serif;

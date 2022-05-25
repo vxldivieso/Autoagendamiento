@@ -72,6 +72,7 @@ export class ClientDataComponent implements OnInit {
     this.form = this.ctrlContainer.form;
     this.form.addControl("clientData", this.clientForm);
     this.getClientData();
+    
 
     //route order
     this.route.paramMap
@@ -95,6 +96,7 @@ export class ClientDataComponent implements OnInit {
       .subscribe((res:any)=>{
         this.clientData = res.contact;
         this.order_visit_status = res.order_visit_status;
+        
       })
     }
     else
@@ -105,6 +107,7 @@ export class ClientDataComponent implements OnInit {
       })
   }
 
+
   updateClientContact(){
     this.clientForm.controls['phone2'].patchValue(this.clientData.phone2);
     this.clientForm.controls['references'].patchValue(this.clientData.references);
@@ -114,14 +117,8 @@ export class ClientDataComponent implements OnInit {
         this.api.putContactDEV(this.clientForm.value, this.order, this.token)
         .subscribe({
           next:(res)=>{
-            if(this.order_visit_status == 'need_correction'){
-              this.messageSuccessfull();
-              this.router.navigate([`${this.order}/${this.token}/contact/data`])
-            }
-            if(this.order_visit_status == 'in_campaing'){
-              this.messageSuccessfull();
+            this.messageSuccessfull();
               this.cdk.next()
-            }
             
           },
           error: () =>{
@@ -135,14 +132,8 @@ export class ClientDataComponent implements OnInit {
         this.api.putContact(this.clientForm.value, this.order, this.token)
         .subscribe({
           next:(res)=>{
-            if(this.order_visit_status == 'need_correction'){
-              this.messageSuccessfull();
-              this.router.navigate([`${this.order}/${this.token}/contact/data`])
-            }
-            if(this.order_visit_status == 'in_campaing'){
-              this.messageSuccessfull();
-              this.cdk.next()
-            }
+            this.messageSuccessfull();
+            this.cdk.next()
           },
           error: () =>{
             this.messageError();
@@ -153,27 +144,29 @@ export class ClientDataComponent implements OnInit {
 
   getRequestId(){
     if (isDevMode()) {
-      this.apiMod.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+      this.apiMod.getRequestDEV(this.order, this.token).subscribe((resp:any)=>{
         this.requests = resp.request_id;
+        this.getRequestLog()
       })
     }
     else
-      this.apiMod.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
+      this.apiMod.getRequest(this.order, this.token).subscribe((resp:any)=>{
         this.requests = resp.request_id;
       })
   }
 
   getRequestLog(){
+    
     if (isDevMode()) {
-      this.apiMod.getRequestLogDEV(this.requests, this.token).subscribe((resp:any)=>{
-        this.requestsLog = resp;
+      this.apiMod.getRequestLogDEV(this.requests,this.token).subscribe((resp:any)=>{
+        this.requestsLog = resp
         console.log(this.requestsLog);
+        
       })
     }
     else
-    this.apiMod.getRequestLog(this.requests, this.token).subscribe((resp:any)=>{
+    this.apiMod.getRequestLog(this.requests,this.token).subscribe((resp:any)=>{
       this.requestsLog = resp;
-      console.log(this.requestsLog);
     })
 
   }

@@ -1,39 +1,46 @@
-<div class="order" @enterState>
-    <div class="card-body" >
-        <div class="row">
-            <ng-container *ngIf="delivery_date then date else nodate"></ng-container>
-                <ng-template #date>
-                    <div class="col-md-4" >
-                        <h5 class="card-title text-uppercase"> fecha de despacho</h5>
-                        <h4> <strong>{{delivery_date}}</strong>  </h4>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="order" @enterState>
+            <div class="card-body" >
+                <div class="row">
+                    <ng-container *ngIf="delivery_date then date else nodate"></ng-container>
+                        <ng-template #date>
+                            <div class="col-md-4" >
+                                <h5 class="card-title text-uppercase"> fecha de despacho</h5>
+                                <h4> <strong>{{delivery_date}}</strong>  </h4>
+                            </div>
+                        </ng-template>
+                        <ng-template #nodate>
+                            <div class="col-md-4" >
+                                <h5 class="card-title text-uppercase"> fecha de despacho</h5>
+                                <h4><strong>No ingresada</strong></h4>
+                                <mat-error style="font-size:10px" *ngIf="!delivery_date">Por favor, ingrese la fecha de despacho.</mat-error>
+                            </div>
+                        </ng-template>
+                    <div class="col-md-8">
+                        <h5 class="card-title text-uppercase"> 
+                            Modificar fecha de despacho 
+                            <form [formGroup]="dateProductForm">
+                                <mat-form-field color="primary" appearance="outline" lang="es">
+                                    <mat-label>Seleccione una fecha</mat-label>
+                                    <input formControlName="dateProduct" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1">
+                                    <mat-hint>DD/MM/AAAA</mat-hint>
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                    
+                                </mat-form-field> &nbsp;
+                                <button type="submit" (click)="onSubmit()" mat-raised-button color="primary">Guardar</button>
+                            </form>
+                        </h5>
                     </div>
-                </ng-template>
-                <ng-template #nodate>
-                    <div class="col-md-4" >
-                        <h5 class="card-title text-uppercase"> fecha de despacho</h5>
-                        <h4><strong>No ingresada</strong></h4>
-                        <mat-error style="font-size:10px" *ngIf="!delivery_date">Por favor, ingrese la fecha de despacho.</mat-error>
-                    </div>
-                </ng-template>
-            <div class="col-md-8">
-                <h5 class="card-title text-uppercase"> 
-                    Modificar fecha de despacho 
-                    <form [formGroup]="dateProductForm">
-                        <mat-form-field color="primary" appearance="outline" lang="es">
-                            <mat-label>Seleccione una fecha</mat-label>
-                            <input formControlName="dateProduct" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="picker1">
-                            <mat-hint>DD/MM/AAAA</mat-hint>
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                            
-                        </mat-form-field> &nbsp;
-                        <button type="submit" (click)="onSubmit()" mat-raised-button color="primary">Guardar</button>
-                    </form>
-                </h5>
             </div>
+        </div>
+        </div>
+        
+        
+        
+        
     </div>
+    <div class="col-md-2"></div>
 </div>
-</div>
-
-
-

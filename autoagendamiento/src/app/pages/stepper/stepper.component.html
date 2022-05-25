@@ -11,16 +11,23 @@
       <ng-template matStepContent>
         <form [formGroup]="checkoutFormGroup">
           <div class="py-4">
-            <h1 class="title">Datos del producto</h1>
-            <p class="subtitle">Corrobore los siguientes datos asociados a su producto. Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-lg-10">
+                <h1 class="title">Datos del producto</h1>
+                <p class="subtitle">Corrobore los siguientes datos asociados a su producto. Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+           
           </div>
           <!--Checkout product-->
-          <div class="py-4" >
+          <div class="" >
             <checkoutproduct></checkoutproduct>
           </div>
         </form>
         <!--Actions-->
-        <p>Si está todo en orden, presione 'Continuar'</p>
+        <p style="color: #7B7D7D;">Si está todo en orden, presione 'Continuar'</p>
         <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
           <button mat-raised-button class="btn-lg" color="primary" matStepperNext>Continuar</button>
         </div>
@@ -34,8 +41,15 @@
       <ng-template matStepContent>
         <form [formGroup]="clientDataFormGroup">
           <div class="py-4">
-            <h1 class="title">Datos de contacto</h1>
-            <p class="subtitle">Corrobore sus datos de contacto. Agregue o modifique referencias a su dirección y/o un telefono extra.</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-lg-10" >
+                <h1 class="title">Datos de contacto</h1>
+                <p class="subtitle">Corrobore sus datos de contacto. Agregue o modifique referencias a su dirección y/o un telefono extra.</p>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+           
           </div>
           <!--Client data-->
           <div>
@@ -51,8 +65,15 @@
       <ng-template matStepContent>
         <form [formGroup]="schedulingFormGroup" >
           <div class="py-4">
-            <h1 class="title">Selección de horario</h1>
-            <p class="subtitle">Para agendar el servicio, seleccione el bloque horario de su preferencia según las fechas disponibles.</p>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-lg-10">
+                <h1 class="title">Selección de horario</h1>
+                <p class="subtitle">Para agendar el servicio, seleccione el bloque horario de su preferencia según las fechas disponibles.</p>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+           
           </div>
           <!--Scheduling Component-->
           <div>
@@ -68,9 +89,14 @@
       <ng-template matStepContent>
         <form [formGroup]="endProcessFormGroup">
           <div class="py-4">
-            <h1 class="title">Todo listo</h1>
-            <p class="subtitle">La visita se agendó correctamente. Te enviaremos un correo con la información detallada.</p>
-            
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-lg-10">
+                <h1 class="title">Todo listo</h1>
+                <p class="subtitle">La visita se agendó correctamente. Te enviaremos un correo con la información detallada.</p>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
           </div>
           <!--End process all done-->
           <app-end-process></app-end-process>

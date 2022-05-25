@@ -1,10 +1,9 @@
-import { Component, OnInit, isDevMode, enableProdMode, OnDestroy } from '@angular/core';
+import { Component, OnInit, isDevMode, OnDestroy } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { DetailOrderService, ModifyProductService} from 'src/app/service/detail.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { map, Observable, ReplaySubject, Subject, takeUntil } from 'rxjs';
@@ -31,13 +30,17 @@ import { TaskService } from 'src/app/service/task.service';
   ]
 })
 export class DetailComponent implements OnInit, OnDestroy {
-  details:any
+  detailsOrder:any
   
   order!: any;
   token!: string;
-
+  
+  //vars task
+  kind: string = 'need_correction'
+  details: string = 'Necesita corrección de datos'
   private destroy = new Subject<void>();
-  constructor(private api: DetailOrderService, private route : ActivatedRoute, private service : RouteService) {
+  constructor(private api: DetailOrderService, private route : ActivatedRoute, private service : RouteService,
+    private task: TaskService ) {
     this.order = this.route.snapshot.params['order'];
     this.token = this.route.snapshot.params['token'];
   }
@@ -70,14 +73,34 @@ export class DetailComponent implements OnInit, OnDestroy {
   getOrderId(){
     if (isDevMode()) {
       this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{
-        this.details = resp;
+        this.detailsOrder = resp;
       })
     }
     else
       this.api.getOrderId(this.order, this.token).subscribe((resp:any)=>{
-        this.details = resp;
+        this.detailsOrder = resp;
       })
   }
+  postTask(){
+     if(this.task.productModify == true || this.task.serviceModify == true){
+          if (isDevMode()) {
+            this.task.postTaskDEV(this.kind, this.details, this.order, this.token).subscribe({
+              next:(res)=>{
+                res
+              }
+            })
+          }
+          this.task.postTask(this.kind, this.details, this.order, this.token).subscribe({
+            next:(res)=>{
+              res
+            }
+          })
+        }
+  }
+
+  
+
+  
   
 }
 
@@ -89,8 +112,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   templateUrl: './editproduct/editProduct.component.html',
   styleUrls: ['./editproduct/editProduct.component.scss']
 })
-
-
 export class EditProductComponent implements OnInit{
   changeProductForm !: FormGroup;
   requests : any;
@@ -109,11 +130,6 @@ export class EditProductComponent implements OnInit{
   base64Output !: string;
   fileSelected!: Blob
 
-  //vars task
-  kind: string = 'need_correction'
-  details: string = 'Realizó una modificación al producto.'
-
-  
   constructor(private formBuilder: FormBuilder, 
     private api: ModifyProductService, private dialog: MatDialog, private route : ActivatedRoute,
     private service : RouteService, private sant: DomSanitizer, private task: TaskService){
@@ -147,6 +163,8 @@ export class EditProductComponent implements OnInit{
     if (isDevMode()) {
       this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
         this.requests = resp.request_id;
+        console.log(this.requests);
+        
       })
     }
     else
@@ -180,22 +198,6 @@ export class EditProductComponent implements OnInit{
     
   }
 
-  postTaskDEV(){
-    this.task.postTaskDEV(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
-      next:(res)=>{
-          res
-      }
-    })
-  }
-  postTask(){
-    this.task.postTask(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
-      next:(res)=>{
-          res
-      }
-    })
-  }
-
-
   onSubmit(): void{
     this.name = this.changeProductForm.controls['nameProduct'].value
     this.sku = this.changeProductForm.controls['skuProduct'].value 
@@ -220,7 +222,7 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
-              this.postTaskDEV();
+              this.task.productModify == true;
             },
             error: () =>{
               this.messageError();
@@ -234,7 +236,7 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
-              this.postTaskDEV();
+              this.task.productModify == true;
             },
             error: () =>{
               this.messageError();
@@ -262,7 +264,6 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
-              this.postTask();
             },
             error: () =>{
               this.messageError();
@@ -276,7 +277,6 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
-              this.postTask();
             },
             error: () =>{
               this.messageError();
@@ -363,12 +363,8 @@ export class EditServiceComponent implements OnInit{
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
 
-   //vars task
-   kind: string = 'need_correction'
-   details: string = 'Realizó una modificación al Tipo de Servicio.'
-
-  constructor(private formBuilder: FormBuilder, 
-    private api: ModifyProductService, private dialog: MatDialog, private service : RouteService, private task: TaskService ){}
+  constructor(private formBuilder: FormBuilder, private api: ModifyProductService, private dialog: MatDialog, 
+    private service : RouteService, private task : TaskService){}
   
   ngOnInit(): void {
     this.changeServiceForm = this.formBuilder.group({
@@ -399,21 +395,6 @@ export class EditServiceComponent implements OnInit{
       })
   }
 
-  postTaskDEV(){
-    this.task.postTaskDEV(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
-      next:(res)=>{
-          res
-      }
-    })
-  }
-  postTask(){
-    this.task.postTask(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
-      next:(res)=>{
-          res
-      }
-    })
-  }
-
   onSubmit(): void{
     let valor = this.changeServiceForm.value
     let parseString = JSON.stringify(valor)
@@ -424,7 +405,7 @@ export class EditServiceComponent implements OnInit{
           next:(res)=>{
             this.dialog.closeAll();
             this.messageSuccessfull();
-            this.postTaskDEV();
+            this.task.serviceModify == true;
           },
           error: () =>{
             this.messageError();  
@@ -439,7 +420,7 @@ export class EditServiceComponent implements OnInit{
         next:(res)=>{
           this.dialog.closeAll();
           this.messageSuccessfull();
-          this.postTask();
+          this.task.serviceModify == true;
         },
         error: () =>{
           this.messageError();  
@@ -447,6 +428,10 @@ export class EditServiceComponent implements OnInit{
       })
     }
   }
+
+  
+
+  
   
 
 //Message successfull
@@ -494,7 +479,7 @@ messageError(){
 
 @Component({
   selector: 'editservice-dialog',
-  template: `<a (click)="openDialog()" class="btn">Editar servicio</a>`,
+  template: `<a (click)="openDialog()" class="btn">Editar Servicio</a>`,
   styleUrls: ['./detailOrder.component.scss']
 })
 export class EditServiceDialog{

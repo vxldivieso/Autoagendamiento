@@ -58,7 +58,7 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
       this.apiDet.getOrderDEV(this.order,this.token).subscribe((res:any)=>{
         this.savedDate = {
           date: res.scheduled_at.day,
-          block: [1,2].includes(res.scheduled_at.block)? "09:00 am - 13:00 pm" : "13:00 pm - 19:00 pm"
+          block: ["9:00 - 11:00","11:00 - 13:00"].includes(res.scheduled_at.block)? "09:00 am - 13:00 pm" : "13:00 pm - 19:00 pm"
         }
       })
     }
@@ -66,7 +66,7 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
     this.apiDet.getOrderId(this.order,this.token).subscribe((res:any)=>{
       this.savedDate = {
         date: res.scheduled_at.day,
-        block: [1,2].includes(res.scheduled_at.block)? "09:00 am - 13:00 pm" : "13:00 pm - 19:00 pm"
+        block: ["9:00 - 11:00","11:00 - 13:00"].includes(res.scheduled_at.block)? "09:00 am - 13:00 pm" : "13:00 pm - 19:00 pm"
       }
     })
   }
