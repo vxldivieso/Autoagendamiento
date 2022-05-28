@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SchedulingService } from '../../../service/scheduling.service';
-import { DateService, DetailOrderService, ReagendarService } from '../../../service/detail.service';
+import { DateService, DetailOrderService, ModifyProductService, ReagendarService } from '../../../service/detail.service';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { ActivatedRoute } from '@angular/router';
 import  {trigger, style, transition, animate,state } from '@angular/animations';
@@ -44,7 +44,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   displayedColumns : string[] = ['date','bloques']
   dataSource!: MatTableDataSource<any>;
   //variables bloque horario
-  date !: string;
+  date = new Date();
   bloque !: number;
   blockSelect !: boolean;
   scheduledCorrect !: boolean;
@@ -65,6 +65,8 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   scheduledFrom:any;
   scheduledTo:any;
   dateToday = new Date() ;
+
+  dateForSelect = new Date();
 
   private destroy = new Subject<void>();
 
@@ -209,7 +211,6 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   //Transform json
   bloqueHorario(item:any){
     const transformJson = Object.keys(item).map(key => {
-      const myFormat= 'DD-MM-YYYY';
       const blocks = Object.keys(item[key]).map(key=>parseInt(key));
       return {
         date: key,
@@ -225,7 +226,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   }
 
   //Select bloque
-  select(date:string, bloque:number){
+  select(date:any, bloque:number){
     this.date = date;
     this.bloque = bloque;
     if (this.date,this.bloque){
@@ -267,9 +268,17 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   }
   //Message successfull
   messageSuccessfull(){
+    const myFormat= 'dddd, DD-MM-YYYY'
+    let block = [1,2].includes(this.bloque)? "09:00 am - 13:00 pm" : "13:00 pm - 19:00 pm"
+
     if(this.blockSelect == true){
-      Swal.fire(`Visita Seleccionada para el día`, 
-          `${this.date}`, 'info').then((result) => {
+      Swal.fire({
+        icon: 'info',
+        title: 'Visita seleccionada: ',
+        html: `<div><ol><li><span style = "font-weight: bold;">Día: </span> ${moment(this.date).format(myFormat)}</li> <br> <li><span style = "font-weight: bold;">Horario: </span> ${block}</li></ol></div>` ,
+        showDenyButton: true,
+        denyButtonText: `Cancelar`,
+      }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           Swal.fire({
@@ -309,7 +318,6 @@ export class SchedulingComponent implements OnInit, OnDestroy {
       title: 'Oops...',
       text: 'Por favor selecciona un bloque horario',
       showConfirmButton: true,
-      confirmButtonColor:'black',
       backdrop: true
     })
   }
@@ -334,7 +342,7 @@ export class NoDisponibilityComponent implements OnInit{
   pathParamToken !: Observable<string | null>
 
   kind: string = 'contact_support'
-  details: string = 'No encuentra disponibilidad. Contacto con ejecutivo.'
+  details: string = 'No encuentra disponibilidad'
   
   constructor(private dialog: MatDialog, private router : Router, private service : RouteService, private task:TaskService){}
   ngOnInit(): void {
@@ -475,17 +483,24 @@ export class ContactDialog{
  
 }) 
 export class ReagendarComponent implements OnInit{
-  minDate = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())
-  maxDate = new Date(2022, 11, 1); 
+  minDate = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+1)
+  maxDate = new Date(2022, 11, 31); 
   reagendarForm !: FormGroup;
   //params
-  order!: string | null;
-  token!: string | null;
+  order!: any;
+  token!: any;
 
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
-  constructor(private formBuilder: FormBuilder, private api: ReagendarService, private router : Router,
-    private dialog: MatDialog, private service: RouteService, date: DateAdapter<Date>) {
+
+  dateReagendar = new Date() ;
+  date : any;
+
+  requests : any;
+
+  constructor(private formBuilder: FormBuilder, private api : SchedulingService, 
+    private router : Router, private dialog: MatDialog, private service: RouteService, 
+    date: DateAdapter<Date>, private task : TaskService, private apiMod : ModifyProductService) {
       date.getFirstDayOfWeek = () => 1;
       date.setLocale('es');
 
@@ -507,24 +522,68 @@ export class ReagendarComponent implements OnInit{
       
     })
 
-    
+    this.getRequestId();
   }
+
+  getRequestId(){
+    if (isDevMode()) {
+      this.apiMod.getRequestDEV(this.order, this.token).subscribe((resp:any)=>{
+        this.requests = resp.request_id;
+      })
+    }
+    else
+      this.apiMod.getRequest(this.order, this.token).subscribe((resp:any)=>{
+        this.requests = resp.request_id;
+      })
+  }
+
+
+
+  transformDate(){
+    const myFormat= 'YYYY-MM-DD'
+    let obj = this.reagendarForm.value
+    this.date = moment(obj.date).format(myFormat);
+    return this.date
+  }
+
   onSubmit(){
+    this.transformDate();
+    
+    let message: string = `Fecha de contacto futuro: ${this.date}`;
     if(this.reagendarForm.valid){
-      this.api.postReagendar(this.reagendarForm.value)
-      .subscribe(
-        {
+      if (isDevMode()) {
+        this.api.postDelayDEV(this.date, this.order, this.token)
+        .subscribe(
+          {
+            next:(res)=>{
+              this.dialog.closeAll()
+              this.messageSuccessfull()
+              this.apiMod.putRequestDEV(message, this.requests, this.token)
+              .subscribe((resp:any)=>{
+                resp;
+              })
+            },
+            error: () =>{
+              this.messageError();
+            }
+        }
+      )}
+      else
+      this.api.postDelay(this.date, this.order, this.token)
+      .subscribe({
           next:(res)=>{
             this.dialog.closeAll()
             this.messageSuccessfull()
+            this.apiMod.putRequest(message, this.requests, this.token)
+              .subscribe((resp:any)=>{
+                resp;
+              })
           },
           error: () =>{
             this.messageError();
           }
-        }
-      )
-    }
-    
+        })
+    }    
   }
 
 //Message successfull

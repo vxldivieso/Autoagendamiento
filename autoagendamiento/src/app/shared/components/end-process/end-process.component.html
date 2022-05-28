@@ -1,109 +1,295 @@
-<span *ngIf="details"></span>
-
-<div class="row" >
+<div class="row" *ngIf="details" >
     <div class="col-md-3"></div>
     <div class="col-lg-6">
         <h1>Resumen de la orden</h1>
-        <div class="bg-pay p-3" *ngFor="let data of details.products" @enterState> 
+        <div class="bg-pay p-3"  @enterState> 
             <div class="container py-4">
-                <ng-container *ngIf="details.store =='Ripley' then ripley">
-                </ng-container>
-                <ng-container *ngIf="details.store =='BBQ GRILL' then bbqgrill">
-                </ng-container>
-                <ng-container *ngIf="details.store =='Mercado Ripley' then mercadoripley">
-                </ng-container>
-                <ng-container *ngIf="details.store =='ABCDIN' then abcdin">
-                </ng-container>
-                <ng-container *ngIf="details.store =='Paris' then paris">
-                </ng-container>
-                <ng-container *ngIf="details.store =='SODIMAC' then sodimac">
-                </ng-container>
-                <ng-container *ngIf="details.store =='Hites' then hites">
-                </ng-container>
-                <ng-container *ngIf="details.store =='Easy' then easy">
-                </ng-container>
-                <ng-container *ngIf="details.store =='Falabella' then falabella">
-                </ng-container>
-                <ng-container *ngIf="details.store =='CIC' then cic">
-                </ng-container>
-                <ng-container *ngIf="details.store =='PRUEBA' then prueba">
-                </ng-container>
+                <ng-container *ngIf="details.store =='Ripley' then ripley"></ng-container>
+                <ng-container *ngIf="details.store =='BBQ GRILL' then bbqgrill"></ng-container>
+                <ng-container *ngIf="details.store =='Mercado Ripley' then mercadoripley"></ng-container>
+                <ng-container *ngIf="details.store =='ABCDIN' then abcdin"></ng-container>
+                <ng-container *ngIf="details.store =='Paris' then paris"></ng-container>
+                <ng-container *ngIf="details.store =='SODIMAC' then sodimac"></ng-container>
+                <ng-container *ngIf="details.store =='Hites' then hites"></ng-container>
+                <ng-container *ngIf="details.store =='Easy' then easy"></ng-container>
+                <ng-container *ngIf="details.store =='Falabella' then falabella"></ng-container>
+                <ng-container *ngIf="details.store =='CIC' then cic"></ng-container>
+                <ng-container *ngIf="details.store =='La Polar' then lapolar"></ng-container>
+                <ng-container *ngIf="details.store =='PRUEBA' then prueba"></ng-container>
+                <ng-container *ngIf="details.store =='Globalmarket' then globalmarket"></ng-container>
+                <ng-container *ngIf="details.store =='INVAL' then globalmarket"></ng-container>
+                <ng-container *ngIf="details.store =='ABIKE' then ABIKE"></ng-container>
+                <ng-container *ngIf="details.store =='Favatex' then Favatex"></ng-container>
+                <ng-container *ngIf="details.store =='Decomuebles' then Decomuebles"></ng-container>
+                <ng-container *ngIf="details.store =='Topkitchen' then Topkitchen"></ng-container>
+                <ng-container *ngIf="details.store =='Mutrico' then Mutrico"></ng-container>
+                <ng-container *ngIf="details.store =='Ashley' then Ashley"></ng-container>
+                <ng-container *ngIf="details.store =='IKEA' then IKEA"></ng-container>
+                <ng-container *ngIf="details.store =='FALABELLA RECICLAJE' then FALABELLARECICLAJE"></ng-container>
+                <ng-container *ngIf="details.store =='Easton' then Easton"></ng-container>
+                <ng-container *ngIf="details.store =='Jumbo' then Jumbo"></ng-container>
+                <ng-container *ngIf="details.store =='Imperial' then Imperial"></ng-container>
+                <ng-container *ngIf="details.store =='Rembre' then Rembre"></ng-container>
+                <ng-container *ngIf="details.store =='Grupo Foster' then GrupoFoster"></ng-container>
+                <ng-container *ngIf="details.store =='NUEVA FORMA' then NUEVAFORMA"></ng-container>
+                <ng-container *ngIf="details.store =='SGS Servicios' then SGSServicios"></ng-container>
+                <ng-container *ngIf="details.store =='Bianchi' then Bianchi"></ng-container>
+                <ng-container *ngIf="details.store =='QIIIP' then QIIIP"> </ng-container>
+                <ng-container *ngIf="details.store =='Muebles Y Diseño' then MueblesYDiseno "></ng-container>
+                <ng-container *ngIf="details.store =='Faucon' then Faucon"></ng-container>
+                <ng-container *ngIf="details.store =='Más Muebles' then masmuebles"></ng-container>
+                <ng-container *ngIf="details.store =='Blue Bike' then BlueBike"></ng-container>
+                <ng-container *ngIf="details.store =='Rali' then Rali"></ng-container>
+                <ng-container *ngIf="details.store =='Nexus' then Nexus"></ng-container>
+                <ng-container *ngIf="details.store =='Gescorp' then Gescorp"></ng-container>
+                <ng-container *ngIf="details.store =='Rosen' then Rosen"></ng-container>
+                <ng-container *ngIf="details.store =='Medular' then Medular"></ng-container>
+                <ng-container *ngIf="details.store =='Sillas Y Sillas' then SillasYSillas"></ng-container>
+                <ng-container *ngIf="details.store =='Homy' then Homy"></ng-container>
+                <ng-container *ngIf="details.store =='Dorel Sports Chile' then DorelSportsChile"></ng-container>
+                <ng-container *ngIf="details.store =='DXB' then DXB"></ng-container>
+                <ng-container *ngIf="details.store =='Giant' then Giant"> </ng-container>
+                <ng-container *ngIf="details.store =='AREA DESIGN' then AREADESIGN"></ng-container>
+                <ng-container *ngIf="details.store =='SURTIVENTAS' then SURTIVENTAS"></ng-container>
+                <ng-container *ngIf="details.store =='Comercializadora Sikerei SPA' then ComercializadoraSikereiSPA"></ng-container>
+                <ng-container *ngIf="details.store =='Anaquel' then Anaquel"></ng-container>
+                <ng-container *ngIf="details.store =='Todoproductos' then Todoproductos"></ng-container>
+                <ng-container *ngIf="details.store =='OXFORD' then OXFORD"></ng-container>
+                <ng-container *ngIf="details.store =='Lider' then Lider"></ng-container>
+                <ng-container *ngIf="details.store =='Particular' then Particular"></ng-container>
+                <ng-container *ngIf="details.store =='Lahsen' then Lahsen"> </ng-container>
+                <ng-container *ngIf="details.store =='Acuenta' then Acuenta"></ng-container>
+                <ng-container *ngIf="details.store =='Groupon' then Groupon"></ng-container>
+                <ng-container *ngIf="details.store =='Prisa' then Prisa"></ng-container>
+                <ng-container *ngIf="details.store =='Johnson´S' then JohnsonS"></ng-container>
+                <ng-container *ngIf="details.store =='Corona' then Corona"></ng-container>
             </div>
-            
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="fw-500">Tipo Servicio:</span> <span class="right">{{data.service}}</span> 
+        <div *ngFor="let data of details.products">
+            <div class="d-flex justify-content-between mt-4" > 
+                <span class="fw-500">Tipo Servicio:</span> <span class="right">{{data.service}}</span> 
+            </div>
+            <div class="d-flex justify-content-between mt-4"> 
+                <span class="fw-500">Fecha agendada:</span> <span class="right">{{dates(savedDate && savedDate.date)}}</span> 
+            </div>
+            <div class="d-flex justify-content-between mt-4"> 
+                <span class="fw-500">Horario:</span> <span class="right">{{savedDate && savedDate.block}}</span> 
+            </div>
         </div>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="fw-500">Fecha agendada:</span> <span class="right">{{dates(savedDate && savedDate.date)}}</span> 
-        </div>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="fw-500">Horario:</span> <span class="right">{{savedDate && savedDate.block}}</span> 
-        </div>
+        
         <br>
         <hr>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="lh-16 fw-500">Número de Orden:</span> <span class="right">{{details.order_id}}</span> 
-        </div>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="lh-16 fw-500">Producto:</span> <span class="right">{{data.product_name}}</span> 
-        </div>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="lh-16 fw-500">Código Producto:</span> <span class="right">{{data.sku}}</span> 
-        </div>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="lh-16 fw-500">Retail:</span> <span class="right">{{details.store}}</span> 
-        </div>
+        <div *ngFor="let data of details.products">
+            <div class="d-flex justify-content-between mt-4"> 
+                <span class="lh-16 fw-500">Número de Orden:</span> <span class="right">{{details.order_id}}</span> 
+            </div>
+            <div class="d-flex justify-content-between mt-4" > 
+                <span class="lh-16 fw-500">Producto:</span> <span class="right">{{data.product_name}}</span> 
+            </div>
+            <div class="d-flex justify-content-between mt-4" > 
+                <span class="lh-16 fw-500">Código Producto:</span> <span class="right">{{data.sku}}</span> 
+            </div>
+            <div class="d-flex justify-content-between mt-4"> 
+                <span class="lh-16 fw-500">Retail:</span> <span class="right">{{details.store}}</span> 
+            </div>
+        </div >
+        
         <br>
-        <hr *ngIf="clientData">
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="fw-500">Nombre Titular:  </span> <span class="right">{{clientData.name}}</span> 
+        <hr >
+        <div *ngIf="clientData">
+            <div class="d-flex justify-content-between mt-4"> 
+                <span class="fw-500">Nombre Titular:  </span> <span class="right">{{clientData.name}}</span> 
+            </div>
+            <div class="d-flex justify-content-between mt-4"> 
+                <span class="fw-500">Dirección: </span> <span class="right">{{clientData.address}}</span> 
+            </div>
+            <div class="d-flex justify-content-between mt-4"> 
+                <span class="fw-500">Comuna: </span> <span class="right">{{clientData.county}}</span> 
+            </div>
+            <div class="d-flex justify-content-between mt-4"> 
+                <span class="fw-500">Referencias: </span> <span class="right">{{clientData.references}}</span> 
+            </div>
         </div>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="fw-500">Dirección: </span> <span class="right">{{clientData.address}}</span> 
-        </div>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="fw-500">Comuna: </span> <span class="right">{{clientData.county}}</span> 
-        </div>
-        <div class="d-flex justify-content-between mt-4"> 
-            <span class="fw-500">Referencias: </span> <span class="right">{{clientData.references}}</span> 
-        </div>
+        
     </div></div>
     <div class="col-md-3"></div>
 </div>
 
 <ng-template #ripley>
-    <img src="https://theme.zdassets.com/theme_assets/9853675/0191f6eb785e2ea8fa5b8e94b7f596580598135a.png" alt="" width="50" height="24">
+    <img src="https://theme.zdassets.com/theme_assets/9853675/0191f6eb785e2ea8fa5b8e94b7f596580598135a.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #bbqgrill>
-    <img src="https://bbqgrill.cl/wp-content/uploads/2019/11/logo-bbq-grill-scaled.png" alt="" width="50" height="24">
+    <img src="https://bbqgrill.cl/wp-content/uploads/2019/11/logo-bbq-grill-scaled.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #mercadoripley>
-    <img src="https://minisitios.ripley.cl/minisitios/estatico/mercado-ripley/conocenos/img/logo-market.png" alt="" width="50" height="24">
+    <img src="https://minisitios.ripley.cl/minisitios/estatico/mercado-ripley/conocenos/img/logo-market.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #abcdin>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/AbcdinLogo.svg/2560px-AbcdinLogo.svg.png" alt="" width="50" height="24">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/AbcdinLogo.svg/2560px-AbcdinLogo.svg.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #paris>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Logo_Paris_Cencosud.png" alt="" width="50" height="24">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Logo_Paris_Cencosud.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #sodimac>
     <img class="d-flex" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Logotipo_Sodimac.svg/3000px-Logotipo_Sodimac.svg.png" alt="" width="200" height="24">
 </ng-template>
 <ng-template #hites>
-    <img src="https://dx23yqi1tewca.cloudfront.net/images/poiLogo/2e88fd76-e507-4ebc-b2b7-b5b0f00154a5.png" alt="" width="50" height="24">
+    <img src="https://dx23yqi1tewca.cloudfront.net/images/poiLogo/2e88fd76-e507-4ebc-b2b7-b5b0f00154a5.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #easy>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Easy-Logo.svg/1200px-Easy-Logo.svg.png" alt="" width="50" height="24">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Easy-Logo.svg/1200px-Easy-Logo.svg.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #falabella>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Falabella.svg/1280px-Falabella.svg.png" alt="" width="50" height="24">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Falabella.svg/1280px-Falabella.svg.png" alt="" width="100" height="24">
 </ng-template>
 <ng-template #cic>
-    <img src="https://media-exp1.licdn.com/dms/image/C4E0BAQHgQlul2NV9TA/company-logo_200_200/0/1519906928287?e=2147483647&v=beta&t=FIfQ5YQCshOpuIZuHCWXTOJy2vcOwTdaWwCGGvYn9HM" alt="" width="50" height="24">
+    <img src="https://media-exp1.licdn.com/dms/image/C4E0BAQHgQlul2NV9TA/company-logo_200_200/0/1519906928287?e=2147483647&v=beta&t=FIfQ5YQCshOpuIZuHCWXTOJy2vcOwTdaWwCGGvYn9HM" alt="" width="100  " height="24">
+</ng-template>
+<ng-template #lapolar>
+    <img src="https://dx23yqi1tewca.cloudfront.net/images/poiLogo/7583d129-a15c-4943-b743-a41590535b01.png" alt="" width="100  " height="24">
 </ng-template>
 <ng-template #prueba>
-    <img src="https://maydayservicios.cl/wp-content/uploads/2019/05/Logo_Mayday0.png" alt="" width="50" height="24">
+    <img src="https://maydayservicios.cl/wp-content/uploads/2019/05/Logo_Mayday0.png" alt="" width="100" height="24">
 </ng-template>
+<ng-template #globalmarket>
+    <img src="https://www.globalmarket.cl/wp-content/uploads/2020/06/logo-3.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #ABIKE>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Favatex>
+    <img src="https://www.favatex.com/wp-content/uploads/2021/09/cropped-Logo-favatex_png.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Decomuebles>
+    <img src="https://decomuebles.cl/wp-content/uploads/2021/02/Logo-Decomuebles.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Topkitchen>
+    <img src="https://www.vao.cl/wp-content/uploads/2018/07/top-kitchen.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Mutrico>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Ashley>
+    <img src="https://cintl.rencdn.com/chilespanish/web/cms/userfiles/images/logo-new(1).png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #IKEA>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ikea_logo.svg/800px-Ikea_logo.svg.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #FALABELLARECICLAJE>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Falabella.svg/1280px-Falabella.svg.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Easton>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Jumbo>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Logo_Jumbo_Cencosud.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Imperial>
+    <img src="https://telefonosparareclamoscl.com/wp-content/uploads/2021/03/Imperial-300x150.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Rembre>
+    <img src="https://rembre.cl/app/uploads/2020/10/0-removebg-preview-copia-1.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #GrupoFoster>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #NUEVAFORMA>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #SGSServicios>
+    <img src="https://www.sgs.cl/img/og-image-logo.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Bianchi>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Bianchi_logo.svg/2560px-Bianchi_logo.svg.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #QIIIP>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #MueblesYDiseno>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Faucon>
+    <img src="https://cdn.shopify.com/s/files/1/0538/2858/3604/files/Logo_Cuadrado_Faucon_Fondo_Blanco_1014x.png?v=1626358178" alt="" width="100" height="24">
+</ng-template>
+<ng-template #masmuebles>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #BlueBike>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Rali>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Nexus>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Gescorp>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Rosen>
+    <img src="https://www.camaratemuco.cl/wp-content/uploads/2019/06/ro.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Medular>
+    <img src="https://cdn.shopify.com/s/files/1/2596/6404/files/logo_0087f1f0-2f51-47dc-ad66-a875423a86f1_450x.png?v=1546365640" alt="" width="100" height="24">
+</ng-template>
+<ng-template #SillasYSillas>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Homy>
+    <img src="https://static.wikia.nocookie.net/logopedia/images/3/37/Homy.png/revision/latest?cb=20200406000824&path-prefix=es" alt="" width="100" height="24">
+</ng-template>
+<ng-template #DorelSportsChile>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #DXB>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Giant>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #AREADESIGN>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #SURTIVENTAS>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #ComercializadoraSikereiSPA>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Anaquel>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Todoproductos>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #OXFORD>
+    <img src="https://www.hites.com/on/demandware.static/-/Sites-mastercatalog_HITES/default/dw1f45da20/images/inpages/oxford/Oxford-Logo-600x154.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Lider>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/L%C3%ADder_logo.svg" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Particular>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Lahsen>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Acuenta>
+    <img src="https://www.america-retail.com/static//2013/03/acuenta.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Groupon>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Groupon_Logo.svg/2560px-Groupon_Logo.svg.png" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Prisa>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #JohnsonS>
+    <img src="" alt="" width="100" height="24">
+</ng-template>
+<ng-template #Corona>
+    <img src="https://dx23yqi1tewca.cloudfront.net/images/poiLogo/273e4e84-7878-459d-9488-7cfcb5988671.png" alt="" width="100" height="24">
+</ng-template>
+
+
 
 
 <!--

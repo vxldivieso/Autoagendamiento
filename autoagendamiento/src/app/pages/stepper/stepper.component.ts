@@ -8,6 +8,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DetailOrderService } from 'src/app/service/detail.service';
 import * as moment from 'moment';
+import { TaskService } from 'src/app/service/task.service';
 
 
 //Stepper component
@@ -38,19 +39,33 @@ export class StepperComponent implements OnInit{
   details : any;
   clientData : any;
   scheduled_at:any;
+  requestId:any;
+  requestOrder:any;
   order_visit_status : any;
   order_status:any;
   order!: any;
   token!: string;
+
+  //task var
+  status: string = 'all';
+  kindTask : any;
+  detailsTask : any;
+  taskOrder : any;
+  completed_at : any;
+
   dates = (value:string) => {return moment(value).format('dddd, DD-MM-YYYY')}
-  constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, 
-    public dialog: MatDialog,  private route : ActivatedRoute, private api: DetailOrderService, private router : Router) {
+  constructor(
+    private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, 
+    public dialog: MatDialog,  private route : ActivatedRoute, 
+    private api: DetailOrderService, private router : Router, private task : TaskService) {
+
       this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
 
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
+
     }
   
   ngOnInit(): void {
@@ -59,6 +74,7 @@ export class StepperComponent implements OnInit{
     this.schedulingFormGroup = this._formBuilder.group({});
     this.endProcessFormGroup = this._formBuilder.group({});
     this.getOrderId()
+    this.getTask()
   }
 
   getOrderId(){
@@ -69,18 +85,73 @@ export class StepperComponent implements OnInit{
         this.clientData = resp.contact
         this.order_status = resp.order_status
         this.order_visit_status = resp.order_visit_status;
-        this.processEnd()
+        this.requestId = resp.request_id;
+        this.statusOrder();
+        this.principalView();
       })
     }
     else
       this.api.getOrderId(this.order, this.token).subscribe((resp:any)=>{
         this.scheduled_at = resp.scheduled_at;
         this.details = resp
+        this.clientData = resp.contact
+        this.order_status = resp.order_status
         this.order_visit_status = resp.order_visit_status;
-        this.processEnd()
+        this.requestId = resp.request_id;
+        this.statusOrder();
+        this.principalView();
       })
   }
 
+  getRequestOrder(){
+    if (isDevMode()) {
+      this.api.getRequestOrderDEV(this.requestId, this.token).subscribe((resp:any)=>{
+        this.requestOrder = resp;
+      })
+    }
+    else
+    this.api.getRequestOrder(this.requestId, this.token).subscribe((resp:any)=>{
+      this.requestOrder = resp;
+    })
+
+  }
+
+  getTask(){
+    let task = '';
+    let kind = '';
+    let details = '';
+    let completed_at = '';
+    if (isDevMode()) {
+      this.task.getTaskDEV(this.status, this.order, this.token).subscribe((res: any) =>{
+        res.forEach(function(res: any) {
+          task = res
+          kind = res.kind
+          details = res.details
+          completed_at = res.completed_at
+        })
+        this.taskOrder = task;
+        this.kindTask = kind
+        this.detailsTask = details
+        this.completed_at = completed_at
+
+        console.log(this.taskOrder);
+      })
+    }
+    else
+    this.task.getTask(this.status, this.order, this.token).subscribe((res: any) =>{
+      res.forEach(function(res: any) {
+        task = res
+        kind = res.kind
+        details = res.details
+        completed_at = res.completed_at
+      })
+      this.taskOrder = task;
+      this.kindTask = kind
+      this.detailsTask = details
+      this.completed_at = completed_at
+    })
+  }
+ /*
   processEnd(){
     if(this.order_visit_status == 'in_campaing'){
       this.move(0)
@@ -94,6 +165,59 @@ export class StepperComponent implements OnInit{
     if(this.order_visit_status == 'wait_for_schedule'){
       this.router.navigate([`${this.order}/${this.token}/contact/save`])
     }
+    if (this.scheduled_at != undefined){
+      this.stepper.linear = false;
+      this.move(3)
+    }
+  }*/
+
+  statusOrder(){
+    if(this.order_visit_status == 'in_campaing'){
+      this.move(0);
+
+      if(this.kindTask == 'need_correction' && this.detailsTask == 'Necesita corrección de datos' && this.completed_at != null ){
+        this.stepper.linear = false;
+        this.move(2)    
+      }
+      
+      if(this.kindTask == 'contact_support' && this.detailsTask == 'Necesita contactarse con un ejecutivo.' && this.completed_at != null){
+        this.stepper.linear = false;
+        this.move(2)
+      }
+      if(this.kindTask == 'contact_support' && this.detailsTask == 'No encuentra disponibilidad' && this.completed_at != null){
+        this.stepper.linear = false;
+        this.move(2)
+      }
+    }
+
+    if(this.order_visit_status == 'need_correction'){
+      if(this.completed_at == null ){
+        this.router.navigate([`${this.order}/${this.token}/contact/data`])      
+      }
+    }
+
+    if(this.order_visit_status == 'contact_support'){
+      if(this.kindTask == 'contact_support'){
+        if(this.detailsTask == 'Campaña no ejecutada'){
+          this.stepper.linear = false;
+          this.move(0);
+        }
+        if(this.detailsTask == 'Necesita contactarse con un ejecutivo.' && this.completed_at == null){
+          this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
+        }
+        if(this.detailsTask == 'No encuentra disponibilidad' && this.completed_at == null){
+          this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
+        }
+      }
+     
+    }
+    
+    if(this.order_visit_status == 'wait_for_schedule'){
+      this.router.navigate([`${this.order}/${this.token}/contact/save`])
+    }
+  }
+
+  principalView(){
     if (this.scheduled_at != undefined){
       this.stepper.linear = false;
       this.move(3)

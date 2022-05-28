@@ -28,7 +28,7 @@
                     <mat-form-field class="col-md-6 "  appearance="fill">
                         <mat-label for="phone2" class="form-label">Teléfono 2 </mat-label>
                         <span matPrefix>+56 &nbsp;</span>
-                        <input required matInput type="tel" id="phone" placeholder="(9)XXX-XX-XXX" name="phone2" [(ngModel)]="clientData.phone2" pattern="([0-9]{9})">
+                        <input matInput type="tel" id="phone" placeholder="(9)XXX-XX-XXX" name="phone2" [(ngModel)]="clientData.phone2" pattern="([0-9]{9})">
                         <mat-error *ngIf="clientForm.get('phone2')?.invalid">Ingrese un número con 9 dígitos</mat-error>
                     </mat-form-field>
                     <!--Direccion-->

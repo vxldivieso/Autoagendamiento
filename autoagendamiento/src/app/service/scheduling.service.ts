@@ -59,4 +59,22 @@ export class SchedulingService{
         .set('Type-content','aplication/json').set('token',token);
         return this.http.put<Agendamiento>(`v3/orders/${order}/schedule`,{date,block},{headers:header})
     }
+
+    postDelay(date: string, order:number, token:string){
+        let header = new HttpHeaders()
+        .set('content-type','application/json').set('token',token);
+
+        return this.http.post(`${this.apiURL}/v3/orders/${order}/delay_autoscheduling`,{date:date},{
+            headers:header
+        }) 
+    }
+    
+    postDelayDEV(date: string, order:number, token:string){
+        let header = new HttpHeaders()
+        .set('content-type','application/json').set('token',token);
+
+        return this.http.post(`v3/orders/${order}/delay_autoscheduling`,{date:date},{
+            headers:header
+        }) 
+    }
 }

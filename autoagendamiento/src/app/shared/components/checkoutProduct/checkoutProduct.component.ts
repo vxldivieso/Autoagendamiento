@@ -1,8 +1,9 @@
-import { Component, isDevMode, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, isDevMode, OnInit, Output, ViewChild } from '@angular/core';
 import {MatStepper, StepperOrientation} from '@angular/material/stepper';
 import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { DateService } from 'src/app/service/detail.service';
 import { ActivatedRoute } from '@angular/router';
+import { DateFormProduct } from '../datepicker/datepicker.component';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./checkoutProduct.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class CheckoutProductComponent implements OnInit {
+export class CheckoutProductComponent implements OnInit{
   form!: FormGroup;
   subForm!: FormGroup;
 
@@ -38,6 +39,7 @@ export class CheckoutProductComponent implements OnInit {
     this.form.addControl("checkout", this.subForm);
     this.getDeliveryDate()
   }
+  
 
   getDeliveryDate(){
     if (isDevMode()) {

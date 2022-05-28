@@ -36,6 +36,23 @@ export class DetailOrderService{
             })))
     }
 
+    getRequestOrder(request_id:string, token:string): Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.put<any>(`${this.apiURL}/v3/requests/${request_id}`,{headers:header})
+    }
+
+    getRequestOrderDEV(request_id:string, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        return this.http.get('v3/requests/'+request_id,{
+            headers:header
+        })
+
+    }
+
     getOrderDEV(order:string, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
@@ -65,7 +82,7 @@ export class DetailOrderService{
                 console.log('Client Error');
             }else{
                 console.log('Service Error');
-                this.router.navigate(['error'])
+                this.router.navigate(['error']) 
             }
         }else{
             console.log('Other Type');
@@ -119,9 +136,6 @@ export class DateService{
                 return res;
             })))
     }
-
-
-
 } 
 
 @Injectable({
@@ -151,6 +165,17 @@ export class ModifyProductService{
             (map((res:any)=>{
                 return res;
             })))
+    }
+    //Put message DEV
+    putRequestDEV(data:string, request_id:number, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('content-type','application/json').set('token',token);
+
+        return this.http.put<any>(`v3/requests/${request_id}/log`,{message:data},{headers:header}).pipe(
+            (map((res:any)=>{
+                return res;
+            })))
+
     }
     //Put img Modify Product
     putRequestIMG(data: string, img:string, request_id:number, token:string):Observable<any>{
@@ -201,17 +226,7 @@ export class ModifyProductService{
             headers:header
         })
     }
-    //Put message DEV
-    putRequestDEV(data:string, request_id:number, token:string):Observable<any>{
-        let header = new HttpHeaders()
-        .set('content-type','application/json').set('token',token);
-
-        return this.http.put<any>(`v3/requests/${request_id}/log`,{message:data},{headers:header}).pipe(
-            (map((res:any)=>{
-                return res;
-            })))
-
-    }
+    
     
    
 }

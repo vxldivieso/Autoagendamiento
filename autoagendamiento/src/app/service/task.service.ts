@@ -1,15 +1,43 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
-import { map } from "rxjs";
+import { EventEmitter, Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
+import { map, Observable, Subject } from "rxjs";
 
 @Injectable({
     providedIn:'root'
 })
 export class TaskService{
-    productModify : boolean = false;
-    serviceModify : boolean = false;
+    public productModify = new Subject<boolean>();
+    public serviceModify = new Subject<boolean>();
+
+    valueProduct$ = this.productModify.asObservable();
+    valueService$ = this.serviceModify.asObservable();
+    
     private apiURL='https://api.demo.maydayservicios.com'
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient){}
+
+    sendValue(message: boolean) {
+        this.productModify.next(message);
+        this.serviceModify.next(message);
+    }
+
+    getTask( status:string, order:string, token:string): Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        let parameters = {"status": status};
+        const params = new HttpParams({ fromObject: parameters });
+
+        return this.http.get<any>(`${this.apiURL}/v3/orders/${order}/task`,{headers:header, params:params})
+    }
+
+    getTaskDEV( status:string, order:string, token:string): Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+
+        let parameters = {"status": status};
+        const params = new HttpParams({ fromObject: parameters });
+
+        return this.http.get<any>(`v3/orders/${order}/task`,{headers:header, params:params})
     }
 
     postTask(kind:string, details:string, order:string, token:string){

@@ -16,3 +16,15 @@ export class ErrorComponent implements OnInit{
         
     }
 }
+
+@Component({
+  selector: 'error-404',
+  templateUrl: './404.component.html',
+  styleUrls: ['./errores.component.scss'],
+  
+})
+export class Error404Component implements OnInit{
+    ngOnInit(): void {
+        
+    }
+}

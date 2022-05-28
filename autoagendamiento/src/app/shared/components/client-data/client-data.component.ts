@@ -1,15 +1,16 @@
-import { Component, isDevMode, OnInit} from '@angular/core';
+import { AfterViewInit, Component, isDevMode, OnInit, ViewChild} from '@angular/core';
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router'; 
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DetailOrderService, ModifyProductService } from 'src/app/service/detail.service';
-import  {trigger, style, transition, animate,state } from '@angular/animations';
+import  {trigger, style, transition, animate,state, keyframes } from '@angular/animations';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/service/task.service';
+import { EditProductComponent, EditServiceComponent } from '../detailOrder/detailOrder.component';
  
 @Component({ 
   selector: 'client-data',
@@ -29,7 +30,7 @@ import { TaskService } from 'src/app/service/task.service';
   ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 }) 
-export class ClientDataComponent implements OnInit {
+export class ClientDataComponent implements OnInit{
   //form control stepper
   form !: FormGroup;
   //form builder html 
@@ -37,6 +38,7 @@ export class ClientDataComponent implements OnInit {
   //variable que recibe los datos
   clientData:any;
   order_visit_status : any;
+  data: string = '';
 
   order!: string;
   token!: string;
@@ -47,13 +49,22 @@ export class ClientDataComponent implements OnInit {
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
   requests : any;
-  requestsLog:any
+  requestsLog:any;
 
+  //task var
+  status: string = 'pending';
+  kindTask : any;
+  detailsTask : any;
+  taskOrder : any;
+
+  
   private destroy = new Subject<void>();
+
   constructor( private formBuilder: FormBuilder,
-    private api: DetailOrderService, private ctrlContainer: FormGroupDirective
-    ,private route : ActivatedRoute, private cdk : CdkStepper,  private service : RouteService,  private apiMod: ModifyProductService,
-    private router : Router) {
+    private api: DetailOrderService, private ctrlContainer: FormGroupDirective,
+    private route : ActivatedRoute, private cdk : CdkStepper,  
+    private service : RouteService,  private apiMod: ModifyProductService,
+    private router : Router, private task : TaskService) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
      }
@@ -64,7 +75,7 @@ export class ClientDataComponent implements OnInit {
       rut: [''],
       email: [''], 
       phone: ['',[Validators.minLength(9), Validators.maxLength(9)]],
-      phone2: ['', Validators.compose([Validators.required,Validators.minLength(9), Validators.maxLength(9)])],
+      phone2: ['', Validators.compose([Validators.minLength(9), Validators.maxLength(9)])],
       address: [''],
       county: [''],
       references: ['', Validators.required]
@@ -72,8 +83,8 @@ export class ClientDataComponent implements OnInit {
     this.form = this.ctrlContainer.form;
     this.form.addControl("clientData", this.clientForm);
     this.getClientData();
+    this.getTask()
     
-
     //route order
     this.route.paramMap
     .pipe(
@@ -107,19 +118,56 @@ export class ClientDataComponent implements OnInit {
       })
   }
 
+  getTask(){
+    let task = '';
+    let kind = '';
+    let details = '';
+    if (isDevMode()) {
+      this.task.getTaskDEV(this.status, this.order, this.token).subscribe((res: any) =>{
+        res.forEach(function(res: any) {
+          task = res
+          kind = res.kind
+          details = res.details
+        })
+        this.taskOrder = task;
+        this.kindTask = kind
+        this.detailsTask = details
+      })
+    }
+    else
+    this.task.getTask(this.status, this.order, this.token).subscribe((res: any) =>{
+      res.forEach(function(res: any) {
+        task = res
+        kind = res.kind
+        details = res.details
+      })
+      this.taskOrder = task;
+      this.kindTask = kind
+      this.detailsTask = details
+    })
+  }
 
   updateClientContact(){
     this.clientForm.controls['phone2'].patchValue(this.clientData.phone2);
     this.clientForm.controls['references'].patchValue(this.clientData.references);
-    
+
     if (isDevMode()) {
       if(this.clientForm.valid){
+        Object.keys(this.clientForm.value).forEach(res =>{
+          if (this.clientForm.value[res] == ''){
+            delete this.clientForm.value[res]
+          }
+        })
         this.api.putContactDEV(this.clientForm.value, this.order, this.token)
         .subscribe({
           next:(res)=>{
+            if(this.kindTask == 'need_correction'){
+              this.messageSuccessfull();
+              this.router.navigate([`${this.order}/${this.token}/contact/data`])
+            }
+            else
             this.messageSuccessfull();
-              this.cdk.next()
-            
+            this.cdk.next()
           },
           error: () =>{
             this.messageError();
@@ -129,9 +177,19 @@ export class ClientDataComponent implements OnInit {
     }
     else
       if(this.clientForm.valid){
+        Object.keys(this.clientForm.value).forEach(res =>{
+          if (this.clientForm.value[res] == ''){
+            delete this.clientForm.value[res]
+          }
+        })
         this.api.putContact(this.clientForm.value, this.order, this.token)
         .subscribe({
           next:(res)=>{
+            if(this.kindTask == 'need_correction'){
+              this.messageSuccessfull();
+              this.router.navigate([`${this.order}/${this.token}/contact/data`])
+            }
+            else
             this.messageSuccessfull();
             this.cdk.next()
           },
@@ -142,34 +200,7 @@ export class ClientDataComponent implements OnInit {
       }
   }
 
-  getRequestId(){
-    if (isDevMode()) {
-      this.apiMod.getRequestDEV(this.order, this.token).subscribe((resp:any)=>{
-        this.requests = resp.request_id;
-        this.getRequestLog()
-      })
-    }
-    else
-      this.apiMod.getRequest(this.order, this.token).subscribe((resp:any)=>{
-        this.requests = resp.request_id;
-      })
-  }
-
-  getRequestLog(){
-    
-    if (isDevMode()) {
-      this.apiMod.getRequestLogDEV(this.requests,this.token).subscribe((resp:any)=>{
-        this.requestsLog = resp
-        console.log(this.requestsLog);
-        
-      })
-    }
-    else
-    this.apiMod.getRequestLog(this.requests,this.token).subscribe((resp:any)=>{
-      this.requestsLog = resp;
-    })
-
-  }
+ 
 
 
   //Message Successfull
@@ -238,10 +269,17 @@ export class WrongdataComponent implements OnInit {
   direccion!:string;
   comuna!:string;
   referencias!:string;
-
+  
   //vars task
   kind: string = 'need_correction'
-  details: string = 'Necesita corrección de datos de contacto.'
+  details: string = 'Necesita corrección de datos'
+
+  //task var
+  status: string = 'pending';
+  kindTask : any;
+  detailsTask : any;
+  taskOrder : any;
+
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private api : ModifyProductService,
     private router : Router, private service : RouteService, private task:TaskService) {}
   ngOnInit(): void {
@@ -264,6 +302,7 @@ export class WrongdataComponent implements OnInit {
       
     })
     this.getRequestId()
+    this.getTask()
   }
 
   getRequestId(){
@@ -276,6 +315,35 @@ export class WrongdataComponent implements OnInit {
       this.api.getRequest(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
         this.requests = resp.request_id;
       })
+  }
+  
+  getTask(){
+    let task = '';
+    let kind = '';
+    let details = '';
+    if (isDevMode()) {
+      this.task.getTaskDEV(this.status, this.orderParam, this.tokenParam).subscribe((res: any) =>{
+        res.forEach(function(res: any) {
+          task = res
+          kind = res.kind
+          details = res.details
+        })
+        this.taskOrder = task;
+        this.kindTask = kind
+        this.detailsTask = details
+      })
+    }
+    else
+    this.task.getTask(this.status, this.orderParam, this.tokenParam).subscribe((res: any) =>{
+      res.forEach(function(res: any) {
+        task = res
+        kind = res.kind
+        details = res.details
+      })
+      this.taskOrder = task;
+      this.kindTask = kind
+      this.detailsTask = details
+    })
   }
 
   postTaskDEV(){
@@ -315,6 +383,22 @@ export class WrongdataComponent implements OnInit {
         if (this.referencias != null ){
           message += `Referencias: ${this.referencias} \n`
         }
+        if (this.kindTask != 'need_correction' && this.detailsTask != 'Necesita corrección de datos'){
+          this.postTask();
+          this.api.putRequestDEV(message, this.requests, this.tokenParam)
+              .subscribe({
+                next:(res)=>{
+                  res
+                  this.dialog.closeAll();
+                  this.messageSuccessfull();
+                  this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
+                },
+                error: () =>{
+                  this.messageError();
+                }
+              }) 
+        }
+        else
         this.api.putRequestDEV(message, this.requests, this.tokenParam)
               .subscribe({
                 next:(res)=>{
@@ -322,14 +406,11 @@ export class WrongdataComponent implements OnInit {
                   this.dialog.closeAll();
                   this.messageSuccessfull();
                   this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
-                  this.postTaskDEV()
                 },
                 error: () =>{
                   this.messageError();
                 }
               }) 
-        
-        
       }
     }
     else
@@ -347,6 +428,22 @@ export class WrongdataComponent implements OnInit {
         if (this.referencias != null ){
           message += `Referencias: ${this.referencias} \n`
         }
+        if (this.kindTask != 'need_correction' && this.detailsTask != 'Necesita corrección de datos'){
+          this.postTask();
+          this.api.putRequest(message, this.requests, this.tokenParam)
+              .subscribe({
+                next:(res)=>{
+                  res
+                  this.dialog.closeAll();
+                  this.messageSuccessfull();
+                  this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
+                },
+                error: () =>{
+                  this.messageError();
+                }
+              }) 
+        }
+        else
         this.api.putRequest(message, this.requests, this.tokenParam)
               .subscribe({
                 next:(res)=>{
@@ -354,7 +451,6 @@ export class WrongdataComponent implements OnInit {
                   this.dialog.closeAll();
                   this.messageSuccessfull();
                   this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
-                  this.postTask();
                 },
                 error: () =>{
                   this.messageError();
@@ -404,8 +500,6 @@ messageError(){
     title: 'Ups.. Algo ocurrió'
   })
 }
-
-
 }
 
 @Component({
@@ -413,10 +507,7 @@ messageError(){
   template: `
   <div class="d-grid d-md-flex justify-content-md-center">
     <button mat-raised-button color="accent" (click)="openDialog()">Datos Incorrectos</button>
-  </div>
-  
-  
-  `,
+  </div>`,
   styleUrls: ['./wrong.component.scss'],
 })
 export class WrongDataDialog{

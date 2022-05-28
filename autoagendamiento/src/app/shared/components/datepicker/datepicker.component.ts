@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, isDevMode, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, isDevMode, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { DateService } from '../../../service/detail.service';
 import Swal from 'sweetalert2';
@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment'
 import { DateAdapter } from '@angular/material/core';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
+import { CheckoutProductComponent } from '../checkoutProduct/checkoutProduct.component';
 
 
 @Component({
@@ -40,6 +41,8 @@ export class DateFormProduct{
   //params
   order!: any;
   token!: string;
+
+  @ViewChild (CheckoutProductComponent) child !: CheckoutProductComponent;
   
   constructor(private formBuilder: FormBuilder, 
     private api: DateService, public datepipe: DatePipe, private route : ActivatedRoute, date: DateAdapter<Date>){
@@ -69,7 +72,11 @@ export class DateFormProduct{
       .subscribe((res:any)=>{
         this.delivery_date = res.delivery_date;
       })
-  } 
+  }
+
+  hideRadioButton(){
+    this.child.subForm.controls['optionselect'].disable();
+  }
 
   transformDate(){
     const myFormat= 'YYYY-MM-DD'

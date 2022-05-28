@@ -1,4 +1,4 @@
-import { Component, OnInit, isDevMode, OnDestroy } from '@angular/core';
+import { Component, OnInit, isDevMode, OnDestroy, ViewChild } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { DetailOrderService, ModifyProductService} from 'src/app/service/detail.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { map, Observable, ReplaySubject, Subject, takeUntil } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TaskService } from 'src/app/service/task.service';
@@ -35,15 +35,13 @@ export class DetailComponent implements OnInit, OnDestroy {
   order!: any;
   token!: string;
   
-  //vars task
-  kind: string = 'need_correction'
-  details: string = 'Necesita corrección de datos'
   private destroy = new Subject<void>();
   constructor(private api: DetailOrderService, private route : ActivatedRoute, private service : RouteService,
     private task: TaskService ) {
     this.order = this.route.snapshot.params['order'];
     this.token = this.route.snapshot.params['token'];
   }
+
   ngOnInit(): void {
     this.getOrderId()
 
@@ -74,6 +72,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     if (isDevMode()) {
       this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{
         this.detailsOrder = resp;
+        
       })
     }
     else
@@ -81,26 +80,7 @@ export class DetailComponent implements OnInit, OnDestroy {
         this.detailsOrder = resp;
       })
   }
-  postTask(){
-     if(this.task.productModify == true || this.task.serviceModify == true){
-          if (isDevMode()) {
-            this.task.postTaskDEV(this.kind, this.details, this.order, this.token).subscribe({
-              next:(res)=>{
-                res
-              }
-            })
-          }
-          this.task.postTask(this.kind, this.details, this.order, this.token).subscribe({
-            next:(res)=>{
-              res
-            }
-          })
-        }
-  }
 
-  
-
-  
   
 }
 
@@ -113,22 +93,36 @@ export class DetailComponent implements OnInit, OnDestroy {
   styleUrls: ['./editproduct/editProduct.component.scss']
 })
 export class EditProductComponent implements OnInit{
+
   changeProductForm !: FormGroup;
   requests : any;
-  order!: number;
-  token!: string;
 
+  //params
+  order!: any;
+  token!: any;
+  
   orderParam!: any;
   tokenParam!: any;
   
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
-
+  //vars form
   name!:string;
   sku!: string;
   img?:string | void;
   base64Output !: string;
   fileSelected!: Blob
+
+  //task var
+  status: string = 'pending';
+  kindTask : any;
+  detailsTask : any;
+  taskOrder : any;
+
+  //vars task
+  kind: string = 'need_correction'
+  details: string = 'Necesita corrección de datos'
+
 
   constructor(private formBuilder: FormBuilder, 
     private api: ModifyProductService, private dialog: MatDialog, private route : ActivatedRoute,
@@ -156,6 +150,7 @@ export class EditProductComponent implements OnInit{
       
     })
     this.getRequestId()
+    this.getTask()
     
   }
 
@@ -163,8 +158,6 @@ export class EditProductComponent implements OnInit{
     if (isDevMode()) {
       this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
         this.requests = resp.request_id;
-        console.log(this.requests);
-        
       })
     }
     else
@@ -172,7 +165,6 @@ export class EditProductComponent implements OnInit{
         this.requests = resp.request_id;
       })
   }
-
   
   onFileSelected(files: FileList):void {
     this.fileSelected = files[0]
@@ -197,6 +189,53 @@ export class EditProductComponent implements OnInit{
     }
     
   }
+  getTask(){
+    let task = '';
+    let kind = '';
+    let details = '';
+    if (isDevMode()) {
+      this.task.getTaskDEV(this.status, this.orderParam, this.tokenParam).subscribe((res: any) =>{
+        res.forEach(function(res: any) {
+          task = res
+          kind = res.kind
+          details = res.details
+        })
+        this.taskOrder = task;
+        this.kindTask = kind
+        this.detailsTask = details
+        console.log(this.taskOrder);
+        
+      })
+    }
+    else
+    this.task.getTask(this.status, this.orderParam, this.tokenParam).subscribe((res: any) =>{
+      res.forEach(function(res: any) {
+        task = res
+        kind = res.kind
+        details = res.details
+      })
+      this.taskOrder = task;
+      this.kindTask = kind
+      this.detailsTask = details
+    })
+  }
+  postTask(){
+    if (isDevMode()) {
+      this.task.postTaskDEV(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+        next:(res)=>{
+          res
+          console.log('tarea posteada');
+        }
+    })
+    }
+    else
+    this.task.postTask(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+      next:(res)=>{
+        res
+      }
+    })
+    
+  }
 
   onSubmit(): void{
     this.name = this.changeProductForm.controls['nameProduct'].value
@@ -204,11 +243,11 @@ export class EditProductComponent implements OnInit{
     this.changeProductForm.controls['img'].patchValue(this.requests.attachment)
 
     let imgB64 = JSON.stringify(this.base64Output)
-    
+
     if (isDevMode()) {
       if(this.changeProductForm.valid){
         let message :string = "Datos Producto (Modificados): \n";
-        if (this.name != null ){
+        if (this.name != null ) {
           message += `Nombre Producto: ${this.name} \n`
         }
         if (this.sku != null){
@@ -216,13 +255,42 @@ export class EditProductComponent implements OnInit{
         }
         if (imgB64 != null){
           let attachment = imgB64;
+          if (this.kindTask != 'need_correction' && this.detailsTask != 'Necesita corrección de datos'){
+            this.postTask();
+            this.api.putRequestIMGDEV(message, attachment, this.requests, this.tokenParam)
+                .subscribe({
+                  next:(res)=>{
+                    res
+                    this.dialog.closeAll();
+                    this.messageSuccessfull();
+                  },
+                  error: () =>{
+                    this.messageError();
+                  }
+                })
+          }
+          else
           this.api.putRequestIMGDEV(message, attachment, this.requests, this.tokenParam)
+                .subscribe({
+                  next:(res)=>{
+                    res
+                    this.dialog.closeAll();
+                    this.messageSuccessfull();
+                  },
+                  error: () =>{
+                    this.messageError();
+                  }
+                })
+        }
+        else
+        if (this.kindTask != 'need_correction' && this.detailsTask != 'Necesita corrección de datos'){
+          this.postTask();
+          this.api.putRequestDEV(message, this.requests, this.tokenParam)
           .subscribe({
             next:(res)=>{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
-              this.task.productModify == true;
             },
             error: () =>{
               this.messageError();
@@ -236,7 +304,6 @@ export class EditProductComponent implements OnInit{
               res
               this.dialog.closeAll();
               this.messageSuccessfull();
-              this.task.productModify == true;
             },
             error: () =>{
               this.messageError();
@@ -258,7 +325,37 @@ export class EditProductComponent implements OnInit{
         }
         if (imgB64 != null){
           let attachment = imgB64;
+          if (this.kindTask != 'need_correction' && this.detailsTask != 'Necesita corrección de datos'){
+            this.postTask();
+            this.api.putRequestIMG(message, attachment, this.requests, this.tokenParam)
+              .subscribe({
+                next:(res)=>{
+                  res
+                  this.dialog.closeAll();
+                  this.messageSuccessfull();
+                },
+                error: () =>{
+                  this.messageError();
+                }
+            }) 
+          }
+          else
           this.api.putRequestIMG(message, attachment, this.requests, this.tokenParam)
+          .subscribe({
+            next:(res)=>{
+              res
+              this.dialog.closeAll();
+              this.messageSuccessfull();
+            },
+            error: () =>{
+              this.messageError();
+            }
+          }) 
+        }
+        else
+        if (this.kindTask != 'need_correction' && this.detailsTask != 'Necesita corrección de datos'){
+          this.postTask();
+          this.api.putRequest(message, this.requests, this.tokenParam)
           .subscribe({
             next:(res)=>{
               res
@@ -285,6 +382,7 @@ export class EditProductComponent implements OnInit{
       }
       else
       this.messageError(); 
+      
 
 }
 
@@ -363,6 +461,16 @@ export class EditServiceComponent implements OnInit{
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
 
+  //task var
+  status: string = 'pending';
+  kindTask : any;
+  detailsTask : any;
+  taskOrder : any;
+
+  //vars task
+  kind: string = 'need_correction'
+  details: string = 'Necesita corrección de datos'
+
   constructor(private formBuilder: FormBuilder, private api: ModifyProductService, private dialog: MatDialog, 
     private service : RouteService, private task : TaskService){}
   
@@ -382,7 +490,9 @@ export class EditServiceComponent implements OnInit{
       
     })
     this.getRequestId()
+    this.getTask()
   }
+
   getRequestId(){
     if (isDevMode()) {
       this.api.getRequestDEV(this.orderParam, this.tokenParam).subscribe((resp:any)=>{
@@ -395,17 +505,79 @@ export class EditServiceComponent implements OnInit{
       })
   }
 
+  getTask(){
+    let task = '';
+    let kind = '';
+    let details = '';
+    if (isDevMode()) {
+      this.task.getTaskDEV(this.status, this.orderParam, this.tokenParam).subscribe((res: any) =>{
+        res.forEach(function(res: any) {
+          task = res
+          kind = res.kind
+          details = res.details
+        })
+        this.taskOrder = task;
+        this.kindTask = kind
+        this.detailsTask = details
+      })
+    }
+    else
+    this.task.getTask(this.status, this.orderParam, this.tokenParam).subscribe((res: any) =>{
+      res.forEach(function(res: any) {
+        task = res
+        kind = res.kind
+        details = res.details
+      })
+      this.taskOrder = task;
+      this.kindTask = kind
+      this.detailsTask = details
+    })
+  }
+  
+  postTask(){
+    if (isDevMode()) {
+      this.task.postTaskDEV(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+        next:(res)=>{
+          res
+          console.log('tarea posteada');
+          
+        }
+    })
+    }
+    else
+    this.task.postTask(this.kind, this.details, this.orderParam, this.tokenParam).subscribe({
+      next:(res)=>{
+        res
+      }
+    })
+    
+  }
+
   onSubmit(): void{
-    let valor = this.changeServiceForm.value
-    let parseString = JSON.stringify(valor)
+    let valor = this.changeServiceForm.controls['servicioModificado'].value
+    let modifyService = JSON.stringify(valor)
+    let message: string = `Servicio modificado: ${modifyService}`;
     if (isDevMode()) {
       if(this.changeServiceForm.valid){
-        this.api.putRequestDEV(parseString, this.requests, this.tokenParam)
+        if (this.kindTask != 'need_correction' && this.detailsTask != 'Necesita corrección de datos'){
+          this.postTask();
+          this.api.putRequestDEV(message, this.requests, this.tokenParam)
+            .subscribe({
+              next:(res)=>{
+                this.dialog.closeAll();
+                this.messageSuccessfull();
+              },
+              error: () =>{
+                this.messageError();  
+              }
+            })
+        }
+        else
+        this.api.putRequestDEV(message, this.requests, this.tokenParam)
         .subscribe({
           next:(res)=>{
             this.dialog.closeAll();
             this.messageSuccessfull();
-            this.task.serviceModify == true;
           },
           error: () =>{
             this.messageError();  
@@ -415,12 +587,25 @@ export class EditServiceComponent implements OnInit{
     }
     else
     if(this.changeServiceForm.valid){
-      this.api.putRequest(parseString, this.requests, this.tokenParam)
+      if (this.kindTask != 'need_correction' && this.detailsTask != 'Necesita corrección de datos'){
+        this.postTask();
+        this.api.putRequest(message, this.requests, this.tokenParam)
+        .subscribe({
+          next:(res)=>{
+            this.dialog.closeAll();
+            this.messageSuccessfull();
+          },
+          error: () =>{
+            this.messageError();  
+          }
+        })
+      }
+      else
+      this.api.putRequest(message, this.requests, this.tokenParam)
       .subscribe({
         next:(res)=>{
           this.dialog.closeAll();
           this.messageSuccessfull();
-          this.task.serviceModify == true;
         },
         error: () =>{
           this.messageError();  
@@ -428,11 +613,6 @@ export class EditServiceComponent implements OnInit{
       })
     }
   }
-
-  
-
-  
-  
 
 //Message successfull
 messageSuccessfull(){

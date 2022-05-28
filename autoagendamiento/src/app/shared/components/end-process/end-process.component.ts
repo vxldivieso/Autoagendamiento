@@ -78,7 +78,6 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
         next:(res)=>{
           this.details = res;
           this.scheduled_at = res.scheduled_at
-          console.log(this.scheduled_at);
           
         }
       })
