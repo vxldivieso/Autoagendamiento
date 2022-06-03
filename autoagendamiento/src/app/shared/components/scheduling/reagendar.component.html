@@ -1,8 +1,8 @@
-<h3 mat-dialog-title>Seleccione la fecha en la que desea ser contactado nuevamente</h3>
+<h3 mat-dialog-title align="center">Seleccione la fecha en la que desea ser contactado nuevamente</h3>
  <div mat-dialog-content >
  <form [formGroup]="reagendarForm">
  <mat-form-field appearance="outline">
-  <mat-label>Selecciona una fecha</mat-label>
+  <mat-label align="center">Selecciona una fecha</mat-label>
   <input [min]="minDate" [max]="maxDate" formControlName="date" matInput [matDatepicker]="picker">
   <mat-hint>MM/DD/YYYY</mat-hint>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -11,6 +11,6 @@
  </form>
  </div>
  <div mat-dialog-actions [align]="'center'" >
- <button mat-raised-button mat-dialog-close>Cerrar</button>
+ <button mat-raised-button color="accent" mat-dialog-close>Cerrar</button>
  <button mat-raised-button color="primary" (click)="onSubmit()">Confirmar</button>
 </div>

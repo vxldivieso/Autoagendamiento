@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-lg-10" >
-        <form class="p-3" *ngIf="clientData" @enterState  >
+        <form class="" *ngIf="clientData" @enterState  >
             <div class="container-fluid py-4 " id="form">
                 <div class="row" >
                     <!--Nombre-->
@@ -50,6 +50,8 @@
             </div>
             
         </form>
+        <br>
+<br>
         <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center ">
             <button mat-raised-button color="primary" (click)="updateClientContact()">Confirmar Datos</button>
             <button-wrongdata></button-wrongdata>
@@ -57,3 +59,4 @@
     </div>
     <div class="col-md-1"></div>
 </div>
+

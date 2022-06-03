@@ -38,6 +38,19 @@ table {
         border-radius: 10px;
         font-size: 12px;
         font-weight: bold;
+        padding: 5px 100px;
+        letter-spacing: 1px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        
+    }
+}
+#secundarybuttons{
+    button{
+        font-family: 'Inter', sans-serif;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: bold;
         padding: 5px 25px;
         letter-spacing: 1px;
         
@@ -55,6 +68,13 @@ mat-form-field{
 
 .mat-raised-button{
     border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 25px;
+    letter-spacing: 1px;
+    display: inline-block;
+        
 }
 
 @media(max-width: 400px){
@@ -94,11 +114,6 @@ tr{
         
     }
     
-
-    .mat-raised-button{
-        margin-top: 10px;
-    }
-    
     #btnblocks{
         margin-top: 10px;
         margin-left: 0;
@@ -123,5 +138,10 @@ tr{
     }
     #btnblocks{
         width: 100%;
+    }
+    .mat-raised-button{
+        display: inline-block;
+        width: 100%;
+            
     }
 }

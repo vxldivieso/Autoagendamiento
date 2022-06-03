@@ -4,10 +4,10 @@
 <div class="container">
   
   <mat-stepper class="example-stepper" #stepper color="primary" [orientation]="(stepperOrientation | async)!" linear>
-  
+    
     <!--Verificar el producto-->
-    <mat-step [stepControl]="checkoutFormGroup" label="Verifica tu Producto" [editable]="false" >
-      
+  
+    <mat-step [stepControl]="checkoutFormGroup" label="Verifique el producto"  [editable]="false" >
       <ng-template matStepContent>
         <form [formGroup]="checkoutFormGroup">
           <div class="py-4">
@@ -15,11 +15,10 @@
               <div class="col-md-1"></div>
               <div class="col-lg-10">
                 <h1 class="title">Datos del producto</h1>
-                <p class="subtitle">Corrobore los siguientes datos asociados a su producto. Si cree que hay un error puede modificar "Producto" y/o "Tipo de Servicio".</p>
+                <p class="subtitle">Corrobore los datos del producto. Puede editar producto y/o Servicio.</p>
               </div>
               <div class="col-md-1"></div>
             </div>
-           
           </div>
           <!--Checkout product-->
           <div class="" >
@@ -27,25 +26,25 @@
           </div>
         </form>
         <!--Actions-->
-        <p style="color: #7B7D7D;">Si está todo en orden, presione 'Continuar'</p>
+        <p style="color: #7B7D7D;">Si está todo en orden, presione Continuar.</p>
         <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
           <button mat-raised-button class="btn-lg" color="primary" matStepperNext>Continuar</button>
         </div>
       </ng-template>
-      
     </mat-step>
+  
     
-
+    
     <!--Verifica los datos del Cliente-->
-    <mat-step [stepControl]="clientDataFormGroup" label="Confirma tus datos" [editable]="false">
+    <mat-step [stepControl]="clientDataFormGroup" label="Confirme sus datos" [editable]="false" >
       <ng-template matStepContent>
-        <form [formGroup]="clientDataFormGroup">
+        <form [formGroup]="clientDataFormGroup" >
           <div class="py-4">
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-lg-10" >
                 <h1 class="title">Datos de contacto</h1>
-                <p class="subtitle">Corrobore sus datos de contacto. Agregue o modifique referencias a su dirección y/o un telefono extra.</p>
+                <p class="subtitle">Corrobore sus datos de contacto. Añada referencias a su dirección o un número de telefono extra.</p>
               </div>
               <div class="col-md-1"></div>
             </div>
@@ -61,9 +60,9 @@
     </mat-step>
 
     <!--Seleccion de un horario-->
-    <mat-step [stepControl]="schedulingFormGroup" label="Selección de horario" [editable]="false">
+    <mat-step [stepControl]="schedulingFormGroup" label="Agende el servicio" [editable]="false">
       <ng-template matStepContent>
-        <form [formGroup]="schedulingFormGroup" >
+        <form [formGroup]="schedulingFormGroup"  >
           <div class="py-4">
             <div class="row">
               <div class="col-md-1"></div>
@@ -102,9 +101,14 @@
           <app-end-process></app-end-process>
           
         </form>
+        <br>
+        <button mat-raised-button aria-label="Imprimir" id="btnPrint" >
+          <img class="text-align: left" src="https://img.icons8.com/metro/26/undefined/pdf.png" /> Imprimir
+        </button>
     </ng-template>
     </mat-step>
       
     <!--End-->
   </mat-stepper>
 </div>
+

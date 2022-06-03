@@ -316,7 +316,7 @@ export class SchedulingComponent implements OnInit, OnDestroy {
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
-      text: 'Por favor selecciona un bloque horario',
+      text: 'Por favor seleccione un bloque horario',
       showConfirmButton: true,
       backdrop: true
     })

@@ -101,6 +101,8 @@ export class ClientDataComponent implements OnInit{
     .subscribe(token => this.service.updatePathParamStateToken(token));
   }
 
+  
+
   getClientData(){
     if (isDevMode()) {
       this.api.getOrderDEV(this.order,this.token)

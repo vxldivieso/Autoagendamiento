@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Input, isDevMode, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Directive, HostListener, Inject, Input, isDevMode, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {MatStepper, StepperOrientation} from '@angular/material/stepper';
@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DetailOrderService } from 'src/app/service/detail.service';
 import * as moment from 'moment';
 import { TaskService } from 'src/app/service/task.service';
+import { IButtonGroupEventArgs } from 'igniteui-angular';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 
 //Stepper component
@@ -33,6 +35,7 @@ export class StepperComponent implements OnInit{
   schedulingFormGroup!: FormGroup;
   endProcessFormGroup!: FormGroup;
   stepperOrientation: Observable<StepperOrientation>;
+
 
   @ViewChild('stepper') stepper!: MatStepper;
   savedDate: any ;
@@ -76,6 +79,8 @@ export class StepperComponent implements OnInit{
     this.getOrderId()
     this.getTask()
   }
+
+ 
 
   getOrderId(){
     if (isDevMode()) {
@@ -133,8 +138,6 @@ export class StepperComponent implements OnInit{
         this.kindTask = kind
         this.detailsTask = details
         this.completed_at = completed_at
-
-        console.log(this.taskOrder);
       })
     }
     else
@@ -151,25 +154,7 @@ export class StepperComponent implements OnInit{
       this.completed_at = completed_at
     })
   }
- /*
-  processEnd(){
-    if(this.order_visit_status == 'in_campaing'){
-      this.move(0)
-    }
-    if(this.order_visit_status == 'contact_support'){
-      this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
-    }
-    if(this.order_visit_status == 'need_correction'){
-      this.router.navigate([`${this.order}/${this.token}/contact/data`])
-    }
-    if(this.order_visit_status == 'wait_for_schedule'){
-      this.router.navigate([`${this.order}/${this.token}/contact/save`])
-    }
-    if (this.scheduled_at != undefined){
-      this.stepper.linear = false;
-      this.move(3)
-    }
-  }*/
+ 
 
   statusOrder(){
     if(this.order_visit_status == 'in_campaing'){
@@ -228,10 +213,10 @@ export class StepperComponent implements OnInit{
     this.stepper.selectedIndex = index;
   }
 
-  
-  
 
 }
+
+
 
 /**  Copyright 2022 Google LLC. All Rights Reserved.
     Use of this source code is governed by an MIT-style license that
