@@ -10,7 +10,10 @@ import { DatePipe } from '@angular/common';
   selector: 'app-end-process',
   templateUrl: './end-process.component.html',
   styleUrls: ['./end-process.component.scss'],
-  providers: [DatePipe,{ provide: MAT_DATE_LOCALE, useValue: 'es' }],
+  providers: [DatePipe,
+    { provide: MAT_DATE_LOCALE, useValue: 'es' },
+    { provide: Window, useValue: window }
+  ],
   animations:[
     trigger('enterState',[
       state('void',style({
@@ -37,7 +40,7 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
   order!: any;
   token!: string;
   constructor(private apiDet : DetailOrderService, private ctrlContainer: FormGroupDirective,
-    private route : ActivatedRoute) {
+    private route : ActivatedRoute, private window : Window) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
       moment.locale('es');
@@ -51,6 +54,7 @@ export class EndProcessComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit(): void {
     this.getSavedDate()
+    this.window.scrollTo(0, 10);
   }
 
   getSavedDate(){

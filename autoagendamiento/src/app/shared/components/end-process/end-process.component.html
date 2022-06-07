@@ -1,9 +1,9 @@
 <div class="row" *ngIf="details" >
     <div class="col-md-3"></div>
-    <div class="col-lg-6">
-        <h1>Resumen de la orden</h1>
+    <div class="col-lg-6" id="resumen">
+        <h1 align="center">Resumen de la orden</h1>
         <div class="bg-pay p-3"  @enterState> 
-            <div class="container py-4">
+            <div class="container py-4" align="center">
                 <ng-container *ngIf="details.store =='Ripley' then ripley"></ng-container>
                 <ng-container *ngIf="details.store =='BBQ GRILL' then bbqgrill"></ng-container>
                 <ng-container *ngIf="details.store =='Mercado Ripley' then mercadoripley"></ng-container>

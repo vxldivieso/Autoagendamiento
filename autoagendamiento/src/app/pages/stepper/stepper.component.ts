@@ -9,9 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DetailOrderService } from 'src/app/service/detail.service';
 import * as moment from 'moment';
 import { TaskService } from 'src/app/service/task.service';
-import { IButtonGroupEventArgs } from 'igniteui-angular';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-
 
 //Stepper component
 /**
@@ -25,7 +23,9 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.scss'],
-  
+  providers: [
+    { provide: Window, useValue: window }
+  ]
 })
 export class StepperComponent implements OnInit{
   
@@ -48,6 +48,7 @@ export class StepperComponent implements OnInit{
   order_status:any;
   order!: any;
   token!: string;
+  id!:string | null;
 
   //task var
   status: string = 'all';
@@ -60,7 +61,7 @@ export class StepperComponent implements OnInit{
   constructor(
     private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, 
     public dialog: MatDialog,  private route : ActivatedRoute, 
-    private api: DetailOrderService, private router : Router, private task : TaskService) {
+    private api: DetailOrderService, private router : Router, private task : TaskService, private window: Window) {
 
       this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -213,7 +214,10 @@ export class StepperComponent implements OnInit{
     this.stepper.selectedIndex = index;
   }
 
+  print() {
 
+  }
+    
 }
 
 

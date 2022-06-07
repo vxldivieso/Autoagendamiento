@@ -10,7 +10,7 @@ import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/service/task.service';
-import { EditProductComponent, EditServiceComponent } from '../detailOrder/detailOrder.component';
+
  
 @Component({ 
   selector: 'client-data',
@@ -28,9 +28,12 @@ import { EditProductComponent, EditServiceComponent } from '../detailOrder/detai
       ])
     ])
   ],
+  providers: [
+    { provide: Window, useValue: window }
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 }) 
-export class ClientDataComponent implements OnInit{
+export class ClientDataComponent implements OnInit, AfterViewInit{
   //form control stepper
   form !: FormGroup;
   //form builder html 
@@ -64,7 +67,7 @@ export class ClientDataComponent implements OnInit{
     private api: DetailOrderService, private ctrlContainer: FormGroupDirective,
     private route : ActivatedRoute, private cdk : CdkStepper,  
     private service : RouteService,  private apiMod: ModifyProductService,
-    private router : Router, private task : TaskService) {
+    private router : Router, private task : TaskService, private window: Window) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
      }
@@ -99,6 +102,11 @@ export class ClientDataComponent implements OnInit{
       takeUntil(this.destroy)
     )
     .subscribe(token => this.service.updatePathParamStateToken(token));
+  }
+
+  ngAfterViewInit(): void {
+    this.window.scrollTo(0, 0);
+    
   }
 
   

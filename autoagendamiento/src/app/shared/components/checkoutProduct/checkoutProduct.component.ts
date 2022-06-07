@@ -10,9 +10,12 @@ import { DateFormProduct } from '../datepicker/datepicker.component';
   selector: 'checkoutproduct',
   templateUrl: './checkoutProduct.component.html',
   styleUrls: ['./checkoutProduct.component.scss'],
+  providers: [
+    { provide: Window, useValue: window }
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class CheckoutProductComponent implements OnInit{
+export class CheckoutProductComponent implements OnInit, AfterViewInit{
   form!: FormGroup;
   subForm!: FormGroup;
 
@@ -25,7 +28,7 @@ export class CheckoutProductComponent implements OnInit{
   token!: string;
 
   constructor(private ctrlContainer: FormGroupDirective, private fb: FormBuilder,
-    private api: DateService, private route : ActivatedRoute) { 
+    private api: DateService, private route : ActivatedRoute, private window: Window) { 
     this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
   }
@@ -39,7 +42,9 @@ export class CheckoutProductComponent implements OnInit{
     this.form.addControl("checkout", this.subForm);
     this.getDeliveryDate()
   }
-  
+  ngAfterViewInit(): void {
+    this.window.scrollTo(0, 0);
+  }
 
   getDeliveryDate(){
     if (isDevMode()) {

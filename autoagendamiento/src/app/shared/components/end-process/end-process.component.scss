@@ -149,3 +149,9 @@ mat-expansion-panel{
 		width: 100%;
 	}
 }
+
+@media print{
+	#resumen{
+		margin-top:10%;
+	}
+}

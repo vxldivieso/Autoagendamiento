@@ -14,10 +14,11 @@
         <input formControlName="skuProduct" name="skuProduct" matInput>
       </mat-form-field>
       <!--Comprobante-->
-      <label for="img"> &nbsp; Adjunte comprobante</label>
+      <label for="img"> &nbsp;Adjunte comprobante</label>
       <input class="form-control" [src]="img" accept="image/png,image/jpeg" type="file" formControlName="img" id="img"
-        name="img" (change)="onFileSelected($any($event.target).files)" 
-        data-validation-error-msg="Elija una imagen con formato JPG." data-validation-max-size="1M" data-validation="required" />
+      name="img" (change)="onFileSelected($any($event.target).files)" 
+      data-validation-error-msg="Elija una imagen con formato JPG." data-validation-max-size="1M" data-validation="required"/> 
+      <small style="font-size:0.8em">Tamaño máximo permitido 1MB </small>
   </form>
 </div>
 

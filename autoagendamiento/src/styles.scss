@@ -58,5 +58,15 @@ body::-webkit-scrollbar-thumb{
 html, body { height: 100%; }
 body { margin: 0}
 
+@media print{
+  title{
+    display: none;
+  }
+  @page { 
+    size:auto;
+    margin-bottom:0mm;
+    
+  }
 
+}
 

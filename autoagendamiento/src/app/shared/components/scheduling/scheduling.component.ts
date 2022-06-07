@@ -1,4 +1,4 @@
-import { Component, isDevMode, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, isDevMode, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -23,7 +23,9 @@ import { TaskService } from 'src/app/service/task.service';
   selector: 'scheduling',
   templateUrl: './scheduling.component.html' ,
   styleUrls: ['./scheduling.component.scss'],
-  providers: [FormGroupDirective],
+  providers: [FormGroupDirective,
+    { provide: Window, useValue: window }
+  ],
   animations:[
     trigger('enterState',[
       state('void',style({
@@ -39,7 +41,7 @@ import { TaskService } from 'src/app/service/task.service';
   
 })
 
-export class SchedulingComponent implements OnInit, OnDestroy {
+export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
   //table
   displayedColumns : string[] = ['date','bloques']
   dataSource!: MatTableDataSource<any>;
@@ -73,8 +75,9 @@ export class SchedulingComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!:MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+
   constructor(private api: SchedulingService, private apiDate : DateService, private cdk : CdkStepper, private route : ActivatedRoute,
-    private ctrlContainer: FormGroupDirective,  private service : RouteService, date: DateAdapter<Date>) {
+    private ctrlContainer: FormGroupDirective,  private service : RouteService, date: DateAdapter<Date>, private window : Window) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
       moment.locale('es');
@@ -105,6 +108,14 @@ export class SchedulingComponent implements OnInit, OnDestroy {
     this.destroy.complete()
     this.service.updatePathParamState(null);
     this.service.updatePathParamStateToken(null);
+  }
+
+  ngAfterViewInit(): void {
+    this.window.scrollTo(0, 0);
+  }
+
+  scrollTop(){
+    this.window.scrollTo(0, 0);
   }
 
   getDeliveryDate(){
@@ -189,7 +200,6 @@ export class SchedulingComponent implements OnInit, OnDestroy {
         next:(res)=>{
           const res2 = this.bloqueHorario(res)
           console.log();
-          
           this.dataSource = new MatTableDataSource(res2);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;

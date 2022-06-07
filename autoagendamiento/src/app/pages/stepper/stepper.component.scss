@@ -37,6 +37,7 @@ button{
 
 ::ng-deep .mat-horizontal-stepper-header{
   pointer-events: none !important;
+ 
 }
 ::ng-deep .mat-vertical-stepper-header{
   pointer-events: none !important;
@@ -46,6 +47,24 @@ button{
   border: 0;
   position: relative;
 }
+
+
+@media print{
+  :host ::ng-deep .mat-horizontal-stepper-header-container{display: none !important;}
+  ::ng-deep .mat-step-header{display: none !important;}
+  
+  #instructions{
+    display: none;
+  }
+  #btnPrint{
+    display: none;
+  }
+  app-header{
+      display: none;
+  }
+}
+
+
 
 /*.mat-stepper-vertical-line::before {
     content: none;

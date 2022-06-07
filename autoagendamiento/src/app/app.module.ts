@@ -16,12 +16,13 @@ import { CheckoutProductComponent } from './shared/components/checkoutProduct/ch
 import { DateFormProduct} from './shared/components/datepicker/datepicker.component';
 import { EndProcessComponent } from './shared/components/end-process/end-process.component';
 import { DetailComponent, EditProductComponent, EditProductDialog, EditServiceComponent, EditServiceDialog} from './shared/components/detailOrder/detailOrder.component';
-import { AgGridModule } from 'ag-grid-angular';
+
 import { ClientDataComponent, WrongdataComponent, WrongDataDialog } from './shared/components/client-data/client-data.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { SpinnerModule } from './shared/components/spinner/spinner.module';
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
+import {NgxPrintModule} from 'ngx-print'
 
 
 //I keep the new line
@@ -60,14 +61,14 @@ import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AgGridModule,
     CdkTableModule,
-    SpinnerModule
+    SpinnerModule,
+    NgxPrintModule,
   ],
   providers: [
     {provide: STEPPER_GLOBAL_OPTIONS,
     useValue: { displayDefaultIndicatorType: false}},
-    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi:true}
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi:true},
   
   ],
   bootstrap: [AppComponent],

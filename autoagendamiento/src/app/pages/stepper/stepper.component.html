@@ -2,7 +2,6 @@
 <app-header></app-header>
 
 <div class="container">
-  
   <mat-stepper class="example-stepper" #stepper color="primary" [orientation]="(stepperOrientation | async)!" linear>
     
     <!--Verificar el producto-->
@@ -84,10 +83,10 @@
     </mat-step>
 
     <!--Done-->
-    <mat-step [stepControl]="endProcessFormGroup" label="Listo" [editable]="false">
+    <mat-step [stepControl]="endProcessFormGroup" label="Listo" [editable]="false" >
       <ng-template matStepContent>
-        <form [formGroup]="endProcessFormGroup">
-          <div class="py-4">
+        <form [formGroup]="endProcessFormGroup"   >
+          <div class="py-4" id="instructions">
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-lg-10">
@@ -98,17 +97,38 @@
             </div>
           </div>
           <!--End process all done-->
-          <app-end-process></app-end-process>
+          <app-end-process class="print-section"></app-end-process>
           
         </form>
         <br>
-        <button mat-raised-button aria-label="Imprimir" id="btnPrint" >
-          <img class="text-align: left" src="https://img.icons8.com/metro/26/undefined/pdf.png" /> Imprimir
+        <button mat-raised-button aria-label="Imprimir" id="btnPrint" onclick="print()">
+          <img class="text-align: left" src="https://img.icons8.com/metro/26/undefined/pdf.png"/> Imprimir
         </button>
+
+        <script>
+          
+          function print(){
+            var data = document.getElementById('print-section').innerHTML;
+            document.open();
+            document.write();
+            if (window.matchMedia('(min-width: 400px)').matches) {
+              window.print();
+              window.close();
+              document.close();
+            } else {
+              window.print();
+              document.close();
+            }
+          }
+          
+  
+        </script>
     </ng-template>
     </mat-step>
       
     <!--End-->
   </mat-stepper>
 </div>
+
+
 
