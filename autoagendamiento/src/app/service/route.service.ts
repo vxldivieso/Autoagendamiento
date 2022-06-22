@@ -22,6 +22,4 @@ export class RouteService{
     updatePathParamStateToken(newPathParamToken : string | null ){
         this.pathParamStateToken.next(newPathParamToken)
     }
-
-
 }

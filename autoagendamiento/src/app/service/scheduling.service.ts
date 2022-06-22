@@ -19,11 +19,10 @@ export class SchedulingService{
     token!: string;
   
     private apiURL='https://api.demo.maydayservicios.com'
-    constructor(private http: HttpClient,
-        private route : ActivatedRoute){
-            this.order = this.route.snapshot.params['order'];
-            this.token = this.route.snapshot.params['token'];
-        }
+    constructor(private http: HttpClient, private route : ActivatedRoute){
+        this.order = this.route.snapshot.params['order'];
+        this.token = this.route.snapshot.params['token'];
+    }
     
     getSchedule(from:any, to:any,order:number, token:string): Observable<any>{
         let header = new HttpHeaders()

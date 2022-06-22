@@ -10,6 +10,7 @@ import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { RouteService } from 'src/app/service/route.service';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/service/task.service';
+import { NGXLogger } from 'ngx-logger';
 
  
 @Component({ 
@@ -67,7 +68,7 @@ export class ClientDataComponent implements OnInit, AfterViewInit{
     private api: DetailOrderService, private ctrlContainer: FormGroupDirective,
     private route : ActivatedRoute, private cdk : CdkStepper,  
     private service : RouteService,  private apiMod: ModifyProductService,
-    private router : Router, private task : TaskService, private window: Window) {
+    private router : Router, private task : TaskService, private window: Window, private logger: NGXLogger) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
      }
@@ -107,6 +108,14 @@ export class ClientDataComponent implements OnInit, AfterViewInit{
   ngAfterViewInit(): void {
     this.window.scrollTo(0, 0);
     
+  }
+
+  log(lvl:any){
+    switch(lvl){
+      case 0:
+        this.logger.info('Vista 2: ok')
+        break;
+    }
   }
 
   
@@ -178,6 +187,7 @@ export class ClientDataComponent implements OnInit, AfterViewInit{
             else
             this.messageSuccessfull();
             this.cdk.next()
+            this.log(0);
           },
           error: () =>{
             this.messageError();
@@ -202,6 +212,7 @@ export class ClientDataComponent implements OnInit, AfterViewInit{
             else
             this.messageSuccessfull();
             this.cdk.next()
+            this.log(0);
           },
           error: () =>{
             this.messageError();
@@ -291,7 +302,7 @@ export class WrongdataComponent implements OnInit {
   taskOrder : any;
 
   constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private api : ModifyProductService,
-    private router : Router, private service : RouteService, private task:TaskService) {}
+    private router : Router, private service : RouteService, private task:TaskService, private logger : NGXLogger) {}
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       phone2: [''],
@@ -313,6 +324,13 @@ export class WrongdataComponent implements OnInit {
     })
     this.getRequestId()
     this.getTask()
+  }
+
+  log(lvl:any){
+    switch(lvl){
+      case 0:
+        this.logger.info('Vista 2: datos modificados')
+    }
   }
 
   getRequestId(){
@@ -402,6 +420,7 @@ export class WrongdataComponent implements OnInit {
                   this.dialog.closeAll();
                   this.messageSuccessfull();
                   this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
+                  this.log(0)
                 },
                 error: () =>{
                   this.messageError();
@@ -416,6 +435,7 @@ export class WrongdataComponent implements OnInit {
                   this.dialog.closeAll();
                   this.messageSuccessfull();
                   this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
+                  this.log(0)
                 },
                 error: () =>{
                   this.messageError();
@@ -447,6 +467,7 @@ export class WrongdataComponent implements OnInit {
                   this.dialog.closeAll();
                   this.messageSuccessfull();
                   this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
+                  this.log(0)
                 },
                 error: () =>{
                   this.messageError();
@@ -461,6 +482,7 @@ export class WrongdataComponent implements OnInit {
                   this.dialog.closeAll();
                   this.messageSuccessfull();
                   this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
+                  this.log(0)
                 },
                 error: () =>{
                   this.messageError();

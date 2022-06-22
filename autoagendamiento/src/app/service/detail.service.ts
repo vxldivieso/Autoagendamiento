@@ -1,17 +1,36 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, isDevMode, OnInit } from "@angular/core";
 import { catchError, map, Observable, throwError} from "rxjs";
 import { changeProduct, changeService, reagendar } from "../shared/components/detailOrder/interfaces/changes.interface";
-import { RouterModule, Routes, Router } from '@angular/router';
+import { RouterModule, Routes, Router, ActivatedRoute } from '@angular/router';
+import { NGXLogger } from "ngx-logger";
 
 @Injectable({
     providedIn:'root'
 })
-export class DetailOrderService{
-
+export class DetailOrderService implements OnInit{
+    //params
+    order!: number;
+    token!: string;
     private apiURL='https://api.demo.maydayservicios.com'
-    constructor(private http: HttpClient, private router: Router){
+    constructor(private http: HttpClient, private router: Router, private route : ActivatedRoute, private logger: NGXLogger){
+        this.order = this.route.snapshot.params['order'];
+        this.token = this.route.snapshot.params['token'];
+        
     }
+
+    ngOnInit(): void {
+        if (!isDevMode()) {
+            console.log = function() {};
+        }
+    }
+    log(lvl:any){
+        switch(lvl){
+          case 0:
+            this.logger.error('Error 404 - Orden inválida')
+            break;
+        }
+      }
 
     getOrderId(order : string, token:string){
         let header = new HttpHeaders()
@@ -83,6 +102,9 @@ export class DetailOrderService{
             }else{
                 console.log('Service Error');
                 this.router.navigate(['error']) 
+            }
+            if (error.status === 404) {
+                this.log(0);
             }
         }else{
             console.log('Other Type');

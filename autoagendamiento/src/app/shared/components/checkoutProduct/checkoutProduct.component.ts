@@ -4,6 +4,7 @@ import { ControlContainer, FormBuilder, FormControl, FormGroup, FormGroupDirecti
 import { DateService } from 'src/app/service/detail.service';
 import { ActivatedRoute } from '@angular/router';
 import { DateFormProduct } from '../datepicker/datepicker.component';
+import { NGXLogger } from 'ngx-logger';
 
 
 @Component({

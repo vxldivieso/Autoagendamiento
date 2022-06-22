@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-lg-8">
+    <div class="col-md-1"></div>
+    <div class="col-lg-10">
         <div class="order p-3" @enterState>
             <div class="card-body" >
                 <div class="row">
@@ -12,15 +12,15 @@
                             </div>
                         </ng-template>
                         <ng-template #nodate>
-                            <div class="col-md-4" >
+                            <div class="col-md-4">
                                 <h5 class="card-title text-uppercase"> fecha de despacho</h5>
                                 <h4><strong>No ingresada</strong></h4>
-                                <mat-error style="font-size:10px" *ngIf="!delivery_date">Por favor, ingrese la fecha de despacho.</mat-error>
+                                <mat-error class="p-3" style="font-size:10px" *ngIf="!delivery_date">Por favor, ingrese la fecha de despacho.</mat-error>
                             </div>
                         </ng-template>
                     <div class="col-md-8">
                         <h5 class="card-title text-uppercase"> 
-                            Modificar fecha de despacho 
+                            Ingresar fecha de despacho 
                             <form [formGroup]="dateProductForm">
                                 <mat-form-field color="primary" appearance="outline" lang="es">
                                     <mat-label>Seleccione una fecha</mat-label>
@@ -42,5 +42,5 @@
         
         
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-1"></div>
 </div>

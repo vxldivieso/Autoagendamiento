@@ -34,6 +34,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   
   order!: any;
   token!: string;
+  order_id : any;
   
   private destroy = new Subject<void>();
   constructor(private api: DetailOrderService, private route : ActivatedRoute, private service : RouteService,
@@ -72,12 +73,14 @@ export class DetailComponent implements OnInit, OnDestroy {
     if (isDevMode()) {
       this.api.getOrderDEV(this.order, this.token).subscribe((resp:any)=>{
         this.detailsOrder = resp;
+        this.order_id = resp.order_id;
         
       })
     }
     else
       this.api.getOrderId(this.order, this.token).subscribe((resp:any)=>{
         this.detailsOrder = resp;
+        this.order_id = resp.order_id;
       })
   }
 

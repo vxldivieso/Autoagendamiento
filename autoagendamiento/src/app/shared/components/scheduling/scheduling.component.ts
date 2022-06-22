@@ -17,6 +17,7 @@ import { RouteService } from 'src/app/service/route.service';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { TaskService } from 'src/app/service/task.service';
+import { NGXLogger } from 'ngx-logger';
 
 
 @Component({
@@ -76,8 +77,11 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private api: SchedulingService, private apiDate : DateService, private cdk : CdkStepper, private route : ActivatedRoute,
-    private ctrlContainer: FormGroupDirective,  private service : RouteService, date: DateAdapter<Date>, private window : Window) {
+  constructor(private api: SchedulingService, private apiDate : DateService, private cdk : CdkStepper, 
+    private route : ActivatedRoute,
+    private ctrlContainer: FormGroupDirective,  private service : RouteService, date: DateAdapter<Date>, 
+    private window : Window,
+    private logger: NGXLogger) {
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
       moment.locale('es');
@@ -101,6 +105,7 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
       takeUntil(this.destroy)
     )
     .subscribe(token => this.service.updatePathParamStateToken(token));
+
   }
 
   ngOnDestroy(): void {
@@ -112,6 +117,17 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.window.scrollTo(0, 0);
+  }
+
+  log(lvl:any){
+    switch(lvl){
+      case 0:
+        this.logger.info('Vista 3: Completada exitosamente')
+        break;
+      case 1:
+        this.logger.error('Cliente no pudo agendar')
+        break;
+    }
   }
 
   scrollTop(){
@@ -254,9 +270,11 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
           {
             next:(res)=>{
               this.cdk.next()
+              this.log(0);
             },
             error: (res) =>{
               this.messageError();
+              this.log(1)
             }
           }
         )
@@ -268,9 +286,11 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
           {
             next:(res)=>{
               this.cdk.next()
+              this.log(0);
             },
             error: (res) =>{
               this.messageError();
+              this.log(1)
             }
           }
         )
@@ -339,7 +359,7 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
 @Component({
   selector: 'disponibilidad',
   templateUrl: './disponibilidad.component.html',
-  styleUrls: ['./scheduling.component.scss'],
+  styleUrls: ['./modal.component.scss'],
   
  })
 
@@ -354,7 +374,7 @@ export class NoDisponibilityComponent implements OnInit{
   kind: string = 'contact_support'
   details: string = 'No encuentra disponibilidad'
   
-  constructor(private dialog: MatDialog, private router : Router, private service : RouteService, private task:TaskService){}
+  constructor(private logger: NGXLogger, private dialog: MatDialog, private router : Router, private service : RouteService, private task:TaskService){}
   ngOnInit(): void {
     this.pathParam = this.service.pathParam;
     this.pathParam.subscribe(res=>{
@@ -366,6 +386,14 @@ export class NoDisponibilityComponent implements OnInit{
       this.token = res
       
     })
+  }
+
+  log(lvl:any){
+    switch(lvl){
+      case 0:
+        this.logger.info('Vista 3: Cliente no encontró disponibilidad')
+        break;
+    }
   }
 
   onSubmit(){
@@ -384,6 +412,7 @@ export class NoDisponibilityComponent implements OnInit{
     })
     this.dialog.closeAll()
     this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
+    this.log(0);
   }
 
 }
@@ -412,7 +441,7 @@ export class NoDisponibilityDialog{
 @Component({
   selector: 'contactoejecutivo',
   templateUrl: './contacto.component.html',
-  styleUrls: ['./scheduling.component.scss'],
+  styleUrls: ['./modal.component.scss'],
   
  })
 
@@ -426,7 +455,7 @@ export class ContactComponent implements OnInit{
 
   pathParam !: Observable<string | null>
   pathParamToken !: Observable<string | null>
-  constructor(private dialog: MatDialog, private router : Router, private service : RouteService, private task:TaskService){
+  constructor(private logger: NGXLogger, private dialog: MatDialog, private router : Router, private service : RouteService, private task:TaskService){
     }
   ngOnInit(): void {
     this.pathParam = this.service.pathParam;
@@ -439,6 +468,13 @@ export class ContactComponent implements OnInit{
       this.token = res
       
     })
+  }
+  log(lvl:any){
+    switch(lvl){
+      case 0:
+        this.logger.info('Vista 3: Contacto ejecutivo')
+        break;
+    }
   }
 
   onSubmit(){
@@ -457,6 +493,7 @@ export class ContactComponent implements OnInit{
     })
     this.dialog.closeAll()
     this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
+    this.log(0)
   }
 
 }
@@ -488,7 +525,7 @@ export class ContactDialog{
 @Component({
  selector: 'agendar',
  templateUrl: './reagendar.component.html',
- styleUrls: ['./scheduling.component.scss'],
+ styleUrls: ['./modal.component.scss'],
  providers: [DatePipe,{ provide: MAT_DATE_LOCALE, useValue: 'es' }],
  
 }) 
@@ -509,7 +546,7 @@ export class ReagendarComponent implements OnInit{
   requests : any;
 
   constructor(private formBuilder: FormBuilder, private api : SchedulingService, 
-    private router : Router, private dialog: MatDialog, private service: RouteService, 
+    private router : Router, private logger: NGXLogger, private dialog: MatDialog, private service: RouteService, 
     date: DateAdapter<Date>, private task : TaskService, private apiMod : ModifyProductService) {
       date.getFirstDayOfWeek = () => 1;
       date.setLocale('es');
@@ -533,6 +570,15 @@ export class ReagendarComponent implements OnInit{
     })
 
     this.getRequestId();
+    
+  }
+
+  log(lvl:any){
+    switch(lvl){
+      case 0:
+        this.logger.info('Vista 3: Cliente pidió reagendar')
+        break;
+    }
   }
 
   getRequestId(){
@@ -571,6 +617,7 @@ export class ReagendarComponent implements OnInit{
               this.apiMod.putRequestDEV(message, this.requests, this.token)
               .subscribe((resp:any)=>{
                 resp;
+                this.log(0)
               })
             },
             error: () =>{
@@ -587,6 +634,7 @@ export class ReagendarComponent implements OnInit{
             this.apiMod.putRequest(message, this.requests, this.token)
               .subscribe((resp:any)=>{
                 resp;
+                this.log(0)
               })
           },
           error: () =>{

@@ -6,19 +6,10 @@ import { map, Observable, Subject } from "rxjs";
     providedIn:'root'
 })
 export class TaskService{
-    public productModify = new Subject<boolean>();
-    public serviceModify = new Subject<boolean>();
-
-    valueProduct$ = this.productModify.asObservable();
-    valueService$ = this.serviceModify.asObservable();
     
     private apiURL='https://api.demo.maydayservicios.com'
     constructor(private http: HttpClient){}
 
-    sendValue(message: boolean) {
-        this.productModify.next(message);
-        this.serviceModify.next(message);
-    }
 
     getTask( status:string, order:string, token:string): Observable<any>{
         let header = new HttpHeaders()

@@ -1,15 +1,16 @@
-import {AfterViewInit, Component, Directive, HostListener, Inject, Input, isDevMode, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Injectable, isDevMode, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {MatStepper, StepperOrientation} from '@angular/material/stepper';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DetailOrderService } from 'src/app/service/detail.service';
 import * as moment from 'moment';
 import { TaskService } from 'src/app/service/task.service';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { INGXLoggerConfig, INGXLoggerMetadata, NGXLogger, NgxLoggerLevel, NGXLoggerWriterService } from "ngx-logger";
+import { CheckoutProductComponent } from 'src/app/shared/components/checkoutProduct/checkoutProduct.component';
 
 //Stepper component
 /**
@@ -58,19 +59,33 @@ export class StepperComponent implements OnInit{
   completed_at : any;
 
   dates = (value:string) => {return moment(value).format('dddd, DD-MM-YYYY')}
+
+  @ViewChild (CheckoutProductComponent) option !: CheckoutProductComponent;
+
   constructor(
     private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, 
     public dialog: MatDialog,  private route : ActivatedRoute, 
-    private api: DetailOrderService, private router : Router, private task : TaskService, private window: Window) {
-
+    private api: DetailOrderService, private router : Router, private task : TaskService, private window: Window, 
+    private logger: NGXLogger) {
       this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
 
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
-
     }
+
+  log(lvl:any){
+    switch(lvl){
+      case 0:
+        if (this.option.optionselect == 'Si'){
+          this.logger.info('Vista 1 - Cliente ya tiene el producto en sus manos')
+        }
+        else
+          this.logger.info('Vista 1 - Cliente aún no tiene el producto en sus manos') 
+      break;
+    }
+  }
   
   ngOnInit(): void {
     this.checkoutFormGroup = this._formBuilder.group({});
@@ -81,7 +96,11 @@ export class StepperComponent implements OnInit{
     this.getTask()
   }
 
- 
+  continue(){
+    if (this.checkoutFormGroup.valid){
+      this.log(0);
+    }
+  }
 
   getOrderId(){
     if (isDevMode()) {
@@ -214,10 +233,9 @@ export class StepperComponent implements OnInit{
     this.stepper.selectedIndex = index;
   }
 
-  print() {
+  //logs
+  
 
-  }
-    
 }
 
 

@@ -16,13 +16,16 @@ import { CheckoutProductComponent } from './shared/components/checkoutProduct/ch
 import { DateFormProduct} from './shared/components/datepicker/datepicker.component';
 import { EndProcessComponent } from './shared/components/end-process/end-process.component';
 import { DetailComponent, EditProductComponent, EditProductDialog, EditServiceComponent, EditServiceDialog} from './shared/components/detailOrder/detailOrder.component';
-
 import { ClientDataComponent, WrongdataComponent, WrongDataDialog } from './shared/components/client-data/client-data.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { SpinnerModule } from './shared/components/spinner/spinner.module';
 import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
-import {NgxPrintModule} from 'ngx-print'
+import {NgxPrintModule} from 'ngx-print';
+import { TrackingComponent } from './shared/components/tracking/tracking.component'
+import { LoggerModule, TOKEN_LOGGER_RULES_SERVICE, TOKEN_LOGGER_SERVER_SERVICE, TOKEN_LOGGER_WRITER_SERVICE } from "ngx-logger";
+import { environment } from 'src/environments/environment';
+import { RulesCustomisedService, ServerCustomisedService } from './service/logger.service';
 
 
 //I keep the new line
@@ -50,7 +53,8 @@ import {NgxPrintModule} from 'ngx-print'
     NoDisponibilityComponent,
     NoDisponibilityDialog,
     ContactComponent,
-    ContactDialog
+    ContactDialog,
+    TrackingComponent
   ],
   imports: [
     CommonModule,
@@ -64,12 +68,22 @@ import {NgxPrintModule} from 'ngx-print'
     CdkTableModule,
     SpinnerModule,
     NgxPrintModule,
+    LoggerModule.forRoot(environment.logging, 
+      {
+        ruleProvider: {
+          provide: TOKEN_LOGGER_RULES_SERVICE, useClass: RulesCustomisedService
+        },
+        serverProvider: {
+          provide: TOKEN_LOGGER_SERVER_SERVICE, useClass: ServerCustomisedService
+        }
+      }),
   ],
   providers: [
     {provide: STEPPER_GLOBAL_OPTIONS,
     useValue: { displayDefaultIndicatorType: false}},
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi:true},
-  
+    { provide: Window, useValue: window }
+      
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

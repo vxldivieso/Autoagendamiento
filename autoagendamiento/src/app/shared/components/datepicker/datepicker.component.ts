@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, isDevMode, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, isDevMode, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { DateService } from '../../../service/detail.service';
 import Swal from 'sweetalert2';
@@ -30,7 +30,7 @@ import { CheckoutProductComponent } from '../checkoutProduct/checkoutProduct.com
   ]
 })
 
-export class DateFormProduct{
+export class DateFormProduct implements OnInit, AfterViewChecked{
   minDate = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())
   maxDate = new Date(2030, 11, 1); 
   dateProductForm !: FormGroup;
@@ -38,14 +38,17 @@ export class DateFormProduct{
   delivery_date = new Date() ;
   datedelivery : any;
   visible:boolean = true;
+  store :any;
   //params
   order!: any;
   token!: string;
-
+  
+  form!: FormGroup;
   @ViewChild (CheckoutProductComponent) child !: CheckoutProductComponent;
   
   constructor(private formBuilder: FormBuilder, 
-    private api: DateService, public datepipe: DatePipe, private route : ActivatedRoute, date: DateAdapter<Date>){
+    private api: DateService, public datepipe: DatePipe, private route : ActivatedRoute, date: DateAdapter<Date>,
+    private ctrlContainer: FormGroupDirective){
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
 
@@ -57,25 +60,39 @@ export class DateFormProduct{
     this.dateProductForm = this.formBuilder.group({
       dateProduct: ['',Validators.required]
     });
-    this.getDeliveryDate() 
+    this.getDeliveryDate()
+    
+    
   }
 
+  ngAfterViewChecked(): void {
+    
+    if(this.store == 'ABCDIN'){
+      this.form = this.ctrlContainer.form;
+      this.form.addControl("date", this.dateProductForm);
+    }
+    
+    
+  }
+  
   getDeliveryDate(){
     if (isDevMode()) {
       this.api.getOrderIdDEV(this.order, this.token)
       .subscribe((res:any)=>{
         this.delivery_date = res.delivery_date;
+        this.store = res.store
       })
+      
     }
     else
       this.api.getOrderId(this.order, this.token)
       .subscribe((res:any)=>{
         this.delivery_date = res.delivery_date;
+        this.store = res.store
       })
-  }
-
-  hideRadioButton(){
-    this.child.subForm.controls['optionselect'].disable();
+      if(this.store== 'ABCDIN'){
+        this.form.addControl("date", this.dateProductForm);
+      }
   }
 
   transformDate(){

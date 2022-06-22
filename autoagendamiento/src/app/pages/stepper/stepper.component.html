@@ -27,7 +27,7 @@
         <!--Actions-->
         <p style="color: #7B7D7D;">Si está todo en orden, presione Continuar.</p>
         <div class="d-grid gap-2 d-md-flex d-lg-flex justify-content-md-center mb-2">
-          <button mat-raised-button class="btn-lg" color="primary" matStepperNext>Continuar</button>
+          <button mat-raised-button class="btn-lg" color="primary" (click)="continue()" matStepperNext>Continuar</button>
         </div>
       </ng-template>
     </mat-step>
@@ -90,7 +90,11 @@
             <div class="row">
               <div class="col-md-1"></div>
               <div class="col-lg-10">
-                <h1 class="title">Todo listo</h1>
+                <h1 class="title">
+                  <svg width="35" height="35" viewBox="0 0 24 30"  fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.2426 16.3137L6 12.071L7.41421 10.6568L10.2426 13.4853L15.8995 7.8284L17.3137 9.24262L10.2426 16.3137Z" fill="#7FE06A" />
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" fill="#7FE06A" />
+                  </svg>&nbsp;Todo listo</h1>
                 <p class="subtitle">La visita se agendó correctamente. Te enviaremos un correo con la información detallada.</p>
               </div>
               <div class="col-md-1"></div>
