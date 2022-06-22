@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { SchedulingService } from '../../../service/scheduling.service';
-import { DateService, DetailOrderService, ModifyProductService, ReagendarService } from '../../../service/detail.service';
+import { DateService, DetailOrderService, ModifyProductService } from '../../../service/detail.service';
 import { CdkStepper } from '@angular/cdk/stepper';
 import { ActivatedRoute } from '@angular/router';
 import  {trigger, style, transition, animate,state } from '@angular/animations';
@@ -286,11 +286,11 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
           {
             next:(res)=>{
               this.cdk.next()
-              this.log(0);
+              
             },
             error: (res) =>{
               this.messageError();
-              this.log(1)
+              
             }
           }
         )
@@ -403,6 +403,7 @@ export class NoDisponibilityComponent implements OnInit{
            res
         }
       })
+      this.log(0);
     }
     else
     this.task.postTask(this.kind, this.details, this.order, this.token).subscribe({
@@ -412,7 +413,7 @@ export class NoDisponibilityComponent implements OnInit{
     })
     this.dialog.closeAll()
     this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
-    this.log(0);
+    
   }
 
 }
@@ -484,6 +485,7 @@ export class ContactComponent implements OnInit{
            res
         }
       })
+      this.log(0)
     }
     else
     this.task.postTask(this.kind, this.details, this.order, this.token).subscribe({
@@ -493,7 +495,7 @@ export class ContactComponent implements OnInit{
     })
     this.dialog.closeAll()
     this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
-    this.log(0)
+    
   }
 
 }
@@ -634,7 +636,6 @@ export class ReagendarComponent implements OnInit{
             this.apiMod.putRequest(message, this.requests, this.token)
               .subscribe((resp:any)=>{
                 resp;
-                this.log(0)
               })
           },
           error: () =>{

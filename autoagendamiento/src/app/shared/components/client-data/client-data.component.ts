@@ -212,7 +212,6 @@ export class ClientDataComponent implements OnInit, AfterViewInit{
             else
             this.messageSuccessfull();
             this.cdk.next()
-            this.log(0);
           },
           error: () =>{
             this.messageError();
@@ -467,7 +466,7 @@ export class WrongdataComponent implements OnInit {
                   this.dialog.closeAll();
                   this.messageSuccessfull();
                   this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
-                  this.log(0)
+                  
                 },
                 error: () =>{
                   this.messageError();
@@ -482,7 +481,7 @@ export class WrongdataComponent implements OnInit {
                   this.dialog.closeAll();
                   this.messageSuccessfull();
                   this.router.navigate([`${this.orderParam}/${this.tokenParam}/contact/data`])
-                  this.log(0)
+                  
                 },
                 error: () =>{
                   this.messageError();

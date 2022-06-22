@@ -97,9 +97,12 @@ export class StepperComponent implements OnInit{
   }
 
   continue(){
-    if (this.checkoutFormGroup.valid){
-      this.log(0);
+    if (isDevMode()) {
+      if (this.checkoutFormGroup.valid){
+        this.log(0);
+      }
     }
+    
   }
 
   getOrderId(){

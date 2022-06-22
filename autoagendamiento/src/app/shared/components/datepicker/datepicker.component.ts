@@ -70,6 +70,9 @@ export class DateFormProduct implements OnInit, AfterViewChecked{
     if(this.store == 'ABCDIN'){
       this.form = this.ctrlContainer.form;
       this.form.addControl("date", this.dateProductForm);
+      if(this.delivery_date != null){
+        this.dateProductForm.get('dateProduct')?.clearValidators();
+      }
     }
     
     
