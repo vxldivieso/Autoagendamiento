@@ -4,9 +4,10 @@ import { NgxLoggerLevel } from 'ngx-logger';
 export const environment = {
   production: true,
   logging:{
-    level: NgxLoggerLevel.DEBUG,
+    level: NgxLoggerLevel.OFF,
     serverLogLevel: NgxLoggerLevel.DEBUG,
-    serverLoggingUrl:'https://eqamw3vmyj.execute-api.us-east-1.amazonaws.com/default/maydayLogger',
+    serverLoggingUrl:'https://nehwwhwmpd.execute-api.us-east-1.amazonaws.com/default/ngxLogger'
+    //serverLoggingUrl:'https://eqamw3vmyj.execute-api.us-east-1.amazonaws.com/default/maydayLogger',
     
   },
   

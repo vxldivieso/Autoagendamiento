@@ -97,11 +97,11 @@ export class StepperComponent implements OnInit{
   }
 
   continue(){
-    if (isDevMode()) {
+    
       if (this.checkoutFormGroup.valid){
         this.log(0);
       }
-    }
+    
     
   }
 

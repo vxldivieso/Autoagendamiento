@@ -286,11 +286,11 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
           {
             next:(res)=>{
               this.cdk.next()
-              
+              this.log(0);
             },
             error: (res) =>{
               this.messageError();
-              
+              this.log(1)
             }
           }
         )
@@ -403,7 +403,7 @@ export class NoDisponibilityComponent implements OnInit{
            res
         }
       })
-      this.log(0);
+      
     }
     else
     this.task.postTask(this.kind, this.details, this.order, this.token).subscribe({
@@ -413,7 +413,7 @@ export class NoDisponibilityComponent implements OnInit{
     })
     this.dialog.closeAll()
     this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
-    
+    this.log(0);
   }
 
 }
@@ -485,7 +485,7 @@ export class ContactComponent implements OnInit{
            res
         }
       })
-      this.log(0)
+      
     }
     else
     this.task.postTask(this.kind, this.details, this.order, this.token).subscribe({
@@ -495,7 +495,7 @@ export class ContactComponent implements OnInit{
     })
     this.dialog.closeAll()
     this.router.navigate([`${this.order}/${this.token}/contact/ejecutivo`])
-    
+    this.log(0)
   }
 
 }
@@ -636,6 +636,7 @@ export class ReagendarComponent implements OnInit{
             this.apiMod.putRequest(message, this.requests, this.token)
               .subscribe((resp:any)=>{
                 resp;
+                this.log(0)
               })
           },
           error: () =>{
