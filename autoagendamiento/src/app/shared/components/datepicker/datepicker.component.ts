@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, isDevMode, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, isDevMode, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { DateService } from '../../../service/detail.service';
 import Swal from 'sweetalert2';
@@ -30,7 +30,7 @@ import { CheckoutProductComponent } from '../checkoutProduct/checkoutProduct.com
   ]
 })
 
-export class DateFormProduct implements OnInit, AfterViewChecked{
+export class DateFormProduct implements OnInit,AfterViewChecked{
   minDate = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate())
   maxDate = new Date(2030, 11, 1); 
   dateProductForm !: FormGroup;
@@ -44,16 +44,19 @@ export class DateFormProduct implements OnInit, AfterViewChecked{
   token!: string;
   
   form!: FormGroup;
-  @ViewChild (CheckoutProductComponent) child !: CheckoutProductComponent;
+  @ViewChildren (CheckoutProductComponent) option !: CheckoutProductComponent;
+
+  dates = (value:Date) => {return moment(value).format('dddd DD/MMMM/YYYY')}
   
   constructor(private formBuilder: FormBuilder, 
     private api: DateService, public datepipe: DatePipe, private route : ActivatedRoute, date: DateAdapter<Date>,
-    private ctrlContainer: FormGroupDirective){
+    private ctrlContainer: FormGroupDirective, private ref: ChangeDetectorRef){
       this.order = this.route.snapshot.params['order'];
       this.token = this.route.snapshot.params['token'];
 
       date.getFirstDayOfWeek = () => 1;
       date.setLocale('es');
+      moment.locale('es');
     }
   
   ngOnInit(): void {
@@ -61,21 +64,16 @@ export class DateFormProduct implements OnInit, AfterViewChecked{
       dateProduct: ['',Validators.required]
     });
     this.getDeliveryDate()
-    
-    
   }
-
   ngAfterViewChecked(): void {
-    
-    if(this.store == 'ABCDIN'){
+    this.ref.detectChanges();
+    if(this.store){
       this.form = this.ctrlContainer.form;
       this.form.addControl("date", this.dateProductForm);
       if(this.delivery_date != null){
         this.dateProductForm.get('dateProduct')?.clearValidators();
       }
     }
-    
-    
   }
   
   getDeliveryDate(){
@@ -85,6 +83,7 @@ export class DateFormProduct implements OnInit, AfterViewChecked{
         this.delivery_date = res.delivery_date;
         this.store = res.store
       })
+      
       
     }
     else

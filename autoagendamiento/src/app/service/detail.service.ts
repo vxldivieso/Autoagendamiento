@@ -22,7 +22,7 @@ export class DetailOrderService implements OnInit{
     ngOnInit(): void {
         if (!isDevMode()) {
             console.log = function() {};
-          }
+        }
     }
     log(lvl:any){
         switch(lvl){

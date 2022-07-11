@@ -59,7 +59,7 @@ export class SchedulingComponent implements OnInit, OnDestroy, AfterViewInit {
   token!: string;
 
   //vars
-  dates = (value:string) => {return moment(value).format('dddd, DD-MM-YYYY')}
+  dates = (value:string) => {return moment(value).format('dddd, DD/MMMM/YYYY')}
 
   delivery_date:any;
   datedelivery : any;
