@@ -5,6 +5,7 @@ import { INGXLoggerConfig, INGXLoggerMetadata, NgxLoggerLevel, NGXLoggerRulesSer
 import { Observable } from 'rxjs';
 import { RouteService } from './route.service';
 
+//Logger service: Implementación de ruta del usuario, flujo de viaje dentro de la página.
 @Injectable({
     providedIn:'root'
 })

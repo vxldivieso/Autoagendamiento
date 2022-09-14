@@ -140,15 +140,6 @@ export class DateService{
                 return res;
             })))
     }
-
-    getOrderIdDEV(order:string, token:string){
-        let header = new HttpHeaders()
-        .set('Type-content','aplication/json').set('token',token);
-        return this.http.get('v3/orders/'+order,{
-            headers:header
-        })
-    } 
-
     putDateDeliveryDEV(data: string, order:number, token:string):Observable<any>{
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
@@ -158,6 +149,16 @@ export class DateService{
                 return res;
             })))
     }
+
+    getOrderIdDEV(order:string, token:string){
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+        return this.http.get('v3/orders/'+order,{
+            headers:header
+        })
+    } 
+
+    
 } 
 
 @Injectable({
@@ -169,12 +170,21 @@ export class ModifyProductService{
     private apiURL ='https://api.demo.maydayservicios.com'
 
     constructor (private http : HttpClient){}
-    //Modify Product 
+    //Modify Product / Service
     //GET request id 
     getRequest(order:string, token:string){
         let header = new HttpHeaders()
         .set('Type-content','aplication/json').set('token',token);
         return this.http.get(`${this.apiURL}/v3/orders/`+order,{
+            headers:header
+        })
+    }
+    //GET request id DEV
+    getRequestDEV(order:string, token:string):Observable<any>{
+        let header = new HttpHeaders()
+        .set('Type-content','aplication/json').set('token',token);
+        
+        return this.http.get('v3/orders/'+order,{
             headers:header
         })
     }
@@ -230,15 +240,7 @@ export class ModifyProductService{
         })
     }
     
-    //GET request id DEV
-    getRequestDEV(order:string, token:string):Observable<any>{
-        let header = new HttpHeaders()
-        .set('Type-content','aplication/json').set('token',token);
-        
-        return this.http.get('v3/orders/'+order,{
-            headers:header
-        })
-    }
+    
     //GET request message DEV
     getRequestLogDEV(request_id:number, token:string):Observable<any>{
         let header = new HttpHeaders()

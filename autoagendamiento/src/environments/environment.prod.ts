@@ -6,7 +6,7 @@ export const environment = {
   logging:{
     level: NgxLoggerLevel.OFF,
     serverLogLevel: NgxLoggerLevel.DEBUG,
-    //prod
+    //prod 
     serverLoggingUrl:'https://eqamw3vmyj.execute-api.us-east-1.amazonaws.com/default/maydayLogger',
 
     //demo serverLoggingUrl:'https://nehwwhwmpd.execute-api.us-east-1.amazonaws.com/default/ngxLogger'
