@@ -7,7 +7,7 @@ import { NGXLogger } from "ngx-logger";
 
 @Injectable({
     providedIn:'root'
-})
+}) 
 export class DetailOrderService implements OnInit{
     //params
     order!: number;
@@ -38,7 +38,7 @@ export class DetailOrderService implements OnInit{
         
         return this.http.get(`${this.apiURL}/v3/orders/`+order,{
             headers:header
-        }).pipe(
+            }).pipe(
             catchError((error) =>{
                 return this.errorHandler(error);
             })
